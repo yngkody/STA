@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STA — Store Locator</title>
+
+  <!-- Snipcart -->
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
+
+  <!-- Global reset -->
+  <style>
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      background:#fdfcf9;
+      color:#111;
+      font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ====================== STA HEADER (EXACT MATCH) ====================== -->
+<section class="sta-banner is-top" role="contentinfo">
+<style>
+:root{
+  --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9;
+  --panel:#fff; --line:#e6e6e6; --shadow:0 12px 34px rgba(16,24,40,.10);
+  --cap:#ffffff; --max:1200px;
+  --padX:clamp(12px,3.4vw,24px); --padY:clamp(10px,1.8vw,14px);
+}
+.sta-banner{
+  background:var(--bg);
+  position:sticky; top:0; z-index:9999;
+  border-bottom:1px solid var(--line);
+}
+.sta-banner .wrap{
+  max-width:var(--max); margin:0 auto;
+  padding:var(--padY) var(--padX);
+}
+.sta-row{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap;
+}
+.sta-brand{
+  display:flex; gap:8px; align-items:center;
+  background:#fff; border:1px solid var(--line);
+  border-radius:999px; padding:8px 12px;
+}
+.sta-mark{
+  width:32px; height:32px; border-radius:50%;
+  background:conic-gradient(var(--accent),var(--accent));
+  display:grid; place-items:center;
+  font-weight:900; font-size:11px; color:#fff;
+}
+.sta-text .top{ font-weight:800; }
+.sta-text .sub{ font-size:13px; color:var(--dim); }
+
+.sta-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+.sta-chip{
+  padding:8px 12px; border-radius:999px;
+  background:#fff; border:1px solid var(--line);
+  text-decoration:none; color:#111; font-weight:700;
+}
+.sta-chip:hover{ box-shadow:0 6px 18px rgba(0,0,0,.08); }
+
+.sta-icons{ display:flex; gap:8px; }
+.sta-iconbtn{
+  width:36px; height:36px; border-radius:999px;
+  background:#fff; border:1px solid var(--line);
+  display:grid; place-items:center; cursor:pointer;
+}
+.sta-iconbtn svg{ width:18px; height:18px; }
+
+.sta-cart{ position:relative; }
+.sta-cart .badge{
+  position:absolute; top:-6px; right:-6px;
+  min-width:16px; height:16px;
+  border-radius:999px;
+  background:var(--accent); color:#fff;
+  font-size:10px; font-weight:800;
+  line-height:16px; text-align:center;
+}
+
+.sta-camo{
+  width:100%; height:96px;
+  background:url("https://images.squarespace-cdn.com/content/v1/68f9286f24ab7f4313a8fdb1/56a14432-1556-4e22-9869-d22e4ec74fe6/ChatGPT+Image+Oct+22%2C+2025%2C+04_11_48+PM.png?format=2500w")
+  center/cover no-repeat;
+  transition:height .25s ease, opacity .25s ease;
+}
+.sta-banner.is-scrolled .sta-camo{
+  height:0; opacity:0; overflow:hidden;
+}
+</style>
+
+<div class="wrap">
+  <div class="sta-row">
+    <div class="sta-brand">
+      <div class="sta-mark">STA</div>
+      <div class="sta-text">
+        <div class="top">STA — New York</div>
+        <div class="sub">Quality Flower • Culture</div>
+      </div>
+    </div>
+
+    <nav class="sta-actions">
+      <a class="sta-chip" href="./index.html">Home</a>
+      <a class="sta-chip" href="./products.html">Products</a>
+      <a class="sta-chip" href="./merch.html">Merch</a>
+      <a class="sta-chip" href="./about.html">About</a>
+      <a class="sta-chip" href="./stores.html">Store Locator</a>
+    </nav>
+
+    <div class="sta-icons">
+      <a class="sta-iconbtn sta-cart" data-action="open-cart">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L20 8H7.1"
+            stroke="currentColor" stroke-width="1.7"/>
+          <circle cx="10" cy="20" r="1.6" fill="currentColor"/>
+          <circle cx="17" cy="20" r="1.6" fill="currentColor"/>
+        </svg>
+        <span class="badge" id="staCartCount">0</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="sta-camo"></div>
+</section>
+<!-- ====================== /STA HEADER ====================== -->
+
+<!-- ====================== STORE MAP SECTION ====================== -->
+<!-- (YOUR MAP CODE — UNTOUCHED) -->
+<!-- paste continues exactly as you sent it -->
+<!-- ===== STA • Store Map (Static + Instant Load) ===== -->
+<section class="sta-map" aria-label="STA Locations">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+  ></script>
+
+  <style>
+    .sta-map{
+      --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#F7F5F3; --panel:#fff; --line:#e9e9e9;
+      --shadow:0 8px 24px rgba(0,0,0,.06); --radius:16px;
+      font:14px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      color:var(--ink); background:var(--bg);
+    }
+    .sta-map .wrap{
+      max-width:1200px; margin:clamp(12px,3vw,28px) auto; padding:0 clamp(12px,3vw,20px);
+    }
+    .sta-map .grid{
+      display:grid; gap:16px; grid-template-columns: 360px 1fr;
+    }
+    @media (max-width:900px){ .sta-map .grid{ grid-template-columns:1fr; } }
+    .sta-card{
+      background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .sta-list{ padding:14px; max-height:560px; overflow:auto; }
+    .sta-item{
+      border-bottom:1px dashed var(--line); padding:10px 2px; cursor:pointer;
+    }
+    .sta-item:last-child{ border-bottom:none; }
+    .sta-name{ font-weight:700; }
+    .sta-meta{ color:var(--dim); font-size:13px; margin-top:4px; }
+    .sta-link{
+      display:inline-block; margin-top:6px; font-weight:600; color:var(--accent); text-decoration:none;
+    }
+    .legend{
+      display:flex; gap:8px; align-items:center; padding:10px 14px; border-bottom:1px solid var(--line);
+      background:linear-gradient(0deg,#ffffff,#fff7f7);
+      border-top-left-radius:var(--radius); border-top-right-radius:var(--radius);
+      font-weight:600;
+    }
+    .dot{ width:10px; height:10px; background:var(--accent); border-radius:50%; box-shadow:0 0 0 3px #ffdfe2 inset; }
+    #map{ height:600px; border-radius:var(--radius); border:1px solid var(--line); }
+    .no-pin{
+      margin-top:10px; padding-top:10px; border-top:1px solid var(--line); color:var(--dim); font-size:13px;
+    }
+  </style>
+
+  <div class="wrap">
+    <div class="grid">
+      <aside class="sta-card">
+        <div class="legend"><span class="dot"></span> STA Locations</div>
+        <div class="sta-list" id="staList"></div>
+      </aside>
+      <div id="map" class="sta-card"></div>
+    </div>
+  </div>
+
+  <script>
+    // Pre-set coordinates (Manhattan area, approximated for instant load)
+    const LOCATIONS = [
+      { name:"The High Club", contacts:"Kevin", address:"129 Avenue C, Manhattan, NY 10009", lat:40.7254, lon:-73.9787, notes:"Buyer for BK Exotics & Good Grades – priority meeting." },
+      { name:"Jerry Cannadreams", contacts:"Jerry", address:"862 9th Ave, New York, NY 10019", lat:40.7682, lon:-73.9868, notes:"Legacy account, good follow-up stop." },
+      { name:"Qube Times Square", contacts:"Arian", address:"1412 Broadway #102, New York, NY 10018", lat:40.7531, lon:-73.9876, notes:"Verify display & restock." },
+      { name:"Torches", contacts:"Gilly", address:"12 E 42nd St, New York, NY 10017", lat:40.7529, lon:-73.9814, notes:"Also buyer for Munchies Queens & Polanco Ridgewood." },
+      { name:"Flower Power", contacts:"Angelo", address:"22 W 66th St, New York, NY 10023", lat:40.7737, lon:-73.9791, notes:"Uptown – confirm restock." },
+      { name:"Culture House", contacts:"Josh", address:"958 6th Ave, New York, NY 10001", lat:40.7486, lon:-73.9882, notes:"Daytime visit – leaves by 5 PM." },
+      { name:"Kush Klub", contacts:"Ashly", address:"186 Orchard St, New York, NY 10002", lat:40.7217, lon:-73.9871, notes:"Call first to confirm she’s in." },
+      { name:"Conbud", contacts:"Coss / Ommie", address:"", lat:null, lon:null, notes:"Call first; Ommie can help if needed." },
+      { name:"Stoops", contacts:"Chris / Matt", address:"182 5th Ave, New York, NY 10010", lat:40.7404, lon:-73.9893, notes:"Email Matt for Wed/Thu appointment." },
+      { name:"Happy Munkey", contacts:"Vald / John", address:"151 Dyckman St, New York, NY 10034", lat:40.8658, lon:-73.9262, notes:"Confirm meeting & collab." },
+      { name:"Indoor Treez", contacts:"Areeb", address:"584 8th Ave, New York, NY 10018", lat:40.7547, lon:-73.9922, notes:"Call to verify buyer." },
+      { name:"Hells Kitchen Cannabis Club", contacts:"Desi", address:"356 W 40th St, New York, NY 10018", lat:40.7577, lon:-73.9928, notes:"Check bundle deals." },
+      { name:"Elevation HQ", contacts:"Mo / Hassan", address:"701 8th Ave, New York, NY 10036", lat:40.7585, lon:-73.9888, notes:"Check reorder opportunity." },
+      { name:"Green Genius NYC", contacts:"Howard", address:"214 3rd Ave, New York, NY 10003", lat:40.7355, lon:-73.9849, notes:"Maintain relationship." },
+      { name:"Sparkboro", contacts:"", address:"704 W 177th St, New York, NY 10033", lat:40.8519, lon:-73.9384, notes:"Previously ordered – check reorder." },
+      { name:"Liberty Buds", contacts:"", address:"1115 1st Ave, New York, NY 10065", lat:40.7608, lon:-73.9618, notes:"Ask for manager / unknown contact." },
+      { name:"Cannabis Realm (White Plains)", contacts:"", address:"", lat:null, lon:null, notes:"Coordinate with Jesus for follow-up." }
+    ];
+
+    const map = L.map('map', { scrollWheelZoom: true }).setView([40.75,-73.98], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:19, attribution:'&copy; OpenStreetMap'
+    }).addTo(map);
+
+    const listEl = document.getElementById('staList');
+    const group = L.featureGroup().addTo(map);
+    const noPin = [];
+
+    const googleMapsLink = (addr)=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`;
+
+    LOCATIONS.forEach(loc=>{
+      const addr = loc.address || 'No public address';
+      const item = document.createElement('div');
+      item.className='sta-item';
+      item.innerHTML = `
+        <div class="sta-name">${loc.name}</div>
+        <div class="sta-meta">${loc.contacts ? loc.contacts : ''}</div>
+        <div class="sta-meta">${addr}</div>
+        ${loc.address ? `<a class="sta-link" href="${googleMapsLink(loc.address)}" target="_blank">Open in Maps →</a>` : ''}
+      `;
+      listEl.appendChild(item);
+
+      if(loc.lat && loc.lon){
+        const popup = `
+          <strong>${loc.name}</strong><br/>
+          ${loc.contacts ? `${loc.contacts}<br/>` : ''}
+          ${addr}<br/>
+          ${loc.notes ? `<em>${loc.notes}</em><br/>` : ''}
+          <a href="${googleMapsLink(loc.address)}" target="_blank">Open in Maps</a>
+        `;
+        const marker = L.marker([loc.lat, loc.lon]).addTo(group).bindPopup(popup);
+        item.addEventListener('click',()=>{
+          map.flyTo([loc.lat, loc.lon],16,{duration:0.6});
+          marker.openPopup();
+        });
+      } else {
+        noPin.push(loc.name);
+      }
+    });
+
+    if(group.getLayers().length){ map.fitBounds(group.getBounds().pad(0.12)); }
+
+    if(noPin.length){
+      const div=document.createElement('div');
+      div.className='no-pin';
+      div.innerHTML=`<strong>No map pin:</strong> ${noPin.join(', ')}`;
+      listEl.appendChild(div);
+    }
+  </script>
+</section>
