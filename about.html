@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STA — About</title>
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
+  
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:#fdfcf9;
+    color:#111;
+    font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+  }
+</style>
+
+</head>
+<body>
+
+<section class="sta-banner is-top" role="contentinfo" aria-label="Site banner">
+    <style>
+      :root{
+        --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9;
+        --panel:#fff; --line:#e6e6e6; --shadow:0 12px 34px rgba(16,24,40,.10);
+        --cap:#ffffff; --max:1200px; --padX:clamp(12px,3.4vw,24px); --padY:clamp(10px,1.8vw,14px);
+      }
+
+      .sta-banner{
+        font:15px/1.45 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+        color:var(--ink); background:var(--bg); width:100%;
+        border-bottom:1px solid var(--line);
+        position:sticky; top:0; z-index:9999;
+        backdrop-filter:saturate(1.1);
+        overflow:visible;
+      }
+      .sta-banner .wrap{ max-width:var(--max); margin:0 auto; padding:var(--padY) var(--padX); position:relative; }
+      .sta-banner .wrap::before{
+        content:""; position:absolute; inset:4px 6px auto 6px; height:60px;
+        background:linear-gradient(180deg,#fff,#fafafa); opacity:.55; pointer-events:none; border-radius:14px; box-shadow:var(--shadow);
+      }
+      .sta-banner .row{ position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+      .sta-brand{ display:flex; align-items:center; gap:8px; min-width:0; background:var(--cap);
+        border:1px solid var(--line); border-radius:999px; padding:8px 12px; box-shadow:0 8px 22px rgba(0,0,0,.04);}
+      .sta-mark{ width:32px; height:32px; border-radius:50%; background:
+        radial-gradient(closest-side,#fff 0 62%,transparent 63%),
+        conic-gradient(var(--accent),var(--accent)); box-shadow:inset 0 0 0 1px rgba(0,0,0,.06); position:relative; flex:0 0 32px;}
+      .sta-mark::after{ content:"STA"; position:absolute; inset:0; display:grid; place-items:center;
+        font:700 10px/1 system-ui,-apple-system,"Segoe UI",Inter,sans-serif; color:#111; letter-spacing:.6px; mix-blend-mode:screen; opacity:.95; }
+      .sta-text{ display:flex; flex-direction:column; min-width:0; }
+      .sta-text .top{ font-weight:800; letter-spacing:.2px; font-size:14px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .sta-text .sub{ color:var(--dim); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+      .sta-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-left:auto; }
+      .sta-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+      .sta-chip{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+        background:var(--cap); border:1px solid var(--line); text-decoration:none; color:var(--ink);
+        transition:transform .12s ease, box-shadow .12s ease; font-weight:700; font-size:14px; }
+      .sta-chip:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
+      .sta-chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 2px #fff inset; }
+
+      .sta-icons{ display:flex; gap:8px; }
+      .sta-iconbtn{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px;
+        background:var(--cap); border:1px solid var(--line); text-decoration:none; color:var(--ink);
+        transition:transform .12s ease, box-shadow .12s ease; cursor:pointer; }
+      .sta-iconbtn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
+      .sta-iconbtn svg{ width:18px; height:18px; display:block; }
+      .sta-cart{ position:relative; }
+      .sta-cart .badge{ position:absolute; top:-6px; right:-6px; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:var(--accent); color:#fff; font:800 10px/16px system-ui,-apple-system,Segoe UI,Inter,Roboto,sans-serif; text-align:center; }
+
+      .sta-camo{
+        width:100%; height:96px;
+        background-image:url('https://images.squarespace-cdn.com/content/v1/68f9286f24ab7f4313a8fdb1/56a14432-1556-4e22-9869-d22e4ec74fe6/ChatGPT+Image+Oct+22%2C+2025%2C+04_11_48+PM.png?format=2500w');
+        background-size:cover; background-position:center; background-repeat:no-repeat;
+        border-top:1px solid var(--line); transition:height .25s ease, opacity .25s ease;
+      }
+      .sta-banner.is-scrolled .sta-camo{ height:0; opacity:0; border-top:0; overflow:hidden; }
+
+      @media (max-width:640px){
+        .sta-banner .wrap{ padding:10px var(--padX) 12px; }
+        .sta-banner .wrap::before{ height:56px; inset:4px 4px auto 4px; }
+        .sta-banner .row{ gap:10px; }
+        .sta-right{ width:100%; justify-content:space-between; }
+        .sta-actions{ flex:1 1 auto; min-width:200px; }
+        .sta-chip{ padding:8px 10px; font-size:13px; }
+        .sta-camo{ height:88px; }
+      }
+
+      /* Snipcart above everything */
+      #snipcart, .snipcart { z-index: 2147483000 !important; position: relative; }
+      html.snipcart-open .sta-banner { z-index: 1 !important; pointer-events: none; }
+      @media (max-width: 820px){ html.snipcart-open .sta-banner { position: static !important; } }
+      html.snipcart-open, html.snipcart-open body { overflow: hidden; }
+
+      .sta-banner a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+    </style>
+
+    <div class="wrap" role="presentation">
+      <div class="row">
+        <div class="sta-brand" aria-label="STA brand banner">
+          <i class="sta-mark" aria-hidden="true"></i>
+          <div class="sta-text">
+            <div class="top">STA — New York</div>
+            <div class="sub">Quality Flower • Culture & Community</div>
+          </div>
+        </div>
+
+        <div class="sta-right">
+          <nav class="sta-actions" aria-label="Quick links">
+            <!-- Use RELATIVE links so GitHub Pages repo paths don't break -->
+            <a class="sta-chip" href="./index.html"><span class="dot" aria-hidden="true"></span> Home</a>
+            <a class="sta-chip" href="./products/"><span class="dot" aria-hidden="true"></span> Products</a>
+            <a class="sta-chip" href="./merch/"><span class="dot" aria-hidden="true"></span> Merch</a>
+            <a class="sta-chip" href="./about/"><span class="dot" aria-hidden="true"></span> About</a>
+            <a class="sta-chip" href="./stores/"><span class="dot" aria-hidden="true"></span> Store Locator</a>
+          </nav>
+
+          <nav class="sta-icons" aria-label="Social and cart">
+            <a class="sta-iconbtn" href="https://instagram.com/yourhandle" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/>
+                <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+                <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+              </svg>
+            </a>
+
+            <a class="sta-iconbtn" href="https://x.com/yourhandle" target="_blank" rel="noopener" aria-label="Twitter (X)">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 4l7.5 8.3L4.7 20h2.1l6.1-6.6 5 6.6H20l-7-9.2L19.3 4h-2.1l-5.6 6.1L7 4H4z" fill="currentColor"/>
+              </svg>
+            </a>
+
+            <a class="sta-iconbtn sta-cart" href="#" data-action="open-cart" aria-label="Cart">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L20 8H7.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="10" cy="20" r="1.6" fill="currentColor"/>
+                <circle cx="17" cy="20" r="1.6" fill="currentColor"/>
+              </svg>
+              <span class="badge" id="staCartCount" aria-live="polite">0</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="sta-camo" aria-hidden="true"></div>
+  </section>
+
+<!-- ===== STA • About (Ultra-Scoped, Mobile-First) ===== -->
+<section id="sta-about" aria-label="About STA">
+  <style>
+    /* -------- Scope so nothing leaks out -------- */
+    #sta-about {
+      --ink:#111;
+      --dim:#5b606b;
+      --accent:#c71f2d;
+      --bg:#fdfcf9;
+      --panel:#ffffff;
+      --line:#e9e9e9;
+      --shadow:0 8px 24px rgba(0,0,0,.06);
+      --radius:16px;
+      --padX:clamp(14px,4vw,28px);
+      --padY:clamp(18px,4vw,36px);
+      --max:1200px;
+      background:var(--bg);
+      color:var(--ink);
+      font:16px/1.55 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+    }
+    #sta-about * { box-sizing:border-box; }
+    #sta-about .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:var(--padY) var(--padX);
+    }
+
+    /* -------- Headline -------- */
+    #sta-about .eyebrow{
+      display:inline-flex; gap:8px; align-items:center;
+      font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+      font-size:12px; color:var(--accent); background:#fff;
+      border:1px solid var(--line); border-radius:999px; padding:6px 10px;
+    }
+    #sta-about h2{
+      margin:12px 0 10px; font-size:clamp(24px,3.6vw,40px);
+      line-height:1.15; letter-spacing:-0.02em;
+    }
+    #sta-about .lead{
+      color:var(--dim); max-width:70ch; font-size:clamp(14px,1.6vw,18px);
+      margin-bottom:22px;
+    }
+
+    /* -------- Grid primitives -------- */
+    #sta-about .grid{ display:grid; gap:16px; }
+    @media (min-width:720px){
+      #sta-about .grid.cols-3{ grid-template-columns:repeat(3,1fr); }
+      #sta-about .grid.cols-2{ grid-template-columns:repeat(2,1fr); }
+    }
+
+    /* -------- Cards -------- */
+    #sta-about .card{
+      background:var(--panel); border:1px solid var(--line);
+      border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:16px; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #sta-about .card:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,.08); border-color:#e3e3e3; }
+
+    /* -------- Icon chip -------- */
+    #sta-about .chip{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:38px; height:38px; border-radius:12px; background:rgba(199,31,45,.08);
+      border:1px solid rgba(199,31,45,.18); margin-bottom:10px;
+    }
+    #sta-about .chip svg{ width:20px; height:20px; color:var(--accent); }
+
+    #sta-about h3{
+      font-size:18px; margin:6px 0 6px; letter-spacing:-0.01em;
+    }
+    #sta-about p{ color:var(--dim); margin:0; font-size:14px; }
+
+    /* -------- Section dividers -------- */
+    #sta-about .divider{
+      height:1px; background:linear-gradient(90deg,transparent, var(--line), transparent);
+      margin:28px 0;
+    }
+
+    /* -------- CTA row (optional links) -------- */
+    #sta-about .cta{
+      display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;
+    }
+    #sta-about .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:600; font-size:14px;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    #sta-about .btn.primary{ background:var(--accent); color:#fff; }
+    #sta-about .btn.ghost{ background:#fff; color:var(--ink); border:1px solid var(--line); }
+
+    /* -------- Compact lists inside cards -------- */
+    #sta-about ul{ padding-left:18px; margin:6px 0 0; color:var(--dim); }
+    #sta-about li{ margin:4px 0; }
+
+    /* -------- Subtle accent rule -------- */
+    #sta-about .accent-rule{
+      width:64px; height:4px; background:var(--accent);
+      border-radius:999px; margin:14px 0 6px;
+    }
+  </style>
+
+  <div class="wrap">
+    <!-- Intro -->
+    <span class="eyebrow">About STA</span>
+    <h2>Slap That Ass is culture — built in NYC, designed for the block, the stage, and everywhere in between.</h2>
+    <p class="lead">
+      We fuse style, community, and collaboration into a living movement. From bold apparel to premium STA Exotics, everything we put out is
+      crafted with intention and stamped <strong>STA Approved</strong>.
+    </p>
+
+    <!-- What We Do -->
+    <div class="divider" role="presentation"></div>
+    <div class="grid cols-3" aria-label="What we do">
+      <!-- Apparel -->
+      <article class="card" aria-label="Lifestyle Apparel">
+        <div class="chip" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20v-6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v6"/>
+            <path d="M8 10V7a4 4 0 1 1 8 0v3"/>
+          </svg>
+        </div>
+        <h3>Lifestyle Apparel</h3>
+        <div class="accent-rule"></div>
+        <p>Hats, hoodies, tees, and custom stickers that rep the movement with NYC grit and clean design.</p>
+        <ul>
+          <li>Bold graphics, neutral cream &amp; STA red</li>
+          <li>Built to perform on stage &amp; street</li>
+        </ul>
+        <div class="cta">
+          <a class="btn primary" href="./merch.html" aria-label="Shop apparel">Shop Apparel</a>
+        </div>
+      </article>
+
+      <!-- Community & Events -->
+      <article class="card" aria-label="Community and Events">
+        <div class="chip" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9.5 16l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Community &amp; Events</h3>
+        <div class="accent-rule"></div>
+        <p>Pop-ups, showcases, and activations that amplify local voices and keep the city pulsing.</p>
+        <ul>
+          <li>NYC pop-ups &amp; collab drops</li>
+          <li>Artist showcases &amp; brand activations</li>
+        </ul>
+        <div class="cta">
+          <a class="btn primary" href="./events.html" aria-label="See upcoming events">Upcoming Events</a>
+          <a class="btn ghost" href="./contact.html" aria-label="Partner with STA">Partner with Us</a>
+        </div>
+      </article>
+
+      <!-- Collaborations -->
+      <article class="card" aria-label="Collaborations">
+        <div class="chip" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 11l4 4 4-4"/><path d="M2 12a10 10 0 1 0 20 0"/><path d="M12 2v4M4.9 4.9l2.8 2.8M19.1 4.9l-2.8 2.8"/>
+          </svg>
+        </div>
+        <h3>Collaborations</h3>
+        <div class="accent-rule"></div>
+        <p>Working with artists, DJs, and cultural icons to keep the streets and the brand connected.</p>
+        <ul>
+          <li>Limited runs &amp; capsule drops</li>
+          <li>Cross-discipline creative builds</li>
+        </ul>
+        <div class="cta">
+          <a class="btn primary" href="./collaborations.html" aria-label="Explore collaborations">Explore Collabs</a>
+          <a class="btn ghost" href="./contact.html" aria-label="Pitch a collaboration">Pitch a Collab</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- STA Exotics -->
+    <div class="divider" role="presentation"></div>
+    <h3 style="margin:0 0 6px">STA Exotics</h3>
+    <p class="lead" style="margin-top:4px">
+      Hand-crafted, smooth, and potent — curated in <strong>Indica</strong>, <strong>Sativa</strong>, and <strong>Hybrid</strong> options. Always STA Approved.
+    </p>
+    <div class="grid cols-2" aria-label="STA Exotics products">
+      <!-- Pre-Rolls -->
+      <article class="card" aria-label="Pre-rolls">
+        <div class="chip" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12c8-6 10 6 18 0"/><path d="M21 12l-3 3M21 12l-3-3"/>
+          </svg>
+        </div>
+        <h3>Pre-Rolls</h3>
+        <div class="accent-rule"></div>
+        <p>Hand-crafted ceramic-tipped singles and Donkey Walker packs for a clean, reliable burn.</p>
+        <ul>
+          <li>Ceramic-tipped singles</li>
+          <li>Donkey Walker multi-packs</li>
+        </ul>
+        <div class="cta">
+          <a class="btn primary" href="./products.html" aria-label="Shop pre-rolls">Shop Pre-Rolls</a>
+        </div>
+      </article>
+
+      <!-- Flower -->
+      <article class="card" aria-label="Premium Flower">
+        <div class="chip" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s-3-3-3-6a3 3 0 0 1 6 0c0 3-3 6-3 6Z"/>
+            <path d="M6 9a3 3 0 0 1 6 0 3 3 0 0 1-6 0Zm6 0a3 3 0 0 1 6 0 3 3 0 0 1-6 0Z"/>
+          </svg>
+        </div>
+        <h3>Premium Flower</h3>
+        <div class="accent-rule"></div>
+        <p>Potent, smooth strains across Indica, Sativa, and Hybrid — curated for quality and consistency.</p>
+        <ul>
+          <li>Fresh, tested, STA Approved</li>
+          <li>Indoor &amp; exotic selections</li>
+        </ul>
+        <div class="cta">
+          <a class="btn primary" href="./products.html" aria-label="Shop flower">Shop Flower</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ====================== Snipcart Root (so cart works on About too) ====================== -->
+<!-- IMPORTANT: put your API key on ONE line (no spaces/newlines). -->
+<div hidden id="snipcart" data-api-key="YOUR_SNIPCART_API_KEY"></div>
+<script defer src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
+
+
+
+<script>
+(function(){
+  function badgeEl(){ return document.getElementById('staCartCount'); }
+
+  document.addEventListener('click', function(e){
+    var open = e.target.closest && e.target.closest('[data-action="open-cart"]');
+    if(!open) return;
+    if(!(window.Snipcart && Snipcart.api)) return;
+    e.preventDefault();
+    Snipcart.api.theme.cart.open();
+  });
+
+  document.addEventListener('snipcart.cart.updated', function(e){
+    var n = (e && e.detail && e.detail.cart && e.detail.cart.items) ? e.detail.cart.items.count : 0;
+    var b = badgeEl();
+    if(b) b.textContent = String(n || 0);
+  });
+
+  document.addEventListener('snipcart.ready', function(){
+    try{
+      Snipcart.api.cart.get().then(function(c){
+        var n = (c && c.items) ? c.items.count : 0;
+        var b = badgeEl();
+        if(b) b.textContent = String(n || 0);
+      });
+    }catch(_e){}
+  });
+})();
+</script>
+
+
+</body>
+</html>
