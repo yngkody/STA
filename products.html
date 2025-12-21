@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STA — New York</title>
+  <meta name="description" content="STA — New York. Quality Flower • Culture & Community." />
+
+  <!-- Snipcart (required once) -->
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
+
+  <style>
+    /* Base */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif; color: #111; background: #fdfcf9; }
+    a { color: inherit; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ====================== STA HEADER (embedded) ====================== -->
+  <section class="sta-banner is-top" role="contentinfo" aria-label="Site banner">
+    <style>
+      :root{
+        --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9;
+        --panel:#fff; --line:#e6e6e6; --shadow:0 12px 34px rgba(16,24,40,.10);
+        --cap:#ffffff; --max:1200px; --padX:clamp(12px,3.4vw,24px); --padY:clamp(10px,1.8vw,14px);
+      }
+
+      .sta-banner{
+        font:15px/1.45 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+        color:var(--ink); background:var(--bg); width:100%;
+        border-bottom:1px solid var(--line);
+        position:sticky; top:0; z-index:9999;
+        backdrop-filter:saturate(1.1);
+        overflow:visible;
+      }
+      .sta-banner .wrap{ max-width:var(--max); margin:0 auto; padding:var(--padY) var(--padX); position:relative; }
+      .sta-banner .wrap::before{
+        content:""; position:absolute; inset:4px 6px auto 6px; height:60px;
+        background:linear-gradient(180deg,#fff,#fafafa); opacity:.55; pointer-events:none; border-radius:14px; box-shadow:var(--shadow);
+      }
+      .sta-banner .row{ position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+      .sta-brand{ display:flex; align-items:center; gap:8px; min-width:0; background:var(--cap);
+        border:1px solid var(--line); border-radius:999px; padding:8px 12px; box-shadow:0 8px 22px rgba(0,0,0,.04);}
+      .sta-mark{ width:32px; height:32px; border-radius:50%; background:
+        radial-gradient(closest-side,#fff 0 62%,transparent 63%),
+        conic-gradient(var(--accent),var(--accent)); box-shadow:inset 0 0 0 1px rgba(0,0,0,.06); position:relative; flex:0 0 32px;}
+      .sta-mark::after{ content:"STA"; position:absolute; inset:0; display:grid; place-items:center;
+        font:700 10px/1 system-ui,-apple-system,"Segoe UI",Inter,sans-serif; color:#111; letter-spacing:.6px; mix-blend-mode:screen; opacity:.95; }
+      .sta-text{ display:flex; flex-direction:column; min-width:0; }
+      .sta-text .top{ font-weight:800; letter-spacing:.2px; font-size:14px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .sta-text .sub{ color:var(--dim); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+      .sta-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-left:auto; }
+      .sta-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+      .sta-chip{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+        background:var(--cap); border:1px solid var(--line); text-decoration:none; color:var(--ink);
+        transition:transform .12s ease, box-shadow .12s ease; font-weight:700; font-size:14px; }
+      .sta-chip:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
+      .sta-chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 2px #fff inset; }
+
+      .sta-icons{ display:flex; gap:8px; }
+      .sta-iconbtn{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px;
+        background:var(--cap); border:1px solid var(--line); text-decoration:none; color:var(--ink);
+        transition:transform .12s ease, box-shadow .12s ease; cursor:pointer; }
+      .sta-iconbtn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
+      .sta-iconbtn svg{ width:18px; height:18px; display:block; }
+      .sta-cart{ position:relative; }
+      .sta-cart .badge{ position:absolute; top:-6px; right:-6px; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:var(--accent); color:#fff; font:800 10px/16px system-ui,-apple-system,Segoe UI,Inter,Roboto,sans-serif; text-align:center; }
+
+      .sta-camo{
+        width:100%; height:96px;
+        background-image:url('https://images.squarespace-cdn.com/content/v1/68f9286f24ab7f4313a8fdb1/56a14432-1556-4e22-9869-d22e4ec74fe6/ChatGPT+Image+Oct+22%2C+2025%2C+04_11_48+PM.png?format=2500w');
+        background-size:cover; background-position:center; background-repeat:no-repeat;
+        border-top:1px solid var(--line); transition:height .25s ease, opacity .25s ease;
+      }
+      .sta-banner.is-scrolled .sta-camo{ height:0; opacity:0; border-top:0; overflow:hidden; }
+
+      @media (max-width:640px){
+        .sta-banner .wrap{ padding:10px var(--padX) 12px; }
+        .sta-banner .wrap::before{ height:56px; inset:4px 4px auto 4px; }
+        .sta-banner .row{ gap:10px; }
+        .sta-right{ width:100%; justify-content:space-between; }
+        .sta-actions{ flex:1 1 auto; min-width:200px; }
+        .sta-chip{ padding:8px 10px; font-size:13px; }
+        .sta-camo{ height:88px; }
+      }
+
+      /* Snipcart above everything */
+      #snipcart, .snipcart { z-index: 2147483000 !important; position: relative; }
+      html.snipcart-open .sta-banner { z-index: 1 !important; pointer-events: none; }
+      @media (max-width: 820px){ html.snipcart-open .sta-banner { position: static !important; } }
+      html.snipcart-open, html.snipcart-open body { overflow: hidden; }
+
+      .sta-banner a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+    </style>
+
+    <div class="wrap" role="presentation">
+      <div class="row">
+        <div class="sta-brand" aria-label="STA brand banner">
+          <i class="sta-mark" aria-hidden="true"></i>
+          <div class="sta-text">
+            <div class="top">STA — New York</div>
+            <div class="sub">Quality Flower • Culture & Community</div>
+          </div>
+        </div>
+
+        <div class="sta-right">
+          <nav class="sta-actions" aria-label="Quick links">
+            <!-- Use RELATIVE links so GitHub Pages repo paths don't break -->
+            <a class="sta-chip" href="./"><span class="dot" aria-hidden="true"></span> Home</a>
+            <a class="sta-chip" href="./products/"><span class="dot" aria-hidden="true"></span> Products</a>
+            <a class="sta-chip" href="./merch/"><span class="dot" aria-hidden="true"></span> Merch</a>
+            <a class="sta-chip" href="./about/"><span class="dot" aria-hidden="true"></span> About</a>
+            <a class="sta-chip" href="./stores/"><span class="dot" aria-hidden="true"></span> Store Locator</a>
+          </nav>
+
+          <nav class="sta-icons" aria-label="Social and cart">
+            <a class="sta-iconbtn" href="https://instagram.com/yourhandle" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/>
+                <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+                <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+              </svg>
+            </a>
+
+            <a class="sta-iconbtn" href="https://x.com/yourhandle" target="_blank" rel="noopener" aria-label="Twitter (X)">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 4l7.5 8.3L4.7 20h2.1l6.1-6.6 5 6.6H20l-7-9.2L19.3 4h-2.1l-5.6 6.1L7 4H4z" fill="currentColor"/>
+              </svg>
+            </a>
+
+            <a class="sta-iconbtn sta-cart" href="#" data-action="open-cart" aria-label="Cart">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L20 8H7.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="10" cy="20" r="1.6" fill="currentColor"/>
+                <circle cx="17" cy="20" r="1.6" fill="currentColor"/>
+              </svg>
+              <span class="badge" id="staCartCount" aria-live="polite">0</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="sta-camo" aria-hidden="true"></div>
+  </section>
+  <!-- ====================== /STA HEADER ====================== -->
+
+  <main>
+
+    <!-- ===== STA • Scroll-Safe Clean Version (ported from your Squarespace snippet) ===== -->
+    <section id="sta-root-nyc" aria-label="STA Section">
+      <style>
+        /* ---------- Root Scope ---------- */
+        #sta-root-nyc {
+          --sta-ink:#111;
+          --sta-dim:#5b606b;
+          --sta-accent:#c71f2d;
+          --sta-bg:#fdfcf9;
+          --sta-panel:#fff;
+          --sta-line:#e9e9e9;
+          --sta-shadow:0 8px 24px rgba(0,0,0,.06);
+
+          background:var(--sta-bg);
+          color:var(--sta-ink);
+          font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+
+          position:relative;
+          overflow:visible;
+          isolation:auto;
+          z-index:auto;
+        }
+        #sta-root-nyc * { box-sizing:border-box; }
+        #sta-root-nyc .sta-wrap {
+          width:100%;
+          max-width:1200px;
+          margin-inline:auto;
+          padding-inline:clamp(16px,4vw,32px);
+        }
+
+        /* ---------- HERO ---------- */
+        #sta-root-nyc .sta-hero {
+          min-height:60svh;
+          display:grid;
+          place-items:center;
+          text-align:center;
+          padding-block:clamp(56px,10vw,120px);
+          background:var(--sta-bg);
+        }
+        #sta-root-nyc .hero-title {
+          font-size:clamp(42px,9vw,120px);
+          font-weight:800;
+          letter-spacing:-.02em;
+          margin:0 0 .45rem;
+        }
+        #sta-root-nyc .hero-title .arrow { color:var(--sta-accent); }
+        #sta-root-nyc .subtitle {
+          font-size:clamp(15px,2.3vw,24px);
+          font-weight:700;
+          color:var(--sta-accent);
+          margin:0 0 .45rem;
+        }
+        #sta-root-nyc .tagline {
+          color:var(--sta-dim);
+          font-size:clamp(14px,1.7vw,18px);
+          line-height:1.65;
+          max-width:68ch;
+          margin:0 auto 1.1rem;
+        }
+        #sta-root-nyc .sta-btn {
+          display:inline-block;
+          padding:.95rem 1.6rem;
+          border-radius:999px;
+          font-weight:800;
+          letter-spacing:.02em;
+          text-decoration:none;
+          background:var(--sta-accent);
+          color:#fff;
+          box-shadow:0 8px 24px rgba(199,31,45,.25);
+          transition:transform .2s, box-shadow .2s;
+        }
+        #sta-root-nyc .sta-btn:hover {
+          transform:translateY(-2px);
+          box-shadow:0 12px 28px rgba(199,31,45,.32);
+        }
+
+        /* ---------- SHOP ---------- */
+        #sta-root-nyc .sta-section {
+          background:var(--sta-panel);
+          padding-block:clamp(48px,8vw,96px);
+          border-top:1px solid var(--sta-line);
+          position:relative;
+          z-index:2;
+        }
+        #sta-root-nyc .sta-grid {
+          display:grid;
+          gap:28px;
+          grid-template-columns:1fr;
+          max-width:900px;
+          margin-inline:auto;
+        }
+        @media (min-width:460px) {
+          #sta-root-nyc .sta-grid { grid-template-columns:1fr 1fr; gap:40px; }
+        }
+        #sta-root-nyc .sta-card {
+          display:flex;
+          flex-direction:column;
+          background:var(--sta-panel);
+          border:1px solid var(--sta-line);
+          border-radius:18px;
+          overflow:hidden;
+          box-shadow:var(--sta-shadow);
+          transition:transform .2s, box-shadow .2s;
+        }
+        #sta-root-nyc .sta-card:hover {
+          transform:translateY(-4px);
+          box-shadow:0 12px 30px rgba(0,0,0,.08);
+        }
+        #sta-root-nyc .sta-card-media {
+          --img:url('');
+          --focus:50% 50%;
+          width:100%;
+          aspect-ratio:3/4;
+          background:#f7f7f7;
+          position:relative;
+          overflow:hidden;
+        }
+        #sta-root-nyc .sta-card-media::before {
+          content:"";
+          position:absolute;
+          inset:0;
+          background-image:var(--img);
+          background-size:cover!important;
+          background-position:var(--focus)!important;
+          background-repeat:no-repeat!important;
+        }
+        #sta-root-nyc .sta-card-body { padding:24px; background:var(--sta-panel); }
+        #sta-root-nyc .sta-card-body h2 { margin:.1rem 0 .5rem; font-size:clamp(20px,1.8vw,24px); }
+        #sta-root-nyc .sta-card-body p { color:var(--sta-dim); font-size:clamp(14px,1.2vw,16px); line-height:1.6; margin:0 0 1rem; }
+
+        #sta-root-nyc .btn-row { display:flex; flex-wrap:wrap; gap:10px; }
+        #sta-root-nyc .btn-chip {
+          display:inline-block;
+          padding:.75rem 1.1rem;
+          border-radius:999px;
+          font-weight:700;
+          border:1px solid var(--sta-line);
+          background:#fafafa;
+          color:var(--sta-ink);
+          text-decoration:none;
+          transition:transform .15s, background .15s;
+        }
+        #sta-root-nyc .btn-chip:hover { transform:translateY(-1px); background:#f2f2f2; }
+        #sta-root-nyc .btn-chip.accent { background:var(--sta-accent); color:#fff; border-color:var(--sta-accent); }
+
+        /* ---------- BRAND ---------- */
+        #sta-root-nyc .sta-brand {
+          position:relative;
+          text-align:center;
+          padding-top:clamp(80px,10vw,120px);
+          padding-bottom:clamp(60px,8vw,96px);
+          background:var(--sta-panel);
+          border-top:1px solid var(--sta-line);
+          z-index:1;
+        }
+        #sta-root-nyc .brand-card {
+          position:relative;
+          background:var(--sta-panel);
+          border:1px solid var(--sta-line);
+          border-radius:28px;
+          box-shadow:0 8px 30px rgba(0,0,0,.08);
+          padding:clamp(48px,6vw,72px) clamp(24px,5vw,60px);
+          max-width:900px;
+          margin-inline:auto;
+        }
+        #sta-root-nyc .sta-brand h2 { font-size:clamp(22px,2.2vw,28px); margin:0 0 .6rem; }
+        #sta-root-nyc .sta-brand p { color:var(--sta-dim); font-size:clamp(14px,1.2vw,16px); line-height:1.65; max-width:68ch; margin:0 auto 1.4rem; }
+        #sta-root-nyc .sta-brand .cta {
+          display:inline-block;
+          padding:.9rem 1.5rem;
+          border-radius:999px;
+          font-weight:800;
+          background:var(--sta-accent);
+          color:#fff;
+          text-decoration:none;
+          box-shadow:0 8px 24px rgba(199,31,45,.25);
+          transition:transform .2s, box-shadow .2s;
+        }
+        #sta-root-nyc .sta-brand .cta:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(199,31,45,.32); }
+      </style>
+
+      <!-- HERO -->
+      <header class="sta-hero">
+        <div class="sta-wrap">
+          <h1 class="hero-title">STA <span class="arrow">→</span> NY</h1>
+          <p class="subtitle">NYC • Cannabis Culture</p>
+          <p class="tagline">Premium flower, ceramic-tipped pre-rolls, and lifestyle merch — crafted for clarity, culture, and community.</p>
+          <a href="./merch/" class="sta-btn">Shop Now</a>
+        </div>
+      </header>
+
+      <!-- SHOP -->
+      <section class="sta-section" id="shop">
+        <div class="sta-wrap">
+          <div class="sta-grid">
+            <article class="sta-card" id="product">
+              <div class="sta-card-media"
+                style="--img:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w');">
+              </div>
+              <div class="sta-card-body">
+                <h2>Products</h2>
+                <p>Top-tier flower and pre-rolls — balanced blends for creativity, calm, and connection.</p>
+                <div class="btn-row">
+                  <a class="btn-chip accent" href="./products/">View Products</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="sta-card" id="merch">
+              <div class="sta-card-media"
+                style="--img:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/6af53b52-4762-4f1b-a86d-91f78c10758c/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=300w');">
+              </div>
+              <div class="sta-card-body">
+                <h2>Merchandise</h2>
+                <p>Minimal, urban, and rooted in NYC — premium hoodies, tees, and hats built for the modern creative.</p>
+                <div class="btn-row">
+                  <a class="btn-chip accent" href="./merch/">Shop Merch</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- BRAND -->
+      <section class="sta-brand" id="brand">
+        <div class="sta-wrap">
+          <div class="brand-card">
+            <h2>The Brand & Culture</h2>
+            <p>Street-born, design-driven, and community-rooted. STA brings clarity and confidence to NYC’s cannabis scene.</p>
+            <a href="#shop" class="cta">Shop Now</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- ====================== Snipcart Root + Script (embedded) ====================== -->
+  <!-- IMPORTANT: Put your API key on ONE line (no spaces/newlines). -->
+  <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_API_KEY"></div>
+
+  <script defer src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
+
+  <script>
+    (function(){
+      // Collapse camo strip on scroll
+      const banner = document.querySelector('.sta-banner');
+      const onScroll = () => {
+        if(!banner) return;
+        if(window.scrollY > 30) banner.classList.add('is-scrolled');
+        else banner.classList.remove('is-scrolled');
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Open cart from header icon
+      document.addEventListener('click', (e) => {
+        const open = e.target.closest('[data-action="open-cart"]');
+        if(!open) return;
+        e.preventDefault();
+        if(window.Snipcart?.api) window.Snipcart.api.theme.cart.open();
+      });
+
+      // Badge updates
+      const badge = document.getElementById('staCartCount');
+      function setBadge(n){ if(badge) badge.textContent = String(n || 0); }
+
+      function bind(){
+        if(!window.Snipcart?.api) return false;
+        const api = window.Snipcart.api;
+
+        api.cart.get().then(c => setBadge(c?.items?.count || 0));
+
+        document.addEventListener('snipcart.cart.updated', (e) => {
+          setBadge(e?.detail?.cart?.items?.count || 0);
+        });
+
+        document.addEventListener('snipcart.cart.opened',        ()=>document.documentElement.classList.add('snipcart-open'));
+        document.addEventListener('snipcart.cart.closed',        ()=>document.documentElement.classList.remove('snipcart-open'));
+        document.addEventListener('snipcart.checkout.started',   ()=>document.documentElement.classList.add('snipcart-open'));
+        document.addEventListener('snipcart.checkout.confirmed', ()=>document.documentElement.classList.remove('snipcart-open'));
+        return true;
+      }
+
+      if(!bind()){
+        let tries = 0;
+        const iv = setInterval(() => {
+          tries++;
+          if(bind() || tries > 80) clearInterval(iv);
+        }, 200);
+      }
+    })();
+  </script>
+</body>
+</html>
+<!-- ============== STA • Flower + Pre-Roll Catalog (No Checkout • OCM-Compliant) ============== -->
+<section id="sta-flower" class="sta-catalog" aria-label="STA Flower Catalog">
+  <style>
+    /* ---------- Scope + Tokens ---------- */
+    #sta-flower.sta-catalog{
+      --ink:#111; --dim:#5b606b; --accent:#c71f2d;
+      --bg:#fdfcf9; --panel:#ffffff; --line:#e9e9e9;
+      --shadow:0 8px 24px rgba(0,0,0,.06); --shadowH:0 14px 34px rgba(0,0,0,.10);
+      --radius:14px; --pad:clamp(10px,2vw,16px);
+      font:14px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      color:var(--ink); background:transparent;
+    }
+    #sta-flower.sta-catalog *{box-sizing:border-box}
+
+    /* ---------- Width ---------- */
+    #sta-flower .wrap{
+      max-width:min(1040px, 94vw);
+      margin:clamp(14px,3vw,28px) auto;
+      padding:0 8px;
+    }
+
+    /* ---------- Header (chips first on mobile) ---------- */
+    #sta-flower .hero{
+      display:grid; gap:10px;
+      background:linear-gradient(180deg,#ffffff 0%, var(--bg) 100%);
+      border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow);
+      padding:clamp(12px,2vw,16px); margin-bottom:16px;
+    }
+    /* Chips row – horizontal scroll on mobile */
+    #sta-flower .chips{
+      order:0;
+      display:flex; gap:8px;
+      overflow-x:auto; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch;
+      padding-bottom:4px;
+      scrollbar-width:none;
+    }
+    #sta-flower .chips::-webkit-scrollbar{ display:none }
+    #sta-flower .chip{
+      flex:0 0 auto;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 14px; border-radius:999px; cursor:pointer; user-select:none;
+      font-weight:700; color:#2a2d33; background:#fff; border:1px solid var(--line);
+      transition:background .15s ease, border-color .15s ease;
+    }
+    #sta-flower .chip[data-active="true"]{ background:#fff8f6; border-color:#e7d3d1 }
+
+    /* Title/sub (appear after chips on mobile) */
+    #sta-flower .title{margin:0; font-weight:800; letter-spacing:-.01em; font-size:clamp(18px,2vw,22px)}
+    #sta-flower .sub{margin:.2rem 0 0; color:var(--dim); font-size:13px}
+
+    /* On wider screens, place title/sub left, chips right */
+    @media (min-width:720px){
+      #sta-flower .hero{
+        grid-template-columns:1fr auto; align-items:end;
+      }
+      #sta-flower .chips{ order:0; justify-self:end; max-width:520px }
+    }
+
+    /* ---------- (Optional) Toolbar ---------- */
+    #sta-flower .toolbar{
+      display:flex; justify-content:flex-end; align-items:center; gap:10px;
+      margin:10px 0 8px;
+    }
+    #sta-flower .select{
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      padding:8px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; color:#2a2d33; font-weight:600;
+    }
+
+    /* ---------- Grid ---------- */
+    #sta-flower .grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+
+    /* ---------- Product Card ---------- */
+    #sta-flower .card{
+      display:flex; flex-direction:column; background:var(--panel);
+      border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+      overflow:hidden; transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+    }
+    #sta-flower .card:hover{ box-shadow:var(--shadowH); transform:translateY(-1px); border-color:#dedede }
+
+    #sta-flower .media{
+      position:relative;
+      background:#f4f5f7;
+      overflow:hidden;
+      height:auto;          /* let the image define height */
+    }
+    #sta-flower .thumb{
+      width:100%;
+      height:auto;          /* keep natural proportions */
+      object-fit:cover;
+      display:block;
+    }
+
+    #sta-flower .pillbar{
+      position:absolute; left:8px; top:8px; display:flex; gap:6px; flex-wrap:wrap; z-index:2;
+    }
+    #sta-flower .pill{
+      background:rgba(255,255,255,.86); border:1px solid rgba(0,0,0,.06);
+      padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800;
+      backdrop-filter:saturate(120%) blur(2px);
+    }
+
+    #sta-flower .body{ padding:12px }
+    #sta-flower .name{
+      margin:0 0 6px; font-weight:850; letter-spacing:-.01em; font-size:15px;
+      display:flex; align-items:center; gap:8px;
+    }
+    #sta-flower .badge{
+      font-size:11px; font-weight:800; color:#7a2b2b; background:#fff1ef; border:1px solid #f5d4d0;
+      padding:4px 8px; border-radius:999px;
+    }
+
+    #sta-flower .tags{display:flex; gap:6px; flex-wrap:nowrap; overflow:hidden}
+    #sta-flower .tag{
+      font-size:11.5px; color:#3a3f47; background:#f7f7f8; border:1px solid #ececec;
+      padding:5px 6px; border-radius:8px; white-space:nowrap;
+    }
+
+    #sta-flower .copy{
+      margin-top:8px; font-size:12.5px; color:#3d424b;
+    }
+
+    #sta-flower .actions{ display:flex; gap:8px; margin-top:10px }
+    #sta-flower .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      height:36px; padding:0 12px; border-radius:10px; font-weight:800; text-decoration:none;
+      border:1px solid #e2e3e6; background:#fff; color:#111; white-space:nowrap;
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    }
+    #sta-flower .btn:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,.08) }
+    #sta-flower .btn.primary{ background:#111; color:#fff; border-color:#111 }
+    #sta-flower .btn.accent{ background:var(--accent); color:#fff; border-color:var(--accent) }
+
+    #sta-flower details{
+      border:1px dashed #ececec; border-radius:10px; background:#fcfcfd; padding:8px 10px; margin-top:10px;
+    }
+    #sta-flower details summary{ cursor:pointer; font-weight:800; color:#23262f; list-style:none; }
+    #sta-flower details[open] summary{ margin-bottom:6px }
+    #sta-flower summary::-webkit-details-marker{ display:none }
+    #sta-flower .specs{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px }
+    @media (max-width:560px){ #sta-flower .specs{ grid-template-columns:1fr 1fr } }
+    #sta-flower .spec{ background:#ffffff; border:1px solid #eee; border-radius:8px; padding:8px }
+    #sta-flower .spec b{ display:block; font-size:12px; color:#60646b; margin-bottom:4px }
+
+    #sta-flower .note{
+      margin-top:16px; font-size:12px; color:#6a6e76; text-align:center;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      #sta-flower .card, #sta-flower .btn{ transition:none }
+    }
+  </style>
+
+  <div class="wrap">
+    <!-- Header / Filters (chips come first for mobile) -->
+    <div class="hero">
+      <div class="chips" role="tablist" aria-label="Filter strains">
+        <button class="chip" data-filter="all" data-active="true" role="tab" aria-selected="true">All</button>
+        <button class="chip" data-filter="indica" role="tab" aria-selected="false">Indica</button>
+        <button class="chip" data-filter="hybrid" role="tab" aria-selected="false">Hybrid</button>
+        <button class="chip" data-filter="sativa" role="tab" aria-selected="false">Sativa</button>
+      </div>
+      <div>
+        <h2 class="title">STA Flower + Pre-Rolls — Catalog</h2>
+        <p class="sub">Browse only — no online sales. 21+ in-store verification required.</p>
+      </div>
+    </div>
+
+    <!-- (Optional) Toolbar -->
+    <div class="toolbar" aria-hidden="true">
+      <select class="select" aria-label="Sort">
+        <option selected>Sort: Featured</option>
+        <option>Sort: A–Z</option>
+        <option>Sort: Z–A</option>
+      </select>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid" id="staGrid">
+      <!-- ========= FLOWER ========= -->
+
+      <!-- Jack Boro #5 — Sativa Flower -->
+      <article class="card" data-type="sativa">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Flower</span>
+            <span class="pill">3.5g</span>
+            <span class="pill">Uptown Energy</span>
+          </div>
+          <img class="thumb" alt="Jack Boro #5 Sativa Flower — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/7958fa7c-7a75-4e2c-a8bc-39b638a16ce5/A19B1C66-CAA9-47D4-9785-BBFB90B2DA4E.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Jack Boro #5 <span class="badge">Sativa • Electric</span></h3>
+          <div class="tags">
+            <span class="tag">Cerebral clarity</span>
+            <span class="tag">Uptown hustle</span>
+            <span class="tag">Daytime • Creative</span>
+          </div>
+          <p class="copy">
+            Jack Boro #5 is that pure uptown energy bottled in flower form. This electric Sativa fuses the cerebral
+            clarity of Jack Herer with the spicy, soaring high of Old School Haze, giving you the kind of lift that’ll
+            have you zoning out to train rhythms or sketching out your next big hustle.
+          </p>
+          <p class="copy">
+            Expect bright citrus, hints of pine, and that unmistakable NYC funk on the back end — sharp, nostalgic, and
+            bold like a fresh chopped cheese at 3AM. This one ain’t for the sleepy. It’s for the dreamers. For the
+            movers. For the borough-born and bred. Jack Boro #5 — from legacy streets to licensed shelves.
+          </p>
+          <div class="actions" aria-label="Actions for Jack Boro #5">
+            <a class="btn primary" href="/shop/jack-boro-5">View Details</a>
+            <a class="btn" href="stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Strain specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Aroma</b>
+                Bright citrus • Pine • NYC funk
+              </div>
+              <div class="spec">
+                <b>Feel</b>
+                Energetic • Cerebral • Creative
+              </div>
+              <div class="spec">
+                <b>Lineage</b>
+                Jack Herer × Old School Haze
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Sugar Runtz — Hybrid Flower -->
+      <article class="card" data-type="hybrid">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Flower</span>
+            <span class="pill">3.5g</span>
+            <span class="pill">Candy Gas</span>
+          </div>
+          <img class="thumb" alt="Sugar Runtz Hybrid Flower — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/b3ddc0cd-23cc-4a3f-87d8-c9b51ccd9b32/B477F114-38EB-4365-B290-E86E6A9AF579.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Sugar Runtz <span class="badge">Hybrid • Balanced</span></h3>
+          <div class="tags">
+            <span class="tag">Sugary trichomes</span>
+            <span class="tag">Sweet aroma</span>
+            <span class="tag">Anytime use</span>
+          </div>
+          <p class="copy">
+            Sugar Runtz is a hybrid strain that truly lives up to its name, with its sugary appearance and sweet aroma.
+            The buds are dense and covered in a thick layer of trichomes, almost as if they’ve been dusted with sugar,
+            giving them a sparkling, crystalline look.
+          </p>
+          <p class="copy">
+            Flavorful, smooth, and versatile, Sugar Runtz is built for those who want candy-like vibes with
+            functional balance — the kind of strain that plays both sides of the clock.
+          </p>
+          <div class="actions" aria-label="Actions for Sugar Runtz Flower">
+            <a class="btn primary" href="/shop/sugar-runtz">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Strain specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Aroma</b>
+                Sweet candy • Cream • Light gas
+              </div>
+              <div class="spec">
+                <b>Feel</b>
+                Balanced • Relaxed • Uplifted
+              </div>
+              <div class="spec">
+                <b>Format</b>
+                3.5g dense, sugar-frosted buds
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- New York Candy — Indica Flower -->
+      <article class="card" data-type="indica">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Flower</span>
+            <span class="pill">3.5g</span>
+            <span class="pill">NYC • Indica</span>
+          </div>
+          <img class="thumb" alt="New York Candy Indica Flower — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">New York Candy (NYC) <span class="badge">Indica • Bold</span></h3>
+          <div class="tags">
+            <span class="tag">Fruity candy gas</span>
+            <span class="tag">OG backbone</span>
+            <span class="tag">Nighttime</span>
+          </div>
+          <p class="copy">
+            New York Candy is what happens when the old heads from the block link with the new wave and build something
+            legendary. A powerful cross of Lemon Cherry Gelato and OG Kush, this Indica packs sweet street charm and
+            heavyweight flavor in one jar — smooth like a classic freestyle, but loud enough to turn heads on the F train.
+          </p>
+          <p class="copy">
+            Expect fruity candy gas on the inhale with that OG backbone that hits like hard truth from your uncle on the
+            stoop. It’s unity in a bag — bridging generations, settling debates, and making everybody vibe out to the same
+            beat. This ain’t just flower. It’s culture. NYC — bold, balanced, and built different.
+          </p>
+          <div class="actions" aria-label="Actions for New York Candy Flower">
+            <a class="btn primary" href="/shop/new-york-candy">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Strain specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Aroma</b>
+                Fruity candy • Gas • Kush
+              </div>
+              <div class="spec">
+                <b>Feel</b>
+                Heavy body • Chill • Mood-lifting
+              </div>
+              <div class="spec">
+                <b>Lineage</b>
+                Lemon Cherry Gelato × OG Kush
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ========= PRE-ROLLS — SATIVA ========= -->
+
+      <!-- Trop Cherry – 1g Ceramic Tip (Sativa) -->
+      <article class="card" data-type="sativa">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Roll</span>
+            <span class="pill">1g</span>
+            <span class="pill">Ceramic Tip</span>
+          </div>
+          <img class="thumb" alt="Trop Cherry 1g Ceramic Tip Hash-Infused Sativa Pre-Roll — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/99246852-9869-4dc6-84e2-1788c71eb9d4/79B513A5-4DD3-470F-B72A-CACEF21220BC.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Trop Cherry — 1g Ceramic Tip <span class="badge">Sativa • Hash-Infused</span></h3>
+          <div class="tags">
+            <span class="tag">Citrus zing</span>
+            <span class="tag">Smooth burn</span>
+            <span class="tag">Daytime elevation</span>
+          </div>
+          <p class="copy">
+            This single 1g ceramic tip pre-roll hits with STA precision — hash-infused and built for performance.
+            Trop Cherry (Tropicana Cookies × Cherry Cookies f3) delivers a smooth, creamy smoke with bold citrus and
+            sweet cherry gas on the nose.
+          </p>
+          <p class="copy">
+            It’s energizing, functional, and made to spark movement — perfect for daytime creatives, grinders, and city
+            runners. This isn’t your average pre-roll. It’s New York hustle in a wrap — vibrant, flavorful, and built to
+            stand out.
+          </p>
+          <div class="actions" aria-label="Actions for Trop Cherry 1g Ceramic">
+            <a class="btn primary" href="/shop/trop-cherry-1g-ceramic">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                1g ceramic tip pre-roll
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Citrus zing • Smooth burn • Daytime elevation
+              </div>
+              <div class="spec">
+                <b>Lineage</b>
+                Tropicana Cookies × Cherry Cookies f3
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Trop Cherry – 2g Wood Tip Blunt (Sativa) -->
+      <article class="card" data-type="sativa">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Roll</span>
+            <span class="pill">2g Blunt</span>
+            <span class="pill">Hash-Infused</span>
+          </div>
+<img class="thumb"
+     alt="STA 2g Wood Tip Hash-Infused Blunt"
+     src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w"
+     loading="lazy">
+
+        </div>
+        <div class="body">
+          <h3 class="name">Trop Cherry — 2g Wood Tip Blunt <span class="badge">Sativa • Statement Smoke</span></h3>
+          <div class="tags">
+            <span class="tag">Loud flavor</span>
+            <span class="tag">Extended ride</span>
+            <span class="tag">Hash-infused blunt</span>
+          </div>
+          <p class="copy">
+            When you want to be seen and heard, this is the one. Our 2g Trop Cherry hash-infused blunt comes wrapped in
+            STA’s “New York &amp; Wild” signature style with a premium wood tip.
+          </p>
+          <p class="copy">
+            The tangerine-gas-cherry profile floods the palate on every hit, while the hash infusion guarantees a
+            long-lasting, elevating ride. This is for the power players — smooth draw, massive presence, and the kind of
+            smoke session that says you’ve arrived.
+          </p>
+          <div class="actions" aria-label="Actions for Trop Cherry 2g Blunt">
+            <a class="btn primary" href="/shop/trop-cherry-2g-wood-tip">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                2g wood tip blunt
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Loud flavor • Extended ride • Statement smoke
+              </div>
+              <div class="spec">
+                <b>Profile</b>
+                Tangerine gas • Cherry • Citrus
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Trop Cherry – 2.5g Mini 5-Pack (Sativa Dogwalkers) -->
+      <article class="card" data-type="sativa">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Rolls</span>
+            <span class="pill">5 × 0.5g</span>
+            <span class="pill">Hash-Infused</span>
+          </div>
+          <img class="thumb" alt="Trop Cherry 2.5g Mini 5-Pack Hash-Infused Sativa Dogwalkers — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/d3024561-8b29-4481-aa33-e00454cd36d6/C38D6389-936D-453E-B7C0-1FF0BE4C1E75.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Trop Cherry — 2.5g Mini 5-Pack <span class="badge">Sativa • Dogwalkers</span></h3>
+          <div class="tags">
+            <span class="tag">Microdosed motivation</span>
+            <span class="tag">Pocket-sized power</span>
+            <span class="tag">On-the-go</span>
+          </div>
+          <p class="copy">
+            Our Trop Cherry dogwalkers bring the STA experience in micro-format. Each 0.5g mini pre-roll is
+            hash-infused and flavor-forward — ideal for on-the-go hits that don’t compromise on taste or potency.
+          </p>
+          <p class="copy">
+            Expect bursts of citrus, cherry, and gas in every pull, designed to fuel errands, walks, or quick midday
+            resets. Big flavor. Controlled burn. Five small escapes — all in one pocket.
+          </p>
+          <div class="actions" aria-label="Actions for Trop Cherry Dogwalkers">
+            <a class="btn primary" href="/shop/trop-cherry-25g-dogwalkers">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                5-pack of 0.5g hash-infused minis
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Microdosed motivation • Fresh flavor • Pocket-sized power
+              </div>
+              <div class="spec">
+                <b>Ideal for</b>
+                Errands • Walks • Midday resets
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ========= PRE-ROLLS — HYBRID ========= -->
+
+      <!-- Sugar Runtz – 1g Ceramic Tip (Hybrid) -->
+      <article class="card" data-type="hybrid">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Roll</span>
+            <span class="pill">1g</span>
+            <span class="pill">Ceramic Tip</span>
+          </div>
+          <img class="thumb" alt="Sugar Runtz 1g Ceramic Tip Hash-Infused Hybrid Pre-Roll — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/c7f99351-78b6-4c9f-a65e-359fa17855b8/27D02F5E-DCB0-4B16-889A-1C42752F05E2.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Sugar Runtz — 1g Ceramic Tip <span class="badge">Hybrid • Sweet Draw</span></h3>
+          <div class="tags">
+            <span class="tag">Sweet aroma</span>
+            <span class="tag">Balanced high</span>
+            <span class="tag">Smooth burn</span>
+          </div>
+          <p class="copy">
+            STA’s Sugar Runtz 1g ceramic tip pre-roll is built for those who expect flavor and function. This hybrid
+            beauty is all sparkle — frosted in thick trichomes with a sweet, candy-like aroma that leads every hit.
+          </p>
+          <p class="copy">
+            The hash infusion amplifies the experience, delivering a smooth but potent high that walks the perfect line
+            between relaxation and elevation. Great for midday vibes or nighttime unwinding, Sugar Runtz plays both sides
+            of the clock — all wrapped in STA’s premium ceramic delivery.
+          </p>
+          <div class="actions" aria-label="Actions for Sugar Runtz 1g Ceramic">
+            <a class="btn primary" href="/shop/sugar-runtz-1g-ceramic">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                1g ceramic tip pre-roll
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Sweet draw • Balanced high • Smooth burn
+              </div>
+              <div class="spec">
+                <b>Ideal for</b>
+                Midday vibes • Evening unwind
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Sugar Runtz – 2g Wood Tip Blunt (Hybrid) -->
+      <article class="card" data-type="hybrid">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Roll</span>
+            <span class="pill">2g Blunt</span>
+            <span class="pill">Hash-Infused</span>
+          </div>
+          <img class="thumb"
+     alt="STA 2g Wood Tip Hash-Infused Blunt"
+     src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w"
+     loading="lazy">
+
+        </div>
+        <div class="body">
+          <h3 class="name">Sugar Runtz — 2g Wood Tip Blunt <span class="badge">Hybrid • Heavy Pull</span></h3>
+          <div class="tags">
+            <span class="tag">Gassy sweetness</span>
+            <span class="tag">Long session</span>
+            <span class="tag">Flex piece</span>
+          </div>
+          <p class="copy">
+            Level up your session with the 2g hash-infused Sugar Runtz blunt, finished with our signature STA wood tip.
+            The smoke is creamy and candy-forward, backed by rich gas and a deep body high that settles in slow and strong.
+          </p>
+          <p class="copy">
+            This is a true flex piece — built for the bold — and perfect for sharing or stretching out your solo vibe.
+            When you want sweet and strong in one ride, this is it.
+          </p>
+          <div class="actions" aria-label="Actions for Sugar Runtz 2g Blunt">
+            <a class="btn primary" href="/shop/sugar-runtz-2g-wood-tip">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                2g wood tip blunt
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Gassy sweetness • Heavy pull • Long session
+              </div>
+              <div class="spec">
+                <b>Ideal for</b>
+                Sharing • Long solo rides
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Sugar Runtz – 2.5g Mini 5-Pack (Hybrid Dogwalkers) -->
+      <article class="card" data-type="hybrid">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Rolls</span>
+            <span class="pill">5 × 0.5g</span>
+            <span class="pill">Hash-Infused</span>
+          </div>
+          <img class="thumb" alt="Sugar Runtz 2.5g Mini 5-Pack Hash-Infused Hybrid Dogwalkers — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4809eb4b-d4cf-4f97-a0ad-b8b15fb2ef44/324E4DF3-8724-4381-A440-9B815AD762C3.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Sugar Runtz — 2.5g Mini 5-Pack <span class="badge">Hybrid • Dogwalkers</span></h3>
+          <div class="tags">
+            <span class="tag">Candy gas</span>
+            <span class="tag">Compact potency</span>
+            <span class="tag">Everyday fire</span>
+          </div>
+          <p class="copy">
+            With five 0.5g minis, the Sugar Runtz dogwalker pack brings smooth, hash-infused power in a pocket-sized
+            punch. The buds are sugar-dusted and sweet, burning clean with a flavorful smoke and balanced effect — ideal
+            for those who want to stay lit without going overboard.
+          </p>
+          <p class="copy">
+            Pop one, share a few, or take all five for the ride — this is flavor on your own terms, STA style.
+          </p>
+          <div class="actions" aria-label="Actions for Sugar Runtz Dogwalkers">
+            <a class="btn primary" href="/shop/sugar-runtz-25g-dogwalkers">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                5-pack of 0.5g hash-infused minis
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Candy gas • Compact potency • Everyday fire
+              </div>
+              <div class="spec">
+                <b>Ideal for</b>
+                Controlled sessions • Sharing
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ========= PRE-ROLLS — INDICA ========= -->
+
+      <!-- Holy Grail OG – 1g Ceramic Tip (Indica) -->
+      <article class="card" data-type="indica">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Roll</span>
+            <span class="pill">1g</span>
+            <span class="pill">Ceramic Tip</span>
+          </div>
+          <img class="thumb" alt="Holy Grail OG 1g Ceramic Tip Hash-Infused Indica Pre-Roll — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/3b6e1ae7-b501-4ba7-921d-103265ffc850/E451F132-8E81-47EF-A4A1-DAA976AE2416.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Holy Grail OG — 1g Ceramic Tip <span class="badge">Indica • Exotics</span></h3>
+          <div class="tags">
+            <span class="tag">Smooth</span>
+            <span class="tag">Potent</span>
+            <span class="tag">Relaxed focus</span>
+          </div>
+          <p class="copy">
+            Hand-selected for STA Exotics, this 1g hash-infused ceramic tip hits like a ritual. Bred from Kosher Kush ×
+            OG #18, Holy Grail OG delivers a creamy, gassy smoke with layers of earthy pine and citrus.
+          </p>
+          <p class="copy">
+            The high is heavy but purposeful — perfect for winding down without losing clarity. Ideal for nighttime
+            thinkers, creative chillers, or anyone who needs a little peace with punch. It’s legacy New York in every pull.
+          </p>
+          <div class="actions" aria-label="Actions for Holy Grail OG 1g Ceramic">
+            <a class="btn primary" href="/shop/holy-grail-og-1g-ceramic">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                1g ceramic tip pre-roll
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Smooth • Potent • Relaxed focus
+              </div>
+              <div class="spec">
+                <b>Lineage</b>
+                Kosher Kush × OG #18
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Holy Grail OG – 2g Wood Tip Blunt (Indica) -->
+      <article class="card" data-type="indica">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Roll</span>
+            <span class="pill">2g Blunt</span>
+            <span class="pill">Hash-Infused</span>
+          </div>
+          <img class="thumb"
+     alt="STA 2g Wood Tip Hash-Infused Blunt"
+     src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w"
+     loading="lazy">
+
+        </div>
+        <div class="body">
+          <h3 class="name">Holy Grail OG — 2g Wood Tip Blunt <span class="badge">Indica • Nightcap</span></h3>
+          <div class="tags">
+            <span class="tag">Deep body</span>
+            <span class="tag">Rich flavor</span>
+            <span class="tag">End-of-day unwind</span>
+          </div>
+          <p class="copy">
+            Wrapped in STA’s signature wood tip blunt, the 2g Holy Grail OG experience is nothing short of ceremonial.
+            Hash-infused for extra kick, it blends piney kush gas with sweet herbal undertones and a full-bodied smoke that
+            hits heavy.
+          </p>
+          <p class="copy">
+            This is your “clock-out” strain — perfect for decompressing, binge-watching, or staring at the ceiling with
+            intention. A real New York OG’s nightcap.
+          </p>
+          <div class="actions" aria-label="Actions for Holy Grail OG 2g Blunt">
+            <a class="btn primary" href="/shop/holy-grail-og-2g-wood-tip">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                2g wood tip blunt
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Deep body • Rich flavor • End-of-day unwind
+              </div>
+              <div class="spec">
+                <b>Profile</b>
+                Piney kush gas • Sweet herb
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- Holy Grail OG – 2.5g Mini 5-Pack (Indica Dogwalkers) -->
+      <article class="card" data-type="indica">
+        <div class="media">
+          <div class="pillbar">
+            <span class="pill">Pre-Rolls</span>
+            <span class="pill">5 × 0.5g</span>
+            <span class="pill">Hash-Infused</span>
+          </div>
+          <img class="thumb" alt="Holy Grail OG 2.5g Mini 5-Pack Hash-Infused Indica Dogwalkers — STA"
+               src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/3df38a2a-09d3-4bf6-b294-e3507e9a1ca1/06C73B0D-07CE-47E1-860B-E46669E59D93.jpeg?format=500w"
+               loading="lazy">
+        </div>
+        <div class="body">
+          <h3 class="name">Holy Grail OG — 2.5g Mini 5-Pack <span class="badge">Indica • Dogwalkers</span></h3>
+          <div class="tags">
+            <span class="tag">Calm</span>
+            <span class="tag">Clean burn</span>
+            <span class="tag">Kushy bliss</span>
+          </div>
+          <p class="copy">
+            These five 0.5g mini joints pack the essence of Holy Grail OG into a format you can light up on the go.
+            Hash-infused and terp-rich, each mini delivers a dose of mellowed-out relaxation wrapped in kushy, gassy flavor.
+          </p>
+          <p class="copy">
+            It’s the kind of smoke that takes the edge off without taking you out. A pocket-friendly blessing — from STA
+            with love.
+          </p>
+          <div class="actions" aria-label="Actions for Holy Grail OG Dogwalkers">
+            <a class="btn primary" href="/shop/holy-grail-og-25g-dogwalkers">View Details</a>
+            <a class="btn" href="/stores">Find In-Store</a>
+          </div>
+          <details>
+            <summary>Format + specs</summary>
+            <div class="specs">
+              <div class="spec">
+                <b>Format</b>
+                5-pack of 0.5g hash-infused minis
+              </div>
+              <div class="spec">
+                <b>Experience</b>
+                Calm • Clean burn • Kushy bliss
+              </div>
+              <div class="spec">
+                <b>Ideal for</b>
+                Edge-off moments • On-the-go
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      Info for educational/showroom purposes only. No online sales. Availability varies by location. 21+ in-store verification required.
+    </p>
+  </div>
+
+  <!-- Filter script -->
+  <script>
+    (function(){
+      const root = document.querySelector('#sta-flower.sta-catalog'); if(!root) return;
+      const chips=[...root.querySelectorAll('.chip')];
+      const cards=[...root.querySelectorAll('.card')];
+
+      function setActive(target){
+        chips.forEach(c=>{
+          const on = c===target;
+          c.dataset.active = on ? 'true' : 'false';
+          c.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      }
+      function apply(filter){
+        cards.forEach(card=>{
+          const type=card.getAttribute('data-type');
+          card.style.display = (filter==='all' || type===filter) ? '' : 'none';
+        });
+      }
+      chips.forEach(chip=>{
+        chip.addEventListener('click',()=>{ setActive(chip); apply(chip.dataset.filter); });
+        chip.addEventListener('keydown',(e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); chip.click(); }});
+      });
+    })();
+  </script>
+</section>
