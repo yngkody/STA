@@ -18,7 +18,7 @@
     if (!mount) return;
 
     try {
-      const res = await fetch(baseHref('/partials/sta-header.html'), { cache: 'no-cache' });
+      const res = await fetch(baseHref('sta-header.html'), { cache: 'no-cache' });
       if (!res.ok) throw new Error(`Header fetch failed: ${res.status}`);
       mount.innerHTML = await res.text();
     } catch (err) {
