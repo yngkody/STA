@@ -535,6 +535,32 @@ img{ max-width:100%; height:auto; }
   });
 })();
 </script>
+<script>
+(function(){
+  const badge = document.getElementById('staCartCount');
+  if(!badge) return;
+
+  function setCount(n){ badge.textContent = String(n || 0); }
+
+  document.addEventListener('snipcart.ready', async () => {
+    try {
+      const c = await Snipcart.api.cart.get();
+      setCount(c?.items?.count);
+    } catch(e){}
+  });
+
+  document.addEventListener('snipcart.cart.updated', (e) => {
+    setCount(e?.detail?.cart?.items?.count);
+  });
+
+  document.addEventListener('snipcart.cart.ready', async () => {
+    try {
+      const c = await Snipcart.api.cart.get();
+      setCount(c?.items?.count);
+    } catch(e){}
+  });
+})();
+</script>
 
 </body>
 </html>
