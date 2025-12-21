@@ -151,7 +151,7 @@ img{ max-width:100%; height:auto; }
                 <circle cx="10" cy="20" r="1.6" fill="currentColor"/>
                 <circle cx="17" cy="20" r="1.6" fill="currentColor"/>
               </svg>
-              <span class="badge" id="staCartCount" aria-live="polite">0</span>
+              <span class="badge snipcart-items-count" aria-live="polite">0</span>
             </a>
           </nav>
         </div>
@@ -368,7 +368,7 @@ img{ max-width:100%; height:auto; }
             data-item-id="STA-HOODIE-FRONT-BLK"
             data-item-name="STA Signature Hoodie"
             data-item-price="70.00"
-            data-item-url="./merch.html"
+            data-item-url="./merch.html#sta-hoodie-front-blk"
             data-item-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
             data-item-quantity="1">
             Add to Cart
@@ -438,7 +438,7 @@ img{ max-width:100%; height:auto; }
             data-item-id="STA-TEE-FRONT-WHT"
             data-item-name="STA Classic Tee"
             data-item-price="35.00"
-            data-item-url="/shop/sta-shirt"
+            data-item-url="./merch.html#sta-tee-front-wht"
             data-item-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
             data-item-quantity="1">
             Add to Cart
@@ -501,66 +501,12 @@ img{ max-width:100%; height:auto; }
 <!-- ====================== Snipcart Root (required once per page) ====================== -->
 <!-- IMPORTANT: put your API key on ONE line (no spaces/newlines). -->
 <div hidden id="snipcart" data-api-key="ZTdhMTVkNTMtMjU2Mi00ZDZiLThmMjYtMGU5ZTA3Mzk4Y2I0NjM4OTYyNDgzNDg1OTU2NTYx"></div>
+<script>window.SnipcartSettings = window.SnipcartSettings || {};</script>
 <script defer src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
 
 
 <!-- ====================== STA / Snipcart glue (cart badge + open cart) ====================== -->
-<script>
-(function(){
-  function badgeEl(){ return document.getElementById('staCartCount'); }
 
-  document.addEventListener('click', function(e){
-    var open = e.target.closest && e.target.closest('[data-action="open-cart"]');
-    if(!open) return;
-    if(!(window.Snipcart && Snipcart.api)) return;
-    e.preventDefault();
-    Snipcart.api.theme.cart.open();
-  });
-
-  document.addEventListener('snipcart.cart.updated', function(e){
-    var n = (e && e.detail && e.detail.cart && e.detail.cart.items) ? e.detail.cart.items.count : 0;
-    var b = badgeEl();
-    if(b) b.textContent = String(n || 0);
-  });
-
-  document.addEventListener('snipcart.ready', function(){
-    try{
-      var api = Snipcart.api;
-      api.cart.get().then(function(c){
-        var n = (c && c.items) ? c.items.count : 0;
-        var b = badgeEl();
-        if(b) b.textContent = String(n || 0);
-      });
-    }catch(_e){}
-  });
-})();
-</script>
-<script>
-(function(){
-  const badge = document.getElementById('staCartCount');
-  if(!badge) return;
-
-  function setCount(n){ badge.textContent = String(n || 0); }
-
-  document.addEventListener('snipcart.ready', async () => {
-    try {
-      const c = await Snipcart.api.cart.get();
-      setCount(c?.items?.count);
-    } catch(e){}
-  });
-
-  document.addEventListener('snipcart.cart.updated', (e) => {
-    setCount(e?.detail?.cart?.items?.count);
-  });
-
-  document.addEventListener('snipcart.cart.ready', async () => {
-    try {
-      const c = await Snipcart.api.cart.get();
-      setCount(c?.items?.count);
-    } catch(e){}
-  });
-})();
-</script>
 
 </body>
 </html>
