@@ -1,454 +1,124 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>STA — New York</title>
-  <meta name="description" content="STA — New York. Quality Flower • Culture & Community." />
-
-  <!-- Snipcart (required once) -->
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
-
+<!-- ============== STA • Section Header (Jump to Flower / Prerolls) ============== -->
+<section class="sta-head" aria-label="Browse STA Products">
   <style>
-    /* Base */
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif; color: #111; background: #fdfcf9; }
-    a { color: inherit; }
+  /* Force the HTML block itself to center the capsule */
+.sta-cap-nav{
+  display:grid;                 /* new */
+  place-items:center;           /* new: centers children horizontally & vertically */
+  margin-left:auto !important;  /* safety against column padding/alignment */
+  margin-right:auto !important;
+}
+
+/* Make sure the capsule is actually centered within that grid cell */
+.sta-cap-nav .sta-cap{
+  width:100%;
+  max-width:980px;
+  justify-self:center;          /* new */
+}
+
+/* If your section/column is adding extra left padding, neutralize it just for this block */
+.sqs-block-html:has(.sta-cap-nav) .sqs-block-content{
+  text-align: initial !important;
+}
+
+/* Safety: ensure no stray floats collapse centering */
+.sta-cap-nav, .sta-cap-nav .sta-cap{ clear: both; }
+
+    .sta-head{
+      --ink:#111; --dim:#555; --line:#e3e6ea; --bg:#fff; --chip:#0f1111; --chipText:#fff;
+      --hover:#f7fafa; --shadow:0 8px 24px rgba(16,24,40,.08);
+      font: 14px/1.45 system-ui,-apple-system,Segoe UI,Inter,Roboto,sans-serif; color:var(--ink);
+      background:transparent;
+    }
+    .sta-head *{box-sizing:border-box}
+    .sta-head .wrap{
+      max-width:1200px;margin:0 auto;padding:0 14px;
+    }
+
+    /* Sticky bar */
+    .sta-head .bar{
+      position:sticky; top:0; z-index:50;
+      background:var(--bg); border:1px solid var(--line); border-radius:12px;
+      box-shadow:var(--shadow);
+      margin:14px auto; padding:12px 14px;
+    }
+    .sta-head .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .sta-head .title{font-size:18px;font-weight:800;margin:0}
+    .sta-head .sub{margin:0;color:var(--dim)}
+    .sta-head .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+    /* Pills */
+    .sta-head .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border:1px solid var(--line);border-radius:999px;
+      background:#fff;color:#111;text-decoration:none;font-weight:700;
+      transition:background .12s ease, transform .12s ease, border-color .12s ease;
+    }
+    .sta-head .pill:hover{background:var(--hover); transform:translateY(-1px)}
+    .sta-head .pill.primary{
+      background:var(--chip); color:var(--chipText); border-color:#000;
+    }
+    .sta-head .pill.primary:hover{filter:brightness(1.05)}
+
+    /* Mobile stack */
+    @media (max-width:740px){
+      .sta-head .row{align-items:flex-start}
+      .sta-head .right{margin-left:0}
+    }
+/* === MOBILE MICRO-CENTERING PATCH (add after your existing CSS) === */
+@media (max-width: 720px){
+  /* 1) Make the tabs rail shrink to its content and center it */
+  .sta-menu{
+    display:inline-flex !important;   /* shrink-to-fit width */
+    width: -moz-fit-content;
+    width: fit-content;               /* iOS Safari supports this */
+    margin-left:auto !important;
+    margin-right:auto !important;
+    justify-content:center;           /* center items within */
+    text-align:center;
+  }
+
+  /* 2) Evenly respect notches/safe areas so left/right don’t “feel” off */
+  .sta-cap-nav{
+    padding-left: max(12px, env(safe-area-inset-left)) !important;
+    padding-right:max(12px, env(safe-area-inset-right)) !important;
+  }
+
+  /* 3) If your page column adds asymmetric padding, make this block full-bleed on mobile only */
+  .sqs-block-html:has(.sta-cap-nav){
+    position:relative;
+    left:50%; right:50%;
+    margin-left:-50vw; margin-right:-50vw;
+    width:100vw;                     /* escape the column's padding */
+  }
+}
+
+/* Optional: ensure the capsule and tabs share the exact same max-width */
+@media (min-width: 721px){
+  .sta-cap{  max-width:980px; }
+  .sta-menu{ max-width:980px; }      /* keeps visual lock with capsule edge */
+}
+
+    /* Smooth scroll */
+    html{scroll-behavior:smooth}
   </style>
-</head>
 
-<body>
-
-  <!-- ====================== STA HEADER (embedded) ====================== -->
-  <section class="sta-banner is-top" role="contentinfo" aria-label="Site banner">
-    <style>
-      :root{
-        --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9;
-        --panel:#fff; --line:#e6e6e6; --shadow:0 12px 34px rgba(16,24,40,.10);
-        --cap:#ffffff; --max:1200px; --padX:clamp(12px,3.4vw,24px); --padY:clamp(10px,1.8vw,14px);
-      }
-
-      .sta-banner{
-        font:15px/1.45 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
-        color:var(--ink); background:var(--bg); width:100%;
-        border-bottom:1px solid var(--line);
-        position:sticky; top:0; z-index:9999;
-        backdrop-filter:saturate(1.1);
-        overflow:visible;
-      }
-      .sta-banner .wrap{ max-width:var(--max); margin:0 auto; padding:var(--padY) var(--padX); position:relative; }
-      .sta-banner .wrap::before{
-        content:""; position:absolute; inset:4px 6px auto 6px; height:60px;
-        background:linear-gradient(180deg,#fff,#fafafa); opacity:.55; pointer-events:none; border-radius:14px; box-shadow:var(--shadow);
-      }
-      .sta-banner .row{ position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-
-      .sta-brand{ display:flex; align-items:center; gap:8px; min-width:0; background:var(--cap);
-        border:1px solid var(--line); border-radius:999px; padding:8px 12px; box-shadow:0 8px 22px rgba(0,0,0,.04);}
-      .sta-mark{ width:32px; height:32px; border-radius:50%; background:
-        radial-gradient(closest-side,#fff 0 62%,transparent 63%),
-        conic-gradient(var(--accent),var(--accent)); box-shadow:inset 0 0 0 1px rgba(0,0,0,.06); position:relative; flex:0 0 32px;}
-      .sta-mark::after{ content:"STA"; position:absolute; inset:0; display:grid; place-items:center;
-        font:700 10px/1 system-ui,-apple-system,"Segoe UI",Inter,sans-serif; color:#111; letter-spacing:.6px; mix-blend-mode:screen; opacity:.95; }
-      .sta-text{ display:flex; flex-direction:column; min-width:0; }
-      .sta-text .top{ font-weight:800; letter-spacing:.2px; font-size:14px; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-      .sta-text .sub{ color:var(--dim); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-      .sta-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-left:auto; }
-      .sta-actions{ display:flex; gap:8px; flex-wrap:wrap; }
-      .sta-chip{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
-        background:var(--cap); border:1px solid var(--line); text-decoration:none; color:var(--ink);
-        transition:transform .12s ease, box-shadow .12s ease; font-weight:700; font-size:14px; }
-      .sta-chip:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
-      .sta-chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 2px #fff inset; }
-
-      .sta-icons{ display:flex; gap:8px; }
-      .sta-iconbtn{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px;
-        background:var(--cap); border:1px solid var(--line); text-decoration:none; color:var(--ink);
-        transition:transform .12s ease, box-shadow .12s ease; cursor:pointer; }
-      .sta-iconbtn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
-      .sta-iconbtn svg{ width:18px; height:18px; display:block; }
-      .sta-cart{ position:relative; }
-      .sta-cart .badge{ position:absolute; top:-6px; right:-6px; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:var(--accent); color:#fff; font:800 10px/16px system-ui,-apple-system,Segoe UI,Inter,Roboto,sans-serif; text-align:center; }
-
-      .sta-camo{
-        width:100%; height:96px;
-        background-image:url('https://images.squarespace-cdn.com/content/v1/68f9286f24ab7f4313a8fdb1/56a14432-1556-4e22-9869-d22e4ec74fe6/ChatGPT+Image+Oct+22%2C+2025%2C+04_11_48+PM.png?format=2500w');
-        background-size:cover; background-position:center; background-repeat:no-repeat;
-        border-top:1px solid var(--line); transition:height .25s ease, opacity .25s ease;
-      }
-      .sta-banner.is-scrolled .sta-camo{ height:0; opacity:0; border-top:0; overflow:hidden; }
-
-      @media (max-width:640px){
-        .sta-banner .wrap{ padding:10px var(--padX) 12px; }
-        .sta-banner .wrap::before{ height:56px; inset:4px 4px auto 4px; }
-        .sta-banner .row{ gap:10px; }
-        .sta-right{ width:100%; justify-content:space-between; }
-        .sta-actions{ flex:1 1 auto; min-width:200px; }
-        .sta-chip{ padding:8px 10px; font-size:13px; }
-        .sta-camo{ height:88px; }
-      }
-
-      /* Snipcart above everything */
-      #snipcart, .snipcart { z-index: 2147483000 !important; position: relative; }
-      html.snipcart-open .sta-banner { z-index: 1 !important; pointer-events: none; }
-      @media (max-width: 820px){ html.snipcart-open .sta-banner { position: static !important; } }
-      html.snipcart-open, html.snipcart-open body { overflow: hidden; }
-
-      .sta-banner a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-    </style>
-
-    <div class="wrap" role="presentation">
+  <div class="wrap">
+    <div class="bar" role="navigation" aria-label="Product shortcuts">
       <div class="row">
-        <div class="sta-brand" aria-label="STA brand banner">
-          <i class="sta-mark" aria-hidden="true"></i>
-          <div class="sta-text">
-            <div class="top">STA — New York</div>
-            <div class="sub">Quality Flower • Culture & Community</div>
-          </div>
+        <div>
+          <h2 class="title">Shop Slap That Ass</h2>
         </div>
-
-        <div class="sta-right">
-          <nav class="sta-actions" aria-label="Quick links">
-            <!-- Use RELATIVE links so GitHub Pages repo paths don't break -->
-            <a class="sta-chip" href="./"><span class="dot" aria-hidden="true"></span> Home</a>
-            <a class="sta-chip" href="./products/"><span class="dot" aria-hidden="true"></span> Products</a>
-            <a class="sta-chip" href="./merch/"><span class="dot" aria-hidden="true"></span> Merch</a>
-            <a class="sta-chip" href="./about/"><span class="dot" aria-hidden="true"></span> About</a>
-            <a class="sta-chip" href="./stores/"><span class="dot" aria-hidden="true"></span> Store Locator</a>
-          </nav>
-
-          <nav class="sta-icons" aria-label="Social and cart">
-            <a class="sta-iconbtn" href="https://instagram.com/yourhandle" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/>
-                <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
-                <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
-              </svg>
-            </a>
-
-            <a class="sta-iconbtn" href="https://x.com/yourhandle" target="_blank" rel="noopener" aria-label="Twitter (X)">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 4l7.5 8.3L4.7 20h2.1l6.1-6.6 5 6.6H20l-7-9.2L19.3 4h-2.1l-5.6 6.1L7 4H4z" fill="currentColor"/>
-              </svg>
-            </a>
-
-            <a class="sta-iconbtn sta-cart" href="#" data-action="open-cart" aria-label="Cart">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.5a2 2 0 0 0 2-1.6L20 8H7.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="10" cy="20" r="1.6" fill="currentColor"/>
-                <circle cx="17" cy="20" r="1.6" fill="currentColor"/>
-              </svg>
-              <span class="badge" id="staCartCount" aria-live="polite">0</span>
-            </a>
-          </nav>
+        <div class="right">
+          <!-- Update hrefs to match your section IDs -->
+          <a class="pill primary" href="#sta-flower" aria-label="Jump to Flower">Flower</a>
+          <a class="pill" href="#sta-prerolls" aria-label="Jump to Prerolls">Prerolls</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="sta-camo" aria-hidden="true"></div>
-  </section>
-  <!-- ====================== /STA HEADER ====================== -->
-
-  <main>
-
-    <!-- ===== STA • Scroll-Safe Clean Version (ported from your Squarespace snippet) ===== -->
-    <section id="sta-root-nyc" aria-label="STA Section">
-      <style>
-        /* ---------- Root Scope ---------- */
-        #sta-root-nyc {
-          --sta-ink:#111;
-          --sta-dim:#5b606b;
-          --sta-accent:#c71f2d;
-          --sta-bg:#fdfcf9;
-          --sta-panel:#fff;
-          --sta-line:#e9e9e9;
-          --sta-shadow:0 8px 24px rgba(0,0,0,.06);
-
-          background:var(--sta-bg);
-          color:var(--sta-ink);
-          font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
-
-          position:relative;
-          overflow:visible;
-          isolation:auto;
-          z-index:auto;
-        }
-        #sta-root-nyc * { box-sizing:border-box; }
-        #sta-root-nyc .sta-wrap {
-          width:100%;
-          max-width:1200px;
-          margin-inline:auto;
-          padding-inline:clamp(16px,4vw,32px);
-        }
-
-        /* ---------- HERO ---------- */
-        #sta-root-nyc .sta-hero {
-          min-height:60svh;
-          display:grid;
-          place-items:center;
-          text-align:center;
-          padding-block:clamp(56px,10vw,120px);
-          background:var(--sta-bg);
-        }
-        #sta-root-nyc .hero-title {
-          font-size:clamp(42px,9vw,120px);
-          font-weight:800;
-          letter-spacing:-.02em;
-          margin:0 0 .45rem;
-        }
-        #sta-root-nyc .hero-title .arrow { color:var(--sta-accent); }
-        #sta-root-nyc .subtitle {
-          font-size:clamp(15px,2.3vw,24px);
-          font-weight:700;
-          color:var(--sta-accent);
-          margin:0 0 .45rem;
-        }
-        #sta-root-nyc .tagline {
-          color:var(--sta-dim);
-          font-size:clamp(14px,1.7vw,18px);
-          line-height:1.65;
-          max-width:68ch;
-          margin:0 auto 1.1rem;
-        }
-        #sta-root-nyc .sta-btn {
-          display:inline-block;
-          padding:.95rem 1.6rem;
-          border-radius:999px;
-          font-weight:800;
-          letter-spacing:.02em;
-          text-decoration:none;
-          background:var(--sta-accent);
-          color:#fff;
-          box-shadow:0 8px 24px rgba(199,31,45,.25);
-          transition:transform .2s, box-shadow .2s;
-        }
-        #sta-root-nyc .sta-btn:hover {
-          transform:translateY(-2px);
-          box-shadow:0 12px 28px rgba(199,31,45,.32);
-        }
-
-        /* ---------- SHOP ---------- */
-        #sta-root-nyc .sta-section {
-          background:var(--sta-panel);
-          padding-block:clamp(48px,8vw,96px);
-          border-top:1px solid var(--sta-line);
-          position:relative;
-          z-index:2;
-        }
-        #sta-root-nyc .sta-grid {
-          display:grid;
-          gap:28px;
-          grid-template-columns:1fr;
-          max-width:900px;
-          margin-inline:auto;
-        }
-        @media (min-width:460px) {
-          #sta-root-nyc .sta-grid { grid-template-columns:1fr 1fr; gap:40px; }
-        }
-        #sta-root-nyc .sta-card {
-          display:flex;
-          flex-direction:column;
-          background:var(--sta-panel);
-          border:1px solid var(--sta-line);
-          border-radius:18px;
-          overflow:hidden;
-          box-shadow:var(--sta-shadow);
-          transition:transform .2s, box-shadow .2s;
-        }
-        #sta-root-nyc .sta-card:hover {
-          transform:translateY(-4px);
-          box-shadow:0 12px 30px rgba(0,0,0,.08);
-        }
-        #sta-root-nyc .sta-card-media {
-          --img:url('');
-          --focus:50% 50%;
-          width:100%;
-          aspect-ratio:3/4;
-          background:#f7f7f7;
-          position:relative;
-          overflow:hidden;
-        }
-        #sta-root-nyc .sta-card-media::before {
-          content:"";
-          position:absolute;
-          inset:0;
-          background-image:var(--img);
-          background-size:cover!important;
-          background-position:var(--focus)!important;
-          background-repeat:no-repeat!important;
-        }
-        #sta-root-nyc .sta-card-body { padding:24px; background:var(--sta-panel); }
-        #sta-root-nyc .sta-card-body h2 { margin:.1rem 0 .5rem; font-size:clamp(20px,1.8vw,24px); }
-        #sta-root-nyc .sta-card-body p { color:var(--sta-dim); font-size:clamp(14px,1.2vw,16px); line-height:1.6; margin:0 0 1rem; }
-
-        #sta-root-nyc .btn-row { display:flex; flex-wrap:wrap; gap:10px; }
-        #sta-root-nyc .btn-chip {
-          display:inline-block;
-          padding:.75rem 1.1rem;
-          border-radius:999px;
-          font-weight:700;
-          border:1px solid var(--sta-line);
-          background:#fafafa;
-          color:var(--sta-ink);
-          text-decoration:none;
-          transition:transform .15s, background .15s;
-        }
-        #sta-root-nyc .btn-chip:hover { transform:translateY(-1px); background:#f2f2f2; }
-        #sta-root-nyc .btn-chip.accent { background:var(--sta-accent); color:#fff; border-color:var(--sta-accent); }
-
-        /* ---------- BRAND ---------- */
-        #sta-root-nyc .sta-brand {
-          position:relative;
-          text-align:center;
-          padding-top:clamp(80px,10vw,120px);
-          padding-bottom:clamp(60px,8vw,96px);
-          background:var(--sta-panel);
-          border-top:1px solid var(--sta-line);
-          z-index:1;
-        }
-        #sta-root-nyc .brand-card {
-          position:relative;
-          background:var(--sta-panel);
-          border:1px solid var(--sta-line);
-          border-radius:28px;
-          box-shadow:0 8px 30px rgba(0,0,0,.08);
-          padding:clamp(48px,6vw,72px) clamp(24px,5vw,60px);
-          max-width:900px;
-          margin-inline:auto;
-        }
-        #sta-root-nyc .sta-brand h2 { font-size:clamp(22px,2.2vw,28px); margin:0 0 .6rem; }
-        #sta-root-nyc .sta-brand p { color:var(--sta-dim); font-size:clamp(14px,1.2vw,16px); line-height:1.65; max-width:68ch; margin:0 auto 1.4rem; }
-        #sta-root-nyc .sta-brand .cta {
-          display:inline-block;
-          padding:.9rem 1.5rem;
-          border-radius:999px;
-          font-weight:800;
-          background:var(--sta-accent);
-          color:#fff;
-          text-decoration:none;
-          box-shadow:0 8px 24px rgba(199,31,45,.25);
-          transition:transform .2s, box-shadow .2s;
-        }
-        #sta-root-nyc .sta-brand .cta:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(199,31,45,.32); }
-      </style>
-
-      <!-- HERO -->
-      <header class="sta-hero">
-        <div class="sta-wrap">
-          <h1 class="hero-title">STA <span class="arrow">→</span> NY</h1>
-          <p class="subtitle">NYC • Cannabis Culture</p>
-          <p class="tagline">Premium flower, ceramic-tipped pre-rolls, and lifestyle merch — crafted for clarity, culture, and community.</p>
-          <a href="./merch/" class="sta-btn">Shop Now</a>
-        </div>
-      </header>
-
-      <!-- SHOP -->
-      <section class="sta-section" id="shop">
-        <div class="sta-wrap">
-          <div class="sta-grid">
-            <article class="sta-card" id="product">
-              <div class="sta-card-media"
-                style="--img:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w');">
-              </div>
-              <div class="sta-card-body">
-                <h2>Products</h2>
-                <p>Top-tier flower and pre-rolls — balanced blends for creativity, calm, and connection.</p>
-                <div class="btn-row">
-                  <a class="btn-chip accent" href="./products/">View Products</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="sta-card" id="merch">
-              <div class="sta-card-media"
-                style="--img:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/6af53b52-4762-4f1b-a86d-91f78c10758c/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=300w');">
-              </div>
-              <div class="sta-card-body">
-                <h2>Merchandise</h2>
-                <p>Minimal, urban, and rooted in NYC — premium hoodies, tees, and hats built for the modern creative.</p>
-                <div class="btn-row">
-                  <a class="btn-chip accent" href="./merch/">Shop Merch</a>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- BRAND -->
-      <section class="sta-brand" id="brand">
-        <div class="sta-wrap">
-          <div class="brand-card">
-            <h2>The Brand & Culture</h2>
-            <p>Street-born, design-driven, and community-rooted. STA brings clarity and confidence to NYC’s cannabis scene.</p>
-            <a href="#shop" class="cta">Shop Now</a>
-          </div>
-        </div>
-      </section>
-    </section>
-
-  </main>
-
-  <!-- ====================== Snipcart Root + Script (embedded) ====================== -->
-  <!-- IMPORTANT: Put your API key on ONE line (no spaces/newlines). -->
-  <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_API_KEY"></div>
-
-  <script defer src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
-
-  <script>
-    (function(){
-      // Collapse camo strip on scroll
-      const banner = document.querySelector('.sta-banner');
-      const onScroll = () => {
-        if(!banner) return;
-        if(window.scrollY > 30) banner.classList.add('is-scrolled');
-        else banner.classList.remove('is-scrolled');
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-
-      // Open cart from header icon
-      document.addEventListener('click', (e) => {
-        const open = e.target.closest('[data-action="open-cart"]');
-        if(!open) return;
-        e.preventDefault();
-        if(window.Snipcart?.api) window.Snipcart.api.theme.cart.open();
-      });
-
-      // Badge updates
-      const badge = document.getElementById('staCartCount');
-      function setBadge(n){ if(badge) badge.textContent = String(n || 0); }
-
-      function bind(){
-        if(!window.Snipcart?.api) return false;
-        const api = window.Snipcart.api;
-
-        api.cart.get().then(c => setBadge(c?.items?.count || 0));
-
-        document.addEventListener('snipcart.cart.updated', (e) => {
-          setBadge(e?.detail?.cart?.items?.count || 0);
-        });
-
-        document.addEventListener('snipcart.cart.opened',        ()=>document.documentElement.classList.add('snipcart-open'));
-        document.addEventListener('snipcart.cart.closed',        ()=>document.documentElement.classList.remove('snipcart-open'));
-        document.addEventListener('snipcart.checkout.started',   ()=>document.documentElement.classList.add('snipcart-open'));
-        document.addEventListener('snipcart.checkout.confirmed', ()=>document.documentElement.classList.remove('snipcart-open'));
-        return true;
-      }
-
-      if(!bind()){
-        let tries = 0;
-        const iv = setInterval(() => {
-          tries++;
-          if(bind() || tries > 80) clearInterval(iv);
-        }, 200);
-      }
-    })();
-  </script>
-</body>
-</html>
 <!-- ============== STA • Flower + Pre-Roll Catalog (No Checkout • OCM-Compliant) ============== -->
 <section id="sta-flower" class="sta-catalog" aria-label="STA Flower Catalog">
   <style>
@@ -1299,3 +969,4 @@
     })();
   </script>
 </section>
+
