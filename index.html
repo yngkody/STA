@@ -1,3 +1,25 @@
+<!doctype html>
+<html lang="en" data-base="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STA — New York</title>
+
+  <!-- Snipcart styles (required on every page) -->
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
+
+  <style>
+    /* Global page defaults */
+    html, body { margin:0; padding:0; background:#fdfcf9; }
+    body { font-family: system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif; color:#111; }
+    main { display:block; }
+  </style>
+</head>
+<body>
+  <!-- Injected site-wide header goes here -->
+  <div id="site-header"></div>
+
+  <main>
 <!-- ===== STA • Scroll-Safe Clean Version (Final) ===== -->
 <section id="sta-root-nyc" aria-label="STA Section">
   <style>
@@ -234,7 +256,7 @@
       <p class="tagline">
         Premium flower, ceramic-tipped pre-rolls, and lifestyle merch — crafted for clarity, culture, and community.
       </p>
-      <a href="/merch" class="sta-btn">Shop Now</a>
+      <a href="/merch/" data-href="/merch/" class="sta-btn">Shop Now</a>
     </div>
   </header>
 
@@ -250,7 +272,7 @@
             <h2>Products</h2>
             <p>Top-tier flower and pre-rolls — balanced blends for creativity, calm, and connection.</p>
             <div class="btn-row">
-              <a class="btn-chip accent" href="/products">View Products</a>
+              <a class="btn-chip accent" href="/products/" data-href="/products/">View Products</a>
             </div>
           </div>
         </article>
@@ -263,7 +285,7 @@
             <h2>Merchandise</h2>
             <p>Minimal, urban, and rooted in NYC — premium hoodies, tees, and hats built for the modern creative.</p>
             <div class="btn-row">
-              <a class="btn-chip accent" href="/merch">Shop Merch</a>
+              <a class="btn-chip accent" href="/merch/" data-href="/merch/">Shop Merch</a>
             </div>
           </div>
         </article>
@@ -277,8 +299,15 @@
       <div class="brand-card">
         <h2>The Brand & Culture</h2>
         <p>Street-born, design-driven, and community-rooted. STA brings clarity and confidence to NYC’s cannabis scene.</p>
-        <a href="/shop" class="cta">Shop Now</a>
+        <a href="/shop/" data-href="/shop/" class="cta">Shop Now</a>
       </div>
     </div>
   </section>
 </section>
+
+  </main>
+
+  <!-- Site loader (injects header + baseurl fixes) -->
+  <script defer src="./assets/site.js"></script>
+</body>
+</html>
