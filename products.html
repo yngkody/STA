@@ -171,6 +171,14 @@
 <!-- ============== STA • Flower + Pre-Roll Catalog (No Checkout • OCM-Compliant) ============== -->
 <section aria-label="STA Flower Catalog" class="sta-catalog" id="sta-flower">
 <style>
+   .catalog-divider{
+  margin: 40px 0 20px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 130px; /* offset sticky header */
+}
+
     /* ---------- Scope + Tokens ---------- */
     #sta-flower.sta-catalog{
       --ink:#111; --dim:#5b606b; --accent:#c71f2d;
@@ -356,7 +364,9 @@
 <!-- Grid -->
 
 <!-- Anchor for Prerolls jump (kept OUTSIDE the grid to avoid an empty grid slot) -->
-<div id="sta-prerolls" aria-hidden="true"></div>
+<h2 id="sta-prerolls" class="catalog-divider">
+  Pre-Rolls
+</h2>
 <div class="grid" id="staGrid">
 <!-- ========= FLOWER ========= -->
 <!-- Jack Boro #5 — Sativa Flower -->
