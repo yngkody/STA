@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STA — Product</title>
+  <meta name="description" content="STA product details." />
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;color:#111;background:#fdfcf9}
+    a{color:inherit}
+    :root{--accent:#c71f2d;--line:#e9e9e9;--panel:#fff;--shadow:0 12px 34px rgba(16,24,40,.10);}
+    .wrap{max-width:min(980px,92vw);margin:0 auto;padding:18px 0 48px}
+    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:0 14px}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;text-decoration:none;font-weight:800}
+    .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    .card{margin:14px;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:var(--shadow);overflow:hidden}
+    .media{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f4f5f7}
+    img{width:100%;height:auto;display:block}
+    h1{margin:12px 0 6px;font-size:24px;letter-spacing:-.01em}
+    .badge{display:inline-block;margin-left:8px;font-size:12px;font-weight:900;color:#7a2b2b;background:#fff1ef;border:1px solid #f5d4d0;padding:4px 8px;border-radius:999px;vertical-align:middle}
+    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .pill{font-size:12px;font-weight:900;background:rgba(255,255,255,.86);border:1px solid rgba(0,0,0,.06);padding:5px 10px;border-radius:999px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+    .tag{font-size:12px;background:#f7f7f8;border:1px solid #ececec;padding:6px 8px;border-radius:10px}
+    .copy p{margin:10px 0;color:#2f3440}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border-radius:12px;border:1px solid #e2e3e6;background:#fff;text-decoration:none;font-weight:900}
+    .btn.primary{background:#111;color:#fff;border-color:#111}
+    .btn.accent{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+    @media (max-width:720px){.specs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .spec{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px}
+    .spec b{display:block;font-size:12px;color:#60646b;margin-bottom:6px}
+    .empty{padding:20px;text-align:center;color:#5b606b}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="chip" href="products.html"><span class="dot" aria-hidden="true"></span> Back to Products</a>
+      <a class="chip" href="stores.html"><span class="dot" aria-hidden="true"></span> Store Locator</a>
+    </div>
+
+    <div class="card" id="productRoot" aria-live="polite">
+      <div class="empty">Loading product…</div>
+    </div>
+  </div>
+
+  <script src="products-data.js"></script>
+  <script>
+    (function(){
+      const root = document.getElementById('productRoot');
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+
+      const p = window.getStaProductBySlug ? window.getStaProductBySlug(slug) : null;
+
+      if(!slug || !p){
+        root.innerHTML = `
+          <div class="empty">
+            <div style="font-weight:900;font-size:18px;color:#111;margin-bottom:6px;">Product not found</div>
+            <div style="margin-bottom:12px;">That link doesn’t match a product in your catalog.</div>
+            <a class="btn primary" href="products.html">Go back</a>
+          </div>
+        `;
+        return;
+      }
+
+      document.title = `STA — ${p.name}`;
+
+      const pills = (p.pills || []).map(x => `<span class="pill">${x}</span>`).join('');
+      const tags  = (p.tags || []).map(x => `<span class="tag">${x}</span>`).join('');
+      const copy  = (p.copy || []).map(x => `<p>${x}</p>`).join('');
+      const specs = (p.specs || []).map(s => `
+        <div class="spec">
+          <b>${s.label}</b>
+          ${s.value}
+        </div>
+      `).join('');
+
+      root.innerHTML = `
+        <div class="media">
+          <img src="${p.image}" alt="${p.alt || p.name}">
+        </div>
+
+        <h1>
+          ${p.name}
+          ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+        </h1>
+
+        <div class="pills">${pills}</div>
+        <div class="tags">${tags}</div>
+
+        <div class="copy">${copy}</div>
+
+        <div class="actions">
+          <a class="btn accent" href="stores.html">Find In-Store</a>
+          <a class="btn primary" href="products.html#sta-flower">Back to Catalog</a>
+        </div>
+
+        ${specs ? `<div class="specs">${specs}</div>` : ''}
+      `;
+    })();
+  </script>
+</body>
+</html>
