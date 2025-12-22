@@ -354,7 +354,7 @@
       });
 
       // 3) Card click -> go to product page (BUT don't hijack buttons/controls)
-      document.addEventListener('click', (e) => {
+      /*document.addEventListener('click', (e) => {
         const card = e.target.closest('.item');
         if(!card) return;
 
@@ -365,7 +365,7 @@
         if(!key) return;
 
         window.location.href = `./merchandise.html?item=${encodeURIComponent(key)}`;
-      });
+      });*/
 
       // 4) Header cart open + badge update (works if your header has #openCart or .snipcart-checkout)
       document.addEventListener('snipcart.ready', () => {
