@@ -32,11 +32,30 @@
     @media(max-width:900px){
       .product{ grid-template-columns:1fr; }
     }
-    .media{
-      border:1px solid #eee; border-radius:10px; overflow:hidden; background:#f7f7f7;
-      aspect-ratio: 4 / 3;
-    }
-    .media img{ width:100%; height:100%; object-fit:cover; }
+.media{
+  border:1px solid #eee;
+  border-radius:10px;
+  overflow:hidden;
+  background:#f7f7f7;
+
+  /* NEW */
+  height: min(100vh, 800px); /* fills screen but doesn’t go insane on large monitors */
+}
+
+.media img{
+  width:100%;
+  height:100%;
+  object-fit: contain; /* NO CROP */
+  background:#000;     /* optional – makes hoodies look premium */
+}
+
+    
+@media (max-width: 900px){
+  .media{
+    height: 60vh;
+  }
+}
+
 
     h1{ margin:0 0 6px; font-size:26px; font-weight:900; letter-spacing:-.01em; }
     .meta{ color:var(--dim); margin:0 0 14px; }
