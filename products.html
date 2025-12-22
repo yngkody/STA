@@ -22,6 +22,110 @@
     .then(html => document.getElementById('sta-nav').innerHTML = html);
 </script>
 
+<!-- ============== STA • Section Header (Jump to Flower / Prerolls) ============== -->
+<section aria-label="Browse STA Products" class="sta-head">
+<style>
+  /* Force the HTML block itself to center the capsule */
+.sta-cap-nav{
+  display:grid;                 /* new */
+  place-items:center;           /* new: centers children horizontally & vertically */
+  margin-left:auto !important;  /* safety against column padding/alignment */
+  margin-right:auto !important;
+}
+
+/* Make sure the capsule is actually centered within that grid cell */
+.sta-cap-nav .sta-cap{
+  width:100%;
+  max-width:980px;
+  justify-self:center;          /* new */
+}
+
+/* If your section/column is adding extra left padding, neutralize it just for this block */
+.sqs-block-html:has(.sta-cap-nav) .sqs-block-content{
+  text-align: initial !important;
+}
+
+/* Safety: ensure no stray floats collapse centering */
+.sta-cap-nav, .sta-cap-nav .sta-cap{ clear: both; }
+
+    .sta-head{
+      --ink:#111; --dim:#555; --line:#e3e6ea; --bg:#fff; --chip:#0f1111; --chipText:#fff;
+      --hover:#f7fafa; --shadow:0 8px 24px rgba(16,24,40,.08);
+      font: 14px/1.45 system-ui,-apple-system,Segoe UI,Inter,Roboto,sans-serif; color:var(--ink);
+      background:transparent;
+    }
+    .sta-head *{box-sizing:border-box}
+    .sta-head .wrap{
+      max-width:1200px;margin:0 auto;padding:0 14px;
+    }
+
+    /* Sticky bar */
+    .sta-head .bar{
+      position:sticky; top:0; z-index:50;
+      background:var(--bg); border:1px solid var(--line); border-radius:12px;
+      box-shadow:var(--shadow);
+      margin:14px auto; padding:12px 14px;
+    }
+    .sta-head .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .sta-head .title{font-size:18px;font-weight:800;margin:0}
+    .sta-head .sub{margin:0;color:var(--dim)}
+    .sta-head .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+    /* Pills */
+    .sta-head .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border:1px solid var(--line);border-radius:999px;
+      background:#fff;color:#111;text-decoration:none;font-weight:700;
+      transition:background .12s ease, transform .12s ease, border-color .12s ease;
+    }
+    .sta-head .pill:hover{background:var(--hover); transform:translateY(-1px)}
+    .sta-head .pill.primary{
+      background:var(--chip); color:var(--chipText); border-color:#000;
+    }
+    .sta-head .pill.primary:hover{filter:brightness(1.05)}
+
+    /* Mobile stack */
+    @media (max-width:740px){
+      .sta-head .row{align-items:flex-start}
+      .sta-head .right{margin-left:0}
+    }
+/* === MOBILE MICRO-CENTERING PATCH (add after your existing CSS) === */
+@media (max-width: 720px){
+  /* 1) Make the tabs rail shrink to its content and center it */
+  .sta-menu{
+    display:inline-flex !important;   /* shrink-to-fit width */
+    width: -moz-fit-content;
+    width: fit-content;               /* iOS Safari supports this */
+    margin-left:auto !important;
+    margin-right:auto !important;
+    justify-content:center;           /* center items within */
+    text-align:center;
+  }
+
+  /* 2) Evenly respect notches/safe areas so left/right don’t “feel” off */
+  .sta-cap-nav{
+    padding-left: max(12px, env(safe-area-inset-left)) !important;
+    padding-right:max(12px, env(safe-area-inset-right)) !important;
+  }
+
+  /* 3) If your page column adds asymmetric padding, make this block full-bleed on mobile only */
+  .sqs-block-html:has(.sta-cap-nav){
+    position:relative;
+    left:50%; right:50%;
+    margin-left:-50vw; margin-right:-50vw;
+    width:100vw;                     /* escape the column's padding */
+  }
+}
+
+/* Optional: ensure the capsule and tabs share the exact same max-width */
+@media (min-width: 721px){
+  .sta-cap{  max-width:980px; }
+  .sta-menu{ max-width:980px; }      /* keeps visual lock with capsule edge */
+}
+
+    /* Smooth scroll */
+    html{scroll-behavior:smooth}
+  </style>
 <div class="wrap">
 <div aria-label="Product shortcuts" class="bar" role="navigation">
 <div class="row">
