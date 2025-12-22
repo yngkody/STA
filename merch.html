@@ -246,7 +246,7 @@ img{ max-width:100%; height:auto; }
             data-item-id="STA-HOODIE-FRONT-BLK"
             data-item-name="STA Signature Hoodie"
             data-item-price="80.00"
-            data-item-url="./merch.html#sta-hoodie-front-blk"
+            data-item-url="__CURRENT_PAGE__"
             data-item-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
             data-item-quantity="1">
             Add to Cart
@@ -316,7 +316,7 @@ img{ max-width:100%; height:auto; }
             data-item-id="STA-TEE-FRONT-WHT"
             data-item-name="STA Classic Tee"
             data-item-price="40.00"
-            data-item-url="./merch.html#sta-tee-front-wht"
+            data-item-url="__CURRENT_PAGE__"
             data-item-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
             data-item-quantity="1">
             Add to Cart
@@ -369,12 +369,25 @@ img{ max-width:100%; height:auto; }
     document.addEventListener('snipcart.ready', () => {
       const api = window.Snipcart.api;
       document.getElementById('openCart')?.addEventListener('click', (e)=>{
-        e.preventDefault(); api.theme.cart.open();
+        e.preventDefault(); (window.Snipcart && Snipcart.api && Snipcart.api.theme && Snipcart.api.theme.cart && Snipcart.api.theme.cart.open) ? Snipcart.api.theme.cart.open() : document.querySelector('.snipcart-checkout')?.click();
       });
     });
   </script>
 </section>
 
+
+<script>
+  // Ensure Snipcart product URLs match the current deployed page URL (prevents "invalid product URL" issues).
+  document.addEventListener('DOMContentLoaded', () => {
+    const pageUrl = window.location.origin + window.location.pathname;
+    document.querySelectorAll('.snipcart-add-item').forEach(btn => {
+      const url = btn.getAttribute('data-item-url') || '';
+      if (!url || url === '__CURRENT_PAGE__' || url.includes('merch.html')) {
+        btn.setAttribute('data-item-url', pageUrl);
+      }
+    });
+  });
+</script>
 
 <!-- ====================== Snipcart Root (required once per page) ====================== -->
 <!-- IMPORTANT: put your API key on ONE line (no spaces/newlines). -->
