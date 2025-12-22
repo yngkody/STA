@@ -260,35 +260,6 @@
 
 
 
-<script>
-(function(){
-  function badgeEl(){ return document.getElementById('staCartCount'); }
-
-  document.addEventListener('click', function(e){
-    var open = e.target.closest && e.target.closest('[data-action="open-cart"]');
-    if(!open) return;
-    if(!(window.Snipcart && Snipcart.api)) return;
-    e.preventDefault();
-    Snipcart.api.theme.cart.open();
-  });
-
-  document.addEventListener('snipcart.cart.updated', function(e){
-    var n = (e && e.detail && e.detail.cart && e.detail.cart.items) ? e.detail.cart.items.count : 0;
-    var b = badgeEl();
-    if(b) b.textContent = String(n || 0);
-  });
-
-  document.addEventListener('snipcart.ready', function(){
-    try{
-      Snipcart.api.cart.get().then(function(c){
-        var n = (c && c.items) ? c.items.count : 0;
-        var b = badgeEl();
-        if(b) b.textContent = String(n || 0);
-      });
-    }catch(_e){}
-  });
-})();
-</script>
 
 
 </body>
