@@ -263,6 +263,20 @@
       font:14px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
       color:var(--ink); background:transparent;
     }
+    /* Subtle STA grid background so sections don't feel "blank" */
+    #sta-flower.sta-catalog{ position:relative; }
+    #sta-flower.sta-catalog::before{
+      content:"";
+      position:absolute;
+      inset:-40px 0 -40px 0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(to right, rgba(17,17,17,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(17,17,17,.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      opacity:.22;
+      mask-image: radial-gradient(closest-side, rgba(0,0,0,.95), rgba(0,0,0,.15));
+    }
     #sta-flower.sta-catalog *{box-sizing:border-box}
 
     /* ---------- Width ---------- */
@@ -270,7 +284,10 @@
       max-width:min(1040px, 94vw);
       margin:clamp(14px,3vw,28px) auto;
       padding:0 8px;
+      position:relative;
+      z-index:1;
     }
+    #sta-flower .wrap{ position:relative; z-index:1; }
 
     /* ---------- Header (chips first on mobile) ---------- */
     #sta-flower .hero{
@@ -320,9 +337,13 @@
     }
 
     /* ---------- Grid ---------- */
+    /*
+      Use auto-fit (NOT auto-fill) so if a section only has 1–2 products
+      we don't render phantom empty columns that create a “missing grid” look.
+    */
     #sta-flower .grid{
       display:grid; gap:16px;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
     /* ---------- Product Card ---------- */
