@@ -6,14 +6,12 @@
       --panel:#fff; --line:#e6e6e6; --shadow:0 12px 34px rgba(16,24,40,.10);
       --cap:#ffffff; --max:1200px; --padX:clamp(12px,3.4vw,24px); --padY:clamp(10px,1.8vw,14px);
     }
-
     .sta-banner{
       font:15px/1.45 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
       color:var(--ink); background:var(--bg); width:100%;
       border-bottom:1px solid var(--line);
       position:sticky; top:0; z-index:9999;
     }
-
     .sta-banner .wrap{
       max-width:var(--max);
       margin:0 auto;
@@ -23,45 +21,24 @@
       gap:12px;
       flex-wrap:wrap;
     }
-
-    .sta-brand{
-      display:flex; flex-direction:column;
-      font-weight:800;
-    }
+    .sta-brand{ display:flex; flex-direction:column; font-weight:800; }
     .sta-brand .sub{ font-weight:500; color:var(--dim); font-size:13px; }
 
-    .sta-right{
-      margin-left:auto;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
+    .sta-right{ margin-left:auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .sta-actions{ display:flex; gap:8px; flex-wrap:wrap; }
     .sta-chip{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-weight:700;
-      text-decoration:none;
-      color:#111;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid var(--line); background:#fff;
+      font-weight:700; text-decoration:none; color:#111;
     }
 
     .sta-icons{ display:flex; gap:8px; }
     .sta-iconbtn{
       width:36px; height:36px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius:999px; border:1px solid var(--line);
+      background:#fff; cursor:pointer; text-decoration:none; color:#111;
     }
 
     .sta-cart{ position:relative; }
@@ -76,6 +53,8 @@
       border-radius:999px;
       line-height:16px;
       height:16px;
+      min-width:16px;
+      text-align:center;
     }
 
     @media (max-width:640px){
@@ -86,7 +65,7 @@
   <div class="wrap">
     <div class="sta-brand">
       <div>STA — New York</div>
-      <div class="sub">Quality Flower • Culture & Community</div>
+      <div class="sub">Quality Flower • Culture &amp; Community</div>
     </div>
 
     <div class="sta-right">
@@ -102,14 +81,17 @@
         <a class="sta-iconbtn"
            href="https://www.instagram.com/slapthatassexotics/?hl=en"
            target="_blank"
+           rel="noreferrer"
            aria-label="Instagram">
           IG
         </a>
 
-        <a class="sta-iconbtn sta-cart snipcart-checkout" href="#" aria-label="Cart">
+        <!-- ✅ Snipcart cart trigger -->
+        <button class="sta-iconbtn sta-cart snipcart-checkout" type="button" aria-label="Open cart">
           🛒
+          <!-- ✅ Snipcart auto-updating count -->
           <span class="badge snipcart-items-count">0</span>
-        </a>
+        </button>
       </nav>
     </div>
   </div>
