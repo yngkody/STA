@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>STA — Products</title>
-  <meta name="description" content="STA — Products catalog." />
+  <meta name="description" content="STA — Products catalog."/>
 
-  <!-- Base page styles -->
   <style>
-    *{ box-sizing:border-box; }
-    html,body{ margin:0; padding:0; }
-    body{
-      font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif;
       color:#111;
       background:#fdfcf9;
     }
-    a{ color:inherit; }
+    a { color: inherit; }
     html{ scroll-behavior:smooth; }
   </style>
+
+  <!-- Snipcart CSS (loaded once; JS injected below) -->
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css"/>
 </head>
 
 <body>
@@ -34,12 +36,6 @@
   <script>
     (function loadSnipcartOnce(){
       if (document.getElementById('snipcart')) return;
-
-      // CSS
-      const css = document.createElement('link');
-      css.rel = 'stylesheet';
-      css.href = 'https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css';
-      document.head.appendChild(css);
 
       // Root
       const root = document.createElement('div');
@@ -67,9 +63,7 @@
         padding:0 14px;
       }
       .sta-head .bar{
-        position:sticky;
-        top:0;
-        z-index:50;
+        position:sticky; top:0; z-index:50;
         background:var(--bg);
         border:1px solid var(--line);
         border-radius:12px;
@@ -105,7 +99,7 @@
         background:#fff;
         color:#111;
         text-decoration:none;
-        font-weight:800;
+        font-weight:900;
         transition:background .12s ease, transform .12s ease;
       }
       .sta-head .pill:hover{ background:var(--hover); transform:translateY(-1px); }
@@ -151,11 +145,11 @@
         padding: 0 8px 40px;
       }
 
-      /* Bulletproof jump anchors */
+      /* BULLETPROOF jump anchors (works even when it "looks like nothing happened") */
       .jump-anchor{
         height:1px;
-        margin-top:-140px;   /* sticky offset */
-        padding-top:140px;   /* sticky offset */
+        margin-top:-140px;
+        padding-top:140px;
       }
 
       .hero{
@@ -188,7 +182,7 @@
         border-radius:999px;
         cursor:pointer;
         user-select:none;
-        font-weight:800;
+        font-weight:900;
         color:#2a2d33;
         background:#fff;
         border:1px solid var(--line);
@@ -263,7 +257,7 @@
         padding:4px 8px;
         border-radius:999px;
         font-size:11px;
-        font-weight:900;
+        font-weight:950;
         backdrop-filter:saturate(120%) blur(2px);
       }
 
@@ -277,7 +271,7 @@
       }
       .badge{
         font-size:11px;
-        font-weight:900;
+        font-weight:950;
         color:#7a2b2b;
         background:#fff1ef;
         border:1px solid #f5d4d0;
@@ -312,13 +306,13 @@
         height:36px;
         padding:0 12px;
         border-radius:10px;
-        font-weight:900;
+        font-weight:950;
         text-decoration:none;
         border:1px solid #e2e3e6;
         background:#fff;
         color:#111;
         white-space:nowrap;
-        transition:transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+        transition:transform .12s ease, box-shadow .12s ease;
       }
       .btn:hover{
         transform:translateY(-1px);
@@ -335,7 +329,7 @@
       }
       details summary{
         cursor:pointer;
-        font-weight:900;
+        font-weight:950;
         color:#23262f;
         list-style:none;
       }
@@ -391,13 +385,13 @@
         </div>
       </div>
 
-      <!-- ============ FLOWER ============ -->
+      <!-- ================= FLOWER ================= -->
       <div id="sta-flower" class="jump-anchor" aria-hidden="true"></div>
       <h3 class="section-title">Flower</h3>
 
       <div class="grid" id="staGrid">
         <!-- Jack Boro #5 — Sativa Flower -->
-        <article class="card" data-type="sativa">
+        <article class="card" data-slug="jack-boro-5" data-type="sativa">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Flower</span>
@@ -405,7 +399,7 @@
               <span class="pilltag">Uptown Energy</span>
             </div>
             <img class="thumb" loading="lazy" alt="Jack Boro #5 Sativa Flower — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/7958fa7c-7a75-4e2c-a8bc-39b638a16ce5/A19B1C66-CAA9-47D4-9785-BBFB90B2DA4E.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/7958fa7c-7a75-4e2c-a8bc-39b638a16ce5/A19B1C66-CAA9-47D4-9785-BBFB90B2DA4E.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Jack Boro #5 <span class="badge">Sativa • Electric</span></h4>
@@ -415,7 +409,7 @@
               <span class="tag">Daytime • Creative</span>
             </div>
             <p class="copy">
-              Jack Boro #5 is that pure uptown energy bottled in flower form. Electric lift, bright terps, NYC funk.
+              Jack Boro #5 is that pure uptown energy bottled in flower form — bright citrus, pine, and NYC funk.
             </p>
             <div class="actions" aria-label="Actions for Jack Boro #5">
               <a class="btn primary" href="product.html?slug=jack-boro-5">View Details</a>
@@ -433,7 +427,7 @@
         </article>
 
         <!-- Sugar Runtz — Hybrid Flower -->
-        <article class="card" data-type="hybrid">
+        <article class="card" data-slug="sugar-runtz" data-type="hybrid">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Flower</span>
@@ -441,7 +435,7 @@
               <span class="pilltag">Candy Gas</span>
             </div>
             <img class="thumb" loading="lazy" alt="Sugar Runtz Hybrid Flower — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/b3ddc0cd-23cc-4a3f-87d8-c9b51ccd9b32/B477F114-38EB-4365-B290-E86E6A9AF579.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/b3ddc0cd-23cc-4a3f-87d8-c9b51ccd9b32/B477F114-38EB-4365-B290-E86E6A9AF579.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Sugar Runtz <span class="badge">Hybrid • Balanced</span></h4>
@@ -450,10 +444,8 @@
               <span class="tag">Sweet aroma</span>
               <span class="tag">Anytime use</span>
             </div>
-            <p class="copy">
-              Candy-sweet aroma with functional balance — smooth, flavorful, versatile.
-            </p>
-            <div class="actions" aria-label="Actions for Sugar Runtz">
+            <p class="copy">Sweet aroma, frosty buds, and balanced vibes — plays both sides of the clock.</p>
+            <div class="actions" aria-label="Actions for Sugar Runtz Flower">
               <a class="btn primary" href="product.html?slug=sugar-runtz">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
             </div>
@@ -461,7 +453,7 @@
         </article>
 
         <!-- New York Candy — Indica Flower -->
-        <article class="card" data-type="indica">
+        <article class="card" data-slug="new-york-candy" data-type="indica">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Flower</span>
@@ -469,7 +461,7 @@
               <span class="pilltag">NYC • Indica</span>
             </div>
             <img class="thumb" loading="lazy" alt="New York Candy Indica Flower — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w"/>
           </div>
           <div class="body">
             <h4 class="name">New York Candy (NYC) <span class="badge">Indica • Bold</span></h4>
@@ -478,10 +470,8 @@
               <span class="tag">OG backbone</span>
               <span class="tag">Nighttime</span>
             </div>
-            <p class="copy">
-              Lemon Cherry Gelato × OG Kush — sweet street charm with heavyweight flavor.
-            </p>
-            <div class="actions" aria-label="Actions for New York Candy">
+            <p class="copy">Lemon Cherry Gelato × OG Kush — sweet street charm and heavyweight flavor.</p>
+            <div class="actions" aria-label="Actions for New York Candy Flower">
               <a class="btn primary" href="product.html?slug=new-york-candy">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
             </div>
@@ -489,13 +479,13 @@
         </article>
       </div>
 
-      <!-- ============ PREROLLS ============ -->
+      <!-- ================= PREROLLS (anchor is HERE, right before prerolls) ================= -->
       <div id="sta-prerolls" class="jump-anchor" aria-hidden="true"></div>
       <h3 class="section-title">Pre-Rolls</h3>
 
       <div class="grid">
         <!-- Trop Cherry – 1g Ceramic Tip (Sativa) -->
-        <article class="card" data-type="sativa">
+        <article class="card" data-slug="trop-cherry-1g-ceramic" data-type="sativa">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Pre-Roll</span>
@@ -503,7 +493,7 @@
               <span class="pilltag">Ceramic Tip</span>
             </div>
             <img class="thumb" loading="lazy" alt="Trop Cherry 1g Ceramic Tip Hash-Infused Sativa Pre-Roll — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/99246852-9869-4dc6-84e2-1788c71eb9d4/79B513A5-4DD3-470F-B72A-CACEF21220BC.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/99246852-9869-4dc6-84e2-1788c71eb9d4/79B513A5-4DD3-470F-B72A-CACEF21220BC.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Trop Cherry — 1g Ceramic Tip <span class="badge">Sativa • Hash-Infused</span></h4>
@@ -512,7 +502,7 @@
               <span class="tag">Smooth burn</span>
               <span class="tag">Daytime elevation</span>
             </div>
-            <p class="copy">Hash-infused, flavor-forward, built for daytime movement.</p>
+            <p class="copy">Hash-infused and built for daytime creatives, grinders, and city runners.</p>
             <div class="actions" aria-label="Actions for Trop Cherry 1g Ceramic">
               <a class="btn primary" href="product.html?slug=trop-cherry-1g-ceramic">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
@@ -521,7 +511,7 @@
         </article>
 
         <!-- Trop Cherry – 2g Wood Tip Blunt (Sativa) -->
-        <article class="card" data-type="sativa">
+        <article class="card" data-slug="trop-cherry-2g-wood-tip" data-type="sativa">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Pre-Roll</span>
@@ -529,17 +519,17 @@
               <span class="pilltag">Hash-Infused</span>
             </div>
             <img class="thumb" loading="lazy" alt="STA 2g Wood Tip Hash-Infused Blunt"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Trop Cherry — 2g Wood Tip Blunt <span class="badge">Sativa • Statement Smoke</span></h4>
             <div class="tags">
               <span class="tag">Loud flavor</span>
               <span class="tag">Extended ride</span>
-              <span class="tag">Wood tip</span>
+              <span class="tag">Hash-infused blunt</span>
             </div>
-            <p class="copy">Long-lasting, terp-heavy, premium draw.</p>
-            <div class="actions" aria-label="Actions for Trop Cherry 2g">
+            <p class="copy">Premium wood tip, terp-heavy pull, and a long-lasting elevating ride.</p>
+            <div class="actions" aria-label="Actions for Trop Cherry 2g Blunt">
               <a class="btn primary" href="product.html?slug=trop-cherry-2g-wood-tip">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
             </div>
@@ -547,7 +537,7 @@
         </article>
 
         <!-- Trop Cherry – 2.5g Mini 5-Pack (Sativa Dogwalkers) -->
-        <article class="card" data-type="sativa">
+        <article class="card" data-slug="trop-cherry-25g-dogwalkers" data-type="sativa">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Pre-Rolls</span>
@@ -555,16 +545,16 @@
               <span class="pilltag">Hash-Infused</span>
             </div>
             <img class="thumb" loading="lazy" alt="Trop Cherry 2.5g Mini 5-Pack Hash-Infused Sativa Dogwalkers — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/d3024561-8b29-4481-aa33-e00454cd36d6/C38D6389-936D-453E-B7C0-1FF0BE4C1E75.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/d3024561-8b29-4481-aa33-e00454cd36d6/C38D6389-936D-453E-B7C0-1FF0BE4C1E75.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Trop Cherry — 2.5g Mini 5-Pack <span class="badge">Sativa • Dogwalkers</span></h4>
             <div class="tags">
-              <span class="tag">Microdosed</span>
-              <span class="tag">Pocket power</span>
+              <span class="tag">Microdosed motivation</span>
+              <span class="tag">Pocket-sized power</span>
               <span class="tag">On-the-go</span>
             </div>
-            <p class="copy">Five minis, all flavor — controlled burn, quick resets.</p>
+            <p class="copy">Five mini escapes — big flavor, controlled burn, pocket ready.</p>
             <div class="actions" aria-label="Actions for Trop Cherry Dogwalkers">
               <a class="btn primary" href="product.html?slug=trop-cherry-25g-dogwalkers">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
@@ -573,7 +563,7 @@
         </article>
 
         <!-- Sugar Runtz – 1g Ceramic Tip (Hybrid) -->
-        <article class="card" data-type="hybrid">
+        <article class="card" data-slug="sugar-runtz-1g-ceramic" data-type="hybrid">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Pre-Roll</span>
@@ -581,24 +571,77 @@
               <span class="pilltag">Ceramic Tip</span>
             </div>
             <img class="thumb" loading="lazy" alt="Sugar Runtz 1g Ceramic Tip Hash-Infused Hybrid Pre-Roll — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/c7f99351-78b6-4c9f-a65e-359fa17855b8/27D02F5E-DCB0-4B16-889A-1C42752F05E2.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/c7f99351-78b6-4c9f-a65e-359fa17855b8/27D02F5E-DCB0-4B16-889A-1C42752F05E2.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Sugar Runtz — 1g Ceramic Tip <span class="badge">Hybrid • Sweet Draw</span></h4>
             <div class="tags">
-              <span class="tag">Sweet</span>
-              <span class="tag">Balanced</span>
-              <span class="tag">Smooth</span>
+              <span class="tag">Sweet aroma</span>
+              <span class="tag">Balanced high</span>
+              <span class="tag">Smooth burn</span>
             </div>
-            <div class="actions" aria-label="Actions for Sugar Runtz 1g">
+            <p class="copy">Hash-infused balance — smooth, potent, candy-forward.</p>
+            <div class="actions" aria-label="Actions for Sugar Runtz 1g Ceramic">
               <a class="btn primary" href="product.html?slug=sugar-runtz-1g-ceramic">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
             </div>
           </div>
         </article>
 
+        <!-- Sugar Runtz – 2g Wood Tip Blunt (Hybrid) -->
+        <article class="card" data-slug="sugar-runtz-2g-wood-tip" data-type="hybrid">
+          <div class="media">
+            <div class="pillbar">
+              <span class="pilltag">Pre-Roll</span>
+              <span class="pilltag">2g Blunt</span>
+              <span class="pilltag">Hash-Infused</span>
+            </div>
+            <img class="thumb" loading="lazy" alt="STA 2g Wood Tip Hash-Infused Blunt"
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w"/>
+          </div>
+          <div class="body">
+            <h4 class="name">Sugar Runtz — 2g Wood Tip Blunt <span class="badge">Hybrid • Heavy Pull</span></h4>
+            <div class="tags">
+              <span class="tag">Gassy sweetness</span>
+              <span class="tag">Long session</span>
+              <span class="tag">Flex piece</span>
+            </div>
+            <p class="copy">Sweet + strong — long ride, rich gas, heavy pull.</p>
+            <div class="actions" aria-label="Actions for Sugar Runtz 2g Blunt">
+              <a class="btn primary" href="product.html?slug=sugar-runtz-2g-wood-tip">View Details</a>
+              <a class="btn" href="/stores">Find In-Store</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sugar Runtz – 2.5g Mini 5-Pack (Hybrid Dogwalkers) -->
+        <article class="card" data-slug="sugar-runtz-25g-dogwalkers" data-type="hybrid">
+          <div class="media">
+            <div class="pillbar">
+              <span class="pilltag">Pre-Rolls</span>
+              <span class="pilltag">5 × 0.5g</span>
+              <span class="pilltag">Hash-Infused</span>
+            </div>
+            <img class="thumb" loading="lazy" alt="Sugar Runtz 2.5g Mini 5-Pack Hash-Infused Hybrid Dogwalkers — STA"
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4809eb4b-d4cf-4f97-a0ad-b8b15fb2ef44/324E4DF3-8724-4381-A440-9B815AD762C3.jpeg?format=500w"/>
+          </div>
+          <div class="body">
+            <h4 class="name">Sugar Runtz — 2.5g Mini 5-Pack <span class="badge">Hybrid • Dogwalkers</span></h4>
+            <div class="tags">
+              <span class="tag">Candy gas</span>
+              <span class="tag">Compact potency</span>
+              <span class="tag">Everyday fire</span>
+            </div>
+            <p class="copy">Five minis — smooth hash-infused power, pocket friendly.</p>
+            <div class="actions" aria-label="Actions for Sugar Runtz Dogwalkers">
+              <a class="btn primary" href="product.html?slug=sugar-runtz-25g-dogwalkers">View Details</a>
+              <a class="btn" href="/stores">Find In-Store</a>
+            </div>
+          </div>
+        </article>
+
         <!-- Holy Grail OG – 1g Ceramic Tip (Indica) -->
-        <article class="card" data-type="indica">
+        <article class="card" data-slug="holy-grail-og-1g-ceramic" data-type="indica">
           <div class="media">
             <div class="pillbar">
               <span class="pilltag">Pre-Roll</span>
@@ -606,7 +649,7 @@
               <span class="pilltag">Ceramic Tip</span>
             </div>
             <img class="thumb" loading="lazy" alt="Holy Grail OG 1g Ceramic Tip Hash-Infused Indica Pre-Roll — STA"
-              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/3b6e1ae7-b501-4ba7-921d-103265ffc850/E451F132-8E81-47EF-A4A1-DAA976AE2416.jpeg?format=500w" />
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/3b6e1ae7-b501-4ba7-921d-103265ffc850/E451F132-8E81-47EF-A4A1-DAA976AE2416.jpeg?format=500w"/>
           </div>
           <div class="body">
             <h4 class="name">Holy Grail OG — 1g Ceramic Tip <span class="badge">Indica • Exotics</span></h4>
@@ -615,8 +658,61 @@
               <span class="tag">Potent</span>
               <span class="tag">Relaxed focus</span>
             </div>
-            <div class="actions" aria-label="Actions for Holy Grail OG 1g">
+            <p class="copy">Creamy, gassy, earthy pine + citrus — heavy but purposeful.</p>
+            <div class="actions" aria-label="Actions for Holy Grail OG 1g Ceramic">
               <a class="btn primary" href="product.html?slug=holy-grail-og-1g-ceramic">View Details</a>
+              <a class="btn" href="/stores">Find In-Store</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Holy Grail OG – 2g Wood Tip Blunt (Indica) -->
+        <article class="card" data-slug="holy-grail-og-2g-wood-tip" data-type="indica">
+          <div class="media">
+            <div class="pillbar">
+              <span class="pilltag">Pre-Roll</span>
+              <span class="pilltag">2g Blunt</span>
+              <span class="pilltag">Hash-Infused</span>
+            </div>
+            <img class="thumb" loading="lazy" alt="STA 2g Wood Tip Hash-Infused Blunt"
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/4abdad85-b791-4284-8140-57af51118f0e/102D9FAD-6CD8-406D-9B95-6689131609FA.jpeg?format=500w"/>
+          </div>
+          <div class="body">
+            <h4 class="name">Holy Grail OG — 2g Wood Tip Blunt <span class="badge">Indica • Nightcap</span></h4>
+            <div class="tags">
+              <span class="tag">Deep body</span>
+              <span class="tag">Rich flavor</span>
+              <span class="tag">End-of-day unwind</span>
+            </div>
+            <p class="copy">Clock-out strain — kush gas, sweet herb, and a heavy nightcap vibe.</p>
+            <div class="actions" aria-label="Actions for Holy Grail OG 2g Blunt">
+              <a class="btn primary" href="product.html?slug=holy-grail-og-2g-wood-tip">View Details</a>
+              <a class="btn" href="/stores">Find In-Store</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Holy Grail OG – 2.5g Mini 5-Pack (Indica Dogwalkers) -->
+        <article class="card" data-slug="holy-grail-og-25g-dogwalkers" data-type="indica">
+          <div class="media">
+            <div class="pillbar">
+              <span class="pilltag">Pre-Rolls</span>
+              <span class="pilltag">5 × 0.5g</span>
+              <span class="pilltag">Hash-Infused</span>
+            </div>
+            <img class="thumb" loading="lazy" alt="Holy Grail OG 2.5g Mini 5-Pack Hash-Infused Indica Dogwalkers — STA"
+              src="https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/3df38a2a-09d3-4bf6-b294-e3507e9a1ca1/06C73B0D-07CE-47E1-860B-E46669E59D93.jpeg?format=500w"/>
+          </div>
+          <div class="body">
+            <h4 class="name">Holy Grail OG — 2.5g Mini 5-Pack <span class="badge">Indica • Dogwalkers</span></h4>
+            <div class="tags">
+              <span class="tag">Calm</span>
+              <span class="tag">Clean burn</span>
+              <span class="tag">Kushy bliss</span>
+            </div>
+            <p class="copy">Five minis — edge-off calm without taking you out.</p>
+            <div class="actions" aria-label="Actions for Holy Grail OG Dogwalkers">
+              <a class="btn primary" href="product.html?slug=holy-grail-og-25g-dogwalkers">View Details</a>
               <a class="btn" href="/stores">Find In-Store</a>
             </div>
           </div>
@@ -628,7 +724,7 @@
       </p>
     </div>
 
-    <!-- Filter script (works across BOTH grids because it filters all .card in this section) -->
+    <!-- Filter script -->
     <script>
       (function(){
         const root = document.querySelector('.sta-catalog'); if(!root) return;
