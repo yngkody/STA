@@ -316,29 +316,17 @@
 
     <script>
       // 1) Variant chips: swap image + update add-to-cart SKU/image
-      document.addEventListener('click', (e) => {
-        const chip = e.target.closest('.v-chip');
-        if(!chip) return;
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.snipcart-add-item');
+  if(!btn) return;
 
-        e.preventDefault();
-        e.stopPropagation();
+  const card = btn.closest('.item');
+  const qtySel = card?.querySelector('.qty');
+  const qty = parseInt(qtySel?.value || '1', 10) || 1;
 
-        const group = chip.closest('.variants');
-        const imgId = group?.getAttribute('data-target-img');
-        const addSel = group?.getAttribute('data-addbtn');
-        const imgEl = imgId ? document.getElementById(imgId) : null;
-        const addBtn = addSel ? document.querySelector(addSel) : null;
+  btn.setAttribute('data-item-quantity', String(qty));
+}, true); // ✅ capture = runs BEFORE Snipcart, but does not block it
 
-        group.querySelectorAll('.v-chip').forEach(c => c.setAttribute('aria-selected','false'));
-        chip.setAttribute('aria-selected','true');
-
-        const src = chip.getAttribute('data-image');
-        if(imgEl && src) imgEl.src = src;
-
-        const sku = chip.getAttribute('data-sku');
-        if(addBtn && sku) addBtn.setAttribute('data-item-id', sku);
-        if(addBtn && src) addBtn.setAttribute('data-item-image', src);
-      });
 
       // 2) Qty -> data-item-quantity (right before add)
       document.addEventListener('click', (e) => {
