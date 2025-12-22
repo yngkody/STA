@@ -29,10 +29,30 @@
 
   <div id="staSnipcartMount"></div>
 <script>
-  fetch('./snipcart.html')
-    .then(r => r.text())
-    .then(html => { document.getElementById('staSnipcartMount').innerHTML = html; });
+  (function loadSnipcartOnce(){
+    // already loaded?
+    if (document.getElementById('snipcart')) return;
+
+    // CSS
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css';
+    document.head.appendChild(css);
+
+    // Root
+    const root = document.createElement('div');
+    root.id = 'snipcart';
+    root.setAttribute('data-api-key', 'ZTdhMTVkNTMtMjU2Mi00ZDZiLThmMjYtMGU5ZTA3Mzk4Y2I0NjM4OTYyNDgzNDg1OTU2NTYx');
+    document.body.appendChild(root);
+
+    // JS
+    const js = document.createElement('script');
+    js.src = 'https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js';
+    js.defer = true;
+    document.body.appendChild(js);
+  })();
 </script>
+
 
   <main>
 
