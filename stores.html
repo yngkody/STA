@@ -26,6 +26,13 @@
     .then(html => document.getElementById('sta-nav').innerHTML = html);
 </script>
 
+  <div id="staSnipcartMount"></div>
+<script>
+  fetch('./snipcart.html')
+    .then(r => r.text())
+    .then(html => { document.getElementById('staSnipcartMount').innerHTML = html; });
+</script>
+
 <section class="sta-map" aria-label="STA Locations">
   <link
     rel="stylesheet"
