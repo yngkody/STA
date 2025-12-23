@@ -1,9 +1,4 @@
-<script>
-/**
- * STA centralized Stripe checkout helper
- * - Attach to any button with: data-stripe-checkout + data-price-id
- * - Optional: data-qty, data-success-url, data-cancel-url
- */
+
 (function () {
   async function createCheckoutSession({ items, successUrl, cancelUrl }) {
     const res = await fetch(`create-checkout-session`, {
@@ -56,4 +51,3 @@
   });
 })();
 
-</script>
