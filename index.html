@@ -16,9 +16,105 @@
     body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif; color: #111; background: #fdfcf9; }
     a { color: inherit; }
 </style>
+
+  <!-- ===== 21+ Age Verification (non-locking) ===== -->
+  <style>
+    .agegate-overlay{
+      position:fixed; inset:0; z-index:9999;
+      display:flex; align-items:center; justify-content:center;
+      padding:24px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter: blur(6px);
+    }
+    .agegate-card{
+      width:min(520px, 100%);
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 16px 48px rgba(0,0,0,.35);
+      padding:22px 20px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#111;
+    }
+    .agegate-card h2{ margin:0 0 8px; font-size:22px; line-height:1.2; }
+    .agegate-card p{ margin:0 0 14px; color:#444; font-size:14px; line-height:1.45; }
+    .agegate-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .agegate-btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:12px 14px; border-radius:12px;
+      font-weight:700; font-size:14px;
+    }
+    .agegate-yes{ background:var(--sta-accent, #c71f2d); color:#fff; }
+    .agegate-no{ background:#111; color:#fff; }
+    .agegate-small{
+      margin-top:10px;
+      font-size:12px;
+      color:#666;
+    }
+    .agegate-small a{ color:inherit; text-decoration:underline; }
+    .agegate-banner{
+      position:fixed; left:14px; right:14px; bottom:14px;
+      z-index:9998;
+      display:none;
+      background:#111;
+      color:#fff;
+      border-radius:14px;
+      padding:12px 12px;
+      box-shadow:0 12px 40px rgba(0,0,0,.25);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .agegate-banner strong{ display:block; font-size:13px; margin-bottom:4px; }
+    .agegate-banner .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .agegate-banner .row a{ color:#fff; text-decoration:underline; font-size:13px; }
+    .agegate-banner .row button{
+      appearance:none; border:0; cursor:pointer;
+      border-radius:10px;
+      padding:10px 12px;
+      font-weight:800; font-size:13px;
+      background:var(--sta-accent, #c71f2d);
+      color:#fff;
+    }
+    .agegate-banner .row .leave{
+      opacity:.9;
+      padding:10px 12px;
+      border-radius:10px;
+      background:rgba(255,255,255,.12);
+      text-decoration:none;
+      font-weight:800;
+    }
+    @media (max-width:420px){
+      .agegate-card{ padding:18px 16px; }
+      .agegate-actions{ gap:8px; }
+    }
+  </style>
+
 </head>
 
 <body>
+
+  <!-- ===== 21+ Age Gate (shows once; only saves YES) ===== -->
+  <div id="agegate" class="agegate-overlay" role="dialog" aria-modal="true" aria-labelledby="agegate-title" style="display:none;">
+    <div class="agegate-card">
+      <h2 id="agegate-title">Are you 21 or older?</h2>
+      <p>This site contains cannabis-related content and is intended for adults 21+. Please confirm your age to continue.</p>
+      <div class="agegate-actions">
+        <button class="agegate-btn agegate-yes" id="agegateYes" type="button">I’m 21+ — Enter</button>
+        <button class="agegate-btn agegate-no" id="agegateNo" type="button">Not 21</button>
+      </div>
+      <div class="agegate-small">
+        <span>Tip: If you clicked the wrong button, you can always change it.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="agegateBanner" class="agegate-banner" aria-live="polite">
+    <strong>21+ only.</strong>
+    <div class="row">
+      <button type="button" id="agegateEnterFromBanner">I’m 21+ — Enter</button>
+      <a class="leave" href="https://www.google.com/" rel="noopener">Leave site</a>
+      <a href="#" id="agegateChange">Change decision</a>
+    </div>
+  </div>
+
 <div id="sta-nav"></div>
 <script>
   fetch('./sta-header.html')
@@ -358,5 +454,94 @@
       }
     })();
   </script>
+
+  <script>
+    (function(){
+      const KEY = "sta_age_verified_v1"; // only set when user says YES
+      const gate = document.getElementById("agegate");
+      const banner = document.getElementById("agegateBanner");
+      const yesBtn = document.getElementById("agegateYes");
+      const noBtn = document.getElementById("agegateNo");
+      const bannerYes = document.getElementById("agegateEnterFromBanner");
+      const change = document.getElementById("agegateChange");
+
+      if(!gate || !banner || !yesBtn || !noBtn || !bannerYes || !change) return;
+
+      function showGate(){
+        gate.style.display = "flex";
+        banner.style.display = "none";
+        // don't freeze the page — user asked for non-locking.
+      }
+      function hideGate(){
+        gate.style.display = "none";
+      }
+      function showBanner(){
+        banner.style.display = "block";
+      }
+
+      function setVerified(){
+        try{
+          // store YES for 30 days (optional). If you want session-only, switch to sessionStorage.
+          const expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000);
+          localStorage.setItem(KEY, String(expiresAt));
+        }catch(e){}
+      }
+      function isVerified(){
+        try{
+          const v = localStorage.getItem(KEY);
+          if(!v) return false;
+          const exp = Number(v);
+          if(!Number.isFinite(exp)) return false;
+          if(Date.now() > exp){
+            localStorage.removeItem(KEY);
+            return false;
+          }
+          return true;
+        }catch(e){
+          return false;
+        }
+      }
+      function clearVerified(){
+        try{ localStorage.removeItem(KEY); }catch(e){}
+      }
+
+      // Initial state
+      if(!isVerified()){
+        showGate();
+      }
+
+      yesBtn.addEventListener("click", function(){
+        setVerified();
+        hideGate();
+        banner.style.display = "none";
+      });
+
+      noBtn.addEventListener("click", function(){
+        // IMPORTANT: do NOT save "no" — so the user is never locked out.
+        hideGate();
+        showBanner();
+      });
+
+      bannerYes.addEventListener("click", function(){
+        setVerified();
+        banner.style.display = "none";
+      });
+
+      change.addEventListener("click", function(e){
+        e.preventDefault();
+        clearVerified(); // optional; ensures they can re-confirm
+        showGate();
+      });
+
+      // Escape closes the modal (still non-locking).
+      document.addEventListener("keydown", function(e){
+        if(e.key === "Escape" && gate.style.display !== "none"){
+          hideGate();
+          showBanner(); // treat as "no" without saving
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>
