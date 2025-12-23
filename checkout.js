@@ -1,14 +1,16 @@
-
+/**
+ * STA centralized Stripe checkout helper
+ */
 (function () {
   async function createCheckoutSession({ items, successUrl, cancelUrl }) {
-    const res = await fetch(`create-checkout-session`, {
+    const res = await fetch(`/api/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items,
         success_url: successUrl || `${location.origin}/success.html`,
-        cancel_url: cancelUrl || location.href
-      })
+        cancel_url: cancelUrl || location.href,
+      }),
     });
 
     if (!res.ok) {
@@ -31,9 +33,9 @@
       const { url } = await createCheckoutSession({
         items: [{ price: priceId, quantity: qty }],
         successUrl: btn.getAttribute("data-success-url"),
-        cancelUrl: btn.getAttribute("data-cancel-url")
+        cancelUrl: btn.getAttribute("data-cancel-url"),
       });
-      location.href = url;
+      window.location.href = url;
     } finally {
       btn.disabled = false;
       btn.textContent = oldText;
@@ -44,10 +46,10 @@
     const btn = e.target.closest("[data-stripe-checkout]");
     if (!btn) return;
     e.preventDefault();
+
     handleClick(btn).catch((err) => {
       console.error(err);
       alert(err.message || "Checkout error. Check console.");
     });
   });
 })();
-
