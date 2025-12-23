@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>STA — Merch</title>
 
-  <!-- Snipcart CSS -->
-
   <style>
     :root{
       --ink:#111;
@@ -17,6 +15,8 @@
       --line:#e6e6e6;
       --max:1200px;
       --g:clamp(14px,3vw,24px);
+      --r:14px;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
     }
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
@@ -37,12 +37,145 @@
       clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
     }
 
-  
+    /* Page */
+    .ec{ background:#F7F5F3; padding:20px var(--g) 72px; overflow-x:hidden; }
+    .ec .wrap{ max-width:var(--max); margin:0 auto; }
+    .ec .h-title{ margin:0 0 6px; font-size:22px; font-weight:950; letter-spacing:-.02em; }
+    .ec .h-sub{ margin:0 0 18px; color:var(--dim); }
 
+    /* List */
+    .ec .list{ display:flex; flex-direction:column; gap:12px; }
+
+    .ec .item{
+      display:grid;
+      grid-template-columns:minmax(0,150px) 1fr minmax(220px,260px);
+      gap:16px;
+      align-items:center;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+    }
+    @media (max-width:900px){
+      .ec .item{ grid-template-columns:minmax(0,120px) minmax(0,1fr); }
+      .ec .pricebox{
+        grid-column:1 / -1;
+        justify-self:stretch;
+        border-left:0;
+        padding-left:0;
+        margin-top:10px;
+      }
+    }
+
+    .ec .thumb{
+      width:100%;
+      height:150px;
+      border:1px solid #eee;
+      border-radius:12px;
+      overflow:hidden;
+      background:#f7f7f7;
+    }
+    .ec .thumb img{ width:100%; height:100%; object-fit:cover; }
+    @media (max-width:900px){ .ec .thumb{ height:120px; } }
+
+    .ec .info{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+    .ec .title{
+      font-weight:950; font-size:15px; line-height:1.25;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    }
+    .ec .meta{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .ec .badge{
+      font-size:12px; font-weight:950;
+      color:#7f1d1d; background:#fff4f3; border:1px solid #ffd7d4;
+      padding:2px 10px; border-radius:999px;
+    }
+    .ec .stock{ color:#0a6b4a; font-weight:950; font-size:13px; }
+
+    .ec .bullets{ margin:2px 0 0; padding:0 0 0 16px; color:#3a3a3a; font-size:13px; }
+    .ec .bullets li{ margin:2px 0; }
+
+    .ec .variants{ display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+    .ec .v-chip{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid #ddd;
+      background:#fff;
+      font-weight:950; font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .ec .v-chip[aria-selected="true"]{
+      border-color:#f0a1a9;
+      box-shadow:0 0 0 3px rgba(199,31,45,.10);
+    }
+    .ec .v-chip img{
+      width:18px; height:18px; border-radius:5px; object-fit:cover; border:1px solid #eee;
+    }
+
+    .ec .pricebox{
+      justify-self:end;
+      display:flex; flex-direction:column; gap:10px;
+      border-left:1px solid #efefef;
+      padding-left:16px;
+      width:100%;
+      max-width:100%;
+    }
+    .ec .price{ display:flex; align-items:baseline; gap:8px; }
+    .ec .price .now{ font-size:18px; font-weight:1000; }
+    .ec .price .was{ font-size:12px; color:#7e8794; text-decoration:line-through; }
+
+    .ec .shipline{ font-size:12px; color:#6a707a; }
+    .ec .qtyline{ display:flex; gap:8px; align-items:center; }
+    .ec select.qty{
+      height:36px;
+      padding:0 10px;
+      border:1px solid #dcdcdc;
+      border-radius:10px;
+      background:#fff;
+      font-weight:950;
+      width:90px;
+    }
+
+    .ec .btn{
+      display:inline-flex; justify-content:center; align-items:center;
+      width:100%; height:42px;
+      border-radius:12px;
+      border:1px solid #dcdcdc;
+      background:#fff;
+      color:#111;
+      font-weight:1000;
+      cursor:pointer;
+      transition:transform .08s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+    }
+    .ec .btn:hover{ background:#f7f7f7; }
+    .ec .btn:active{ transform:translateY(1px); }
+    .ec .btn.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+    .ec .btn.primary:hover{ background:#a81823; border-color:#a81823; }
+
+    .ec .btn.stripe{
+      position:relative;
+      padding-left:44px;
+    }
+    .ec .btn.stripe::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      width:22px; height:22px;
+      border-radius:6px;
+      background:linear-gradient(135deg,#635bff,#00d4ff);
+      box-shadow:0 6px 16px rgba(99,91,255,.25);
+    }
+    .ec .smallnote{ font-size:12px; color:#6a707a; margin-top:-6px; }
   </style>
 </head>
 
 <body>
+  <!-- Stripe checkout helper (centralized) -->
   <script src="checkout.js"></script>
 
   <!-- Central header -->
@@ -56,7 +189,6 @@
           const r = await fetch(url, { cache: 'no-store' });
           if (!r.ok) continue;
           const html = await r.text();
-          // Avoid injecting GitHub 404 HTML into your page
           if (html.includes("There isn't a GitHub Pages site here")) continue;
           navEl.innerHTML = html;
           return;
@@ -67,125 +199,6 @@
   </script>
 
   <section class="ec" aria-label="STA Merch">
-    <style>
-      .ec{ background:#F7F5F3; padding:20px var(--g) 64px; overflow-x:hidden; }
-      .ec .wrap{ max-width:var(--max); margin:0 auto; }
-
-      .ec .h-title{ margin:0 0 6px; font-size:22px; font-weight:900; letter-spacing:-.01em; }
-      .ec .h-sub{ margin:0 0 18px; color:var(--dim); }
-
-      .ec .list{ display:flex; flex-direction:column; gap:12px; }
-
-      .ec .item{
-        display:grid;
-        grid-template-columns:minmax(0,140px) 1fr minmax(180px,240px);
-        gap:16px;
-        align-items:center;
-        background:#fff;
-        border:1px solid var(--line);
-        border-radius:8px;
-        padding:14px 16px;
-      }
-      @media (max-width:820px){
-        .ec .item{
-          grid-template-columns:minmax(0,110px) minmax(0,1fr);
-          grid-auto-rows:auto;
-        }
-        .ec .pricebox{
-          grid-column:1 / -1;
-          justify-self:stretch;
-          border-left:0;
-          padding-left:0;
-          margin-top:8px;
-        }
-      }
-
-      .ec .thumb{
-        width:100%;
-        height:140px;
-        border:1px solid #eee;
-        border-radius:8px;
-        overflow:hidden;
-        background:#f7f7f7;
-      }
-      .ec .thumb img{ width:100%; height:100%; object-fit:cover; }
-      @media(max-width:820px){ .ec .thumb{ height:110px; } }
-
-      .ec .info{ display:flex; flex-direction:column; gap:6px; min-width:0; }
-      .ec .title{
-        font-weight:900; font-size:15px; line-height:1.3;
-        display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
-      }
-      .ec .meta{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-      .ec .badge{ font-size:12px; font-weight:900; color:#7f1d1d; background:#fff4f3; border:1px solid #ffd7d4; padding:2px 8px; border-radius:999px; }
-      .ec .stock{ color:#0a6b4a; font-weight:900; font-size:13px; }
-
-      .ec .bullets{ margin:4px 0 0; padding:0 0 0 16px; color:#3a3a3a; font-size:13px; }
-      .ec .bullets li{ margin:2px 0; }
-
-      .ec .variants{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
-      .ec .v-chip{
-        display:inline-flex; align-items:center; gap:6px;
-        padding:5px 10px; border-radius:999px;
-        border:1px solid #ddd;
-        background:#fff;
-        font-weight:900; font-size:13px;
-        cursor:pointer;
-      }
-      .ec .v-chip[aria-selected="true"]{
-        outline:2px solid #fef3f2;
-        box-shadow:0 0 0 2px #c71f2d1a;
-      }
-      .ec .v-chip img{
-        width:18px; height:18px; border-radius:4px; object-fit:cover; border:1px solid #eee;
-      }
-
-      .ec .pricebox{
-        justify-self:end;
-        display:flex; flex-direction:column; gap:8px;
-        border-left:1px solid #efefef;
-        padding-left:16px;
-        width:100%;
-        max-width:100%;
-      }
-
-      .ec .price{ display:flex; align-items:baseline; gap:8px; }
-      .ec .price .now{ font-size:18px; font-weight:950; }
-      .ec .price .was{ font-size:12px; color:#7e8794; text-decoration:line-through; }
-
-      .ec .shipline{ font-size:12px; color:#6a707a; }
-      .ec .qtyline{ display:flex; gap:8px; align-items:center; }
-      .ec select.qty{
-        height:34px;
-        padding:0 10px;
-        border:1px solid #dcdcdc;
-        border-radius:8px;
-        background:#fff;
-        font-weight:900;
-      }
-
-      .ec .btn{
-        display:inline-flex; justify-content:center; align-items:center;
-        width:100%; height:40px;
-        border-radius:8px;
-        border:1px solid #dcdcdc;
-        background:#fff;
-        color:#111;
-        font-weight:950;
-        cursor:pointer;
-      }
-      .ec .btn.primary{
-        background:var(--accent);
-        border-color:var(--accent);
-        color:#fff;
-      }
-      .ec .btn.primary:hover{ background:#a81823; border-color:#a81823; }
-      .ec .btn:hover{ background:#f7f7f7; }
-
-
-
-    </style>
-
     <div class="wrap">
       <h2 class="h-title">STA Hoodies &amp; Shirts</h2>
       <p class="h-sub">Get high in style with our signature collection!</p>
@@ -212,9 +225,14 @@
               <li>NYC print shop quality</li>
             </ul>
 
-            <div class="variants" data-target-img="hoodie-img" data-addbtn="#hoodie-add">
+            <!-- IMPORTANT:
+              Replace the placeholder price ids below with your real Stripe Price IDs for each variant.
+              Example: data-price-id="price_1ABC..."
+            -->
+            <div class="variants" data-target-img="hoodie-img" data-buybtn="#hoodie-buy">
               <button type="button" class="v-chip" aria-selected="true"
                 data-sku="STA-HOODIE-FRONT-BLK"
+                data-price-id="price_HOODIE_FRONT_PLACEHOLDER"
                 data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w">
                 <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=200w" alt="">
                 Front
@@ -222,6 +240,7 @@
 
               <button type="button" class="v-chip" aria-selected="false"
                 data-sku="STA-HOODIE-BACK-BLK"
+                data-price-id="price_HOODIE_BACK_PLACEHOLDER"
                 data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w">
                 <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=200w" alt="">
                 Back
@@ -240,15 +259,17 @@
               </select>
             </div>
 
-            <button id="hoodie-add" class="snipcart-add-item btn primary"
-              data-item-id="STA-HOODIE-FRONT-BLK"
-              data-item-name="STA Signature Hoodie"
-              data-item-price="85.00"
-              data-item-url="./merch.html"
-              data-item-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
-              data-item-quantity="1">
-              Add to Cart
+            <!-- Stripe Checkout button (centralized through checkout.js) -->
+            <button
+              id="hoodie-buy"
+              class="btn primary stripe"
+              data-stripe-checkout
+              data-price-id="price_HOODIE_FRONT_PLACEHOLDER"
+              data-qty-from="#qh"
+            >
+              Checkout with Stripe
             </button>
+            <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
 
             <a class="btn" href="./merchandise.html?item=sta-hoodie">View details</a>
           </aside>
@@ -274,9 +295,11 @@
               <li>Everyday fit</li>
             </ul>
 
-            <div class="variants" data-target-img="tee-img" data-addbtn="#tee-add">
+            <!-- Replace placeholders with your real Stripe Price IDs -->
+            <div class="variants" data-target-img="tee-img" data-buybtn="#tee-buy">
               <button type="button" class="v-chip" aria-selected="true"
                 data-sku="STA-TEE-FRONT-WHT"
+                data-price-id="price_TEE_FRONT_PLACEHOLDER"
                 data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w">
                 <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=200w" alt="">
                 Front
@@ -284,6 +307,7 @@
 
               <button type="button" class="v-chip" aria-selected="false"
                 data-sku="STA-TEE-BACK-WHT"
+                data-price-id="price_TEE_BACK_PLACEHOLDER"
                 data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w">
                 <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=200w" alt="">
                 Back
@@ -302,15 +326,16 @@
               </select>
             </div>
 
-            <button id="tee-add" class="snipcart-add-item btn primary"
-              data-item-id="STA-TEE-FRONT-WHT"
-              data-item-name="STA Classic Tee"
-              data-item-price="40.00"
-              data-item-url="./merch.html"
-              data-item-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
-              data-item-quantity="1">
-              Add to Cart
+            <button
+              id="tee-buy"
+              class="btn primary stripe"
+              data-stripe-checkout
+              data-price-id="price_TEE_FRONT_PLACEHOLDER"
+              data-qty-from="#qt"
+            >
+              Checkout with Stripe
             </button>
+            <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
 
             <a class="btn" href="./merchandise.html?item=sta-tee">View details</a>
           </aside>
@@ -319,9 +344,10 @@
       </div>
     </div>
 
-
     <script>
-      // Variant chips: swap image + update add-to-cart SKU/image
+      // Variant chips:
+      // - swap image
+      // - update Stripe price id on the matching "Checkout with Stripe" button
       document.addEventListener('click', (e) => {
         const chip = e.target.closest('.v-chip');
         if (!chip) return;
@@ -330,26 +356,35 @@
         if (!group) return;
 
         const imgId = group.getAttribute('data-target-img');
-        const addSel = group.getAttribute('data-addbtn');
+        const buySel = group.getAttribute('data-buybtn');
 
         const imgEl = imgId ? document.getElementById(imgId) : null;
-        const addBtn = addSel ? document.querySelector(addSel) : null;
+        const buyBtn = buySel ? document.querySelector(buySel) : null;
 
         group.querySelectorAll('.v-chip').forEach(c => c.setAttribute('aria-selected','false'));
         chip.setAttribute('aria-selected','true');
 
         const src = chip.getAttribute('data-image');
-        const sku = chip.getAttribute('data-sku');
+        const priceId = chip.getAttribute('data-price-id');
 
         if (imgEl && src) imgEl.src = src;
-        if (addBtn && sku) addBtn.setAttribute('data-item-id', sku);
-        if (addBtn && src) addBtn.setAttribute('data-item-image', src);
+        if (buyBtn && priceId) buyBtn.setAttribute('data-price-id', priceId);
       }, true);
 
+      // Qty binding:
+      // If a Stripe button has data-qty-from="#selector", we copy that select's value into data-qty
+      // so your centralized checkout.js can read it.
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-stripe-checkout]');
+        if (!btn) return;
 
+        const fromSel = btn.getAttribute('data-qty-from');
+        if (!fromSel) return;
 
+        const sel = document.querySelector(fromSel);
+        if (sel) btn.setAttribute('data-qty', sel.value || "1");
+      }, true);
+    </script>
   </section>
-
- 
 </body>
 </html>
