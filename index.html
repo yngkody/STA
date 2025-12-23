@@ -456,92 +456,87 @@
   </script>
 
   <script>
-    (function(){
-      const KEY = "sta_age_verified_v1"; // only set when user says YES
-      const gate = document.getElementById("agegate");
-      const banner = document.getElementById("agegateBanner");
-      const yesBtn = document.getElementById("agegateYes");
-      const noBtn = document.getElementById("agegateNo");
-      const bannerYes = document.getElementById("agegateEnterFromBanner");
-      const change = document.getElementById("agegateChange");
+  (function(){
+    // Session-only: user is asked again when they start a new session (new tab / closed & reopened).
+    const KEY = "sta_age_verified_session_v1";
+    const gate = document.getElementById("agegate");
+    const banner = document.getElementById("agegateBanner");
+    const yesBtn = document.getElementById("agegateYes");
+    const noBtn = document.getElementById("agegateNo");
+    const bannerYes = document.getElementById("agegateEnterFromBanner");
+    const change = document.getElementById("agegateChange");
 
-      if(!gate || !banner || !yesBtn || !noBtn || !bannerYes || !change) return;
+    if(!gate || !banner || !yesBtn || !noBtn) return;
 
-      function showGate(){
-        gate.style.display = "flex";
-        banner.style.display = "none";
-        // don't freeze the page — user asked for non-locking.
-      }
-      function hideGate(){
-        gate.style.display = "none";
-      }
-      function showBanner(){
-        banner.style.display = "block";
-      }
+    function showGate(){
+      gate.hidden = false;
+      gate.style.display = "grid";
+      banner.classList.remove("show");
+    }
+    function hideGate(){
+      gate.hidden = true;
+      gate.style.display = "none";
+    }
+    function showBanner(){
+      banner.classList.add("show");
+    }
+    function hideBanner(){
+      banner.classList.remove("show");
+    }
 
-      function setVerified(){
-        try{
-          // store YES for 30 days (optional). If you want session-only, switch to sessionStorage.
-          const expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000);
-          localStorage.setItem(KEY, String(expiresAt));
-        }catch(e){}
-      }
-      function isVerified(){
-        try{
-          const v = localStorage.getItem(KEY);
-          if(!v) return false;
-          const exp = Number(v);
-          if(!Number.isFinite(exp)) return false;
-          if(Date.now() > exp){
-            localStorage.removeItem(KEY);
-            return false;
-          }
-          return true;
-        }catch(e){
-          return false;
-        }
-      }
-      function clearVerified(){
-        try{ localStorage.removeItem(KEY); }catch(e){}
-      }
+    function isVerified(){
+      try { return sessionStorage.getItem(KEY) === "true"; }
+      catch(e){ return false; }
+    }
+    function setVerified(){
+      try { sessionStorage.setItem(KEY, "true"); } catch(e){}
+    }
+    function clearVerified(){
+      try { sessionStorage.removeItem(KEY); } catch(e){}
+    }
 
-      // Initial state
-      if(!isVerified()){
-        showGate();
-      }
+    // Initial state (ask every new session)
+    if(isVerified()){
+      hideGate();
+      hideBanner();
+    } else {
+      showGate();
+      hideBanner();
+    }
 
-      yesBtn.addEventListener("click", function(){
-        setVerified();
-        hideGate();
-        banner.style.display = "none";
-      });
+    yesBtn.addEventListener("click", function(){
+      setVerified();
+      hideGate();
+      hideBanner();
+    });
 
-      noBtn.addEventListener("click", function(){
-        // IMPORTANT: do NOT save "no" — so the user is never locked out.
-        hideGate();
-        showBanner();
-      });
+    function handleNo(){
+      // Do NOT save anything. Do NOT lock them out.
+      clearVerified();
+      hideGate();
+      showBanner();
+    }
 
+    noBtn.addEventListener("click", handleNo);
+
+    if(bannerYes){
       bannerYes.addEventListener("click", function(){
         setVerified();
-        banner.style.display = "none";
+        hideBanner();
       });
+    }
 
+    if(change){
       change.addEventListener("click", function(e){
         e.preventDefault();
-        clearVerified(); // optional; ensures they can re-confirm
+        clearVerified();
         showGate();
       });
+    }
 
-      // Escape closes the modal (still non-locking).
-      document.addEventListener("keydown", function(e){
-        if(e.key === "Escape" && gate.style.display !== "none"){
-          hideGate();
-          showBanner(); // treat as "no" without saving
-        }
-      });
-    })();
-  </script>
+    // Optional: if they navigate away via the banner "Leave site", they’ll be asked again next time anyway.
+  })();
+</script>
 
 </body>
 </html>
