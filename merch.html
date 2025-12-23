@@ -6,7 +6,6 @@
   <title>STA — Merch</title>
 
   <!-- Snipcart CSS -->
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
 
   <style>
     :root{
@@ -38,20 +37,13 @@
       clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
     }
 
-    .snipcart,
-.snipcart-modal,
-.snipcart__overlay,
-.snipcart__modal,
-.snipcart__box,
-.snipcart-modal__container,
-.snipcart-cart__content {
-  z-index: 2147483647 !important;
-}
+  
 
   </style>
 </head>
 
 <body>
+  <script src="checkout.js"></script>
 
   <!-- Central header -->
   <div id="sta-nav"></div>
@@ -190,9 +182,7 @@
       .ec .btn.primary:hover{ background:#a81823; border-color:#a81823; }
       .ec .btn:hover{ background:#f7f7f7; }
 
-      body.snipcart-open #sta-nav{
-  pointer-events: none;   /* nav can’t block clicks */
-}
+
 
     </style>
 
@@ -328,15 +318,7 @@
 
       </div>
     </div>
-<script>
-document.addEventListener('snipcart.ready', () => {
-  const api = window.Snipcart?.api;
-  if (!api) return;
 
-  api.events.on('cart.opened', () => document.body.classList.add('snipcart-open'));
-  api.events.on('cart.closed', () => document.body.classList.remove('snipcart-open'));
-});
-</script>
 
     <script>
       // Variant chips: swap image + update add-to-cart SKU/image
@@ -364,28 +346,10 @@ document.addEventListener('snipcart.ready', () => {
         if (addBtn && src) addBtn.setAttribute('data-item-image', src);
       }, true);
 
-      // Qty sync BEFORE Snipcart sees the click (capture phase, no blocking)
-      document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.snipcart-add-item');
-        if (!btn) return;
 
-        const card = btn.closest('.item');
-        const qtySel = card ? card.querySelector('select.qty') : null;
-        const qty = parseInt(qtySel?.value || '1', 10) || 1;
-
-        btn.setAttribute('data-item-quantity', String(qty));
-
-        // Optional: ensure item-url is the current page (better for Snipcart validation on Pages)
-        const currentUrl = window.location.origin + window.location.pathname;
-        btn.setAttribute('data-item-url', currentUrl);
-      }, true);
-    </script>
 
   </section>
 
-  <!-- Snipcart Root (ONCE) -->
-  <div hidden id="snipcart" data-api-key="ZTdhMTVkNTMtMjU2Mi00ZDZiLThmMjYtMGU5ZTA3Mzk4Y2I0NjM4OTYyNDgzNDg1OTU2NTYx"></div>
-  <script defer src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
-
+ 
 </body>
 </html>
