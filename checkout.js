@@ -5,11 +5,8 @@
  * - Optional: data-qty, data-success-url, data-cancel-url
  */
 (function () {
-  const API_BASE = window.STRIPE_API_BASE || "https://YOUR_BACKEND_DOMAIN"; 
-  // e.g. https://sta-backend.vercel.app
-
   async function createCheckoutSession({ items, successUrl, cancelUrl }) {
-    const res = await fetch(`${API_BASE}/create-checkout-session`, {
+    const res = await fetch(`/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -29,7 +26,6 @@
   async function handleClick(btn) {
     const priceId = btn.getAttribute("data-price-id");
     const qty = Number(btn.getAttribute("data-qty") || "1");
-
     if (!priceId) throw new Error("Missing data-price-id on checkout button.");
 
     btn.disabled = true;
@@ -42,8 +38,7 @@
         successUrl: btn.getAttribute("data-success-url"),
         cancelUrl: btn.getAttribute("data-cancel-url")
       });
-
-      window.location.href = url;
+      location.href = url;
     } finally {
       btn.disabled = false;
       btn.textContent = oldText;
@@ -60,4 +55,5 @@
     });
   });
 })();
+
 </script>
