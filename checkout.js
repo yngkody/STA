@@ -6,7 +6,7 @@
  */
 (function () {
   async function createCheckoutSession({ items, successUrl, cancelUrl }) {
-    const res = await fetch(`/create-checkout-session`, {
+    const res = await fetch(`create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
