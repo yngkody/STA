@@ -178,6 +178,11 @@
       }
       .ec .btn.primary:hover{ background:#a81823; border-color:#a81823; }
       .ec .btn:hover{ background:#f7f7f7; }
+
+      body.snipcart-open #sta-nav{
+  pointer-events: none;   /* nav can’t block clicks */
+}
+
     </style>
 
     <div class="wrap">
@@ -312,6 +317,15 @@
 
       </div>
     </div>
+<script>
+document.addEventListener('snipcart.ready', () => {
+  const api = window.Snipcart?.api;
+  if (!api) return;
+
+  api.events.on('cart.opened', () => document.body.classList.add('snipcart-open'));
+  api.events.on('cart.closed', () => document.body.classList.remove('snipcart-open'));
+});
+</script>
 
     <script>
       // Variant chips: swap image + update add-to-cart SKU/image
