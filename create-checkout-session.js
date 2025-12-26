@@ -7,14 +7,28 @@ export default async function handler(req, res) {
 
   try {
     const { items, success_url, cancel_url } = req.body || {};
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).send("Missing items");
+    }
 
-    if (!items?.length) return res.status(400).send("Missing items");
+    // ✅ Accept either {priceId} (your cart) or {price} (Stripe native)
+    const line_items = items.map((it) => ({
+      price: it.price || it.priceId,
+      quantity: Math.max(1, parseInt(it.quantity, 10) || 1),
+    }));
+
+    // Guard: if any item is missing a price, fail clearly
+    if (line_items.some((li) => !li.price)) {
+      return res.status(400).send("One or more items missing price/priceId");
+    }
+
+    const origin = req.headers.origin;
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      line_items: items, // [{ price: "price_xxx", quantity: 1 }]
-      success_url: success_url || `${req.headers.origin}/success.html`,
-      cancel_url: cancel_url || `${req.headers.origin}/merch.html`,
+      line_items,
+      success_url: success_url || `${origin}/success.html`,
+      cancel_url: cancel_url || `${origin}/merch.html`,
     });
 
     return res.status(200).json({ url: session.url });
