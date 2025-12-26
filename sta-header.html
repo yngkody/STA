@@ -6,16 +6,16 @@
       --panel:#fff; --line:#e6e6e6; --shadow:0 12px 34px rgba(16,24,40,.10);
       --cap:#ffffff; --max:1200px; --padX:clamp(12px,3.4vw,24px); --padY:clamp(10px,1.8vw,14px);
     }
-    
+
     .sta-banner{
       font:15px/1.45 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
       color:var(--ink); background:var(--bg); width:100%;
       border-bottom:1px solid var(--line);
       position: sticky;
       top: 0;
-      z-index: 100; /* LOW */
+      z-index: 100;
     }
-    
+
     .sta-banner .wrap{
       max-width:var(--max);
       margin:0 auto;
@@ -61,8 +61,98 @@
       text-align:center;
     }
 
+    /* Cart modal */
+    .sta-cartmodal{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.45);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      z-index:1000;
+    }
+    .sta-cartmodal[aria-hidden="false"]{ display:flex; }
+    .sta-cartpanel{
+      width:min(720px,100%);
+      background:#fff;
+      border-radius:16px 16px 0 0;
+      box-shadow:0 24px 80px rgba(0,0,0,.25);
+      padding:14px;
+      max-height:82vh;
+      overflow:auto;
+    }
+    .sta-carthead{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:6px 4px 12px;
+      border-bottom:1px solid var(--line);
+    }
+    .sta-carttitle{ font-weight:950; letter-spacing:-.01em; }
+    .sta-x{
+      width:36px; height:36px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-weight:950;
+    }
+    .sta-cartlist{ display:flex; flex-direction:column; gap:10px; padding:12px 4px; }
+    .sta-cartrow{
+      display:grid;
+      grid-template-columns:56px 1fr auto;
+      gap:10px;
+      align-items:center;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px;
+    }
+    .sta-cartrow img{
+      width:56px; height:56px;
+      border-radius:10px;
+      object-fit:cover;
+      border:1px solid #eee;
+      background:#f7f7f7;
+    }
+    .sta-cartmeta{ min-width:0; }
+    .sta-cartname{ font-weight:900; font-size:14px; line-height:1.2; }
+    .sta-cartsub{ color:var(--dim); font-size:12px; margin-top:2px; }
+    .sta-cartqty{
+      display:flex; align-items:center; gap:8px;
+    }
+    .sta-qbtn{
+      width:34px; height:34px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-weight:950;
+    }
+    .sta-qnum{ font-weight:950; min-width:16px; text-align:center; }
+    .sta-cartfoot{
+      display:flex; gap:10px; flex-wrap:wrap;
+      padding:10px 4px 4px;
+      border-top:1px solid var(--line);
+      position:sticky;
+      bottom:0;
+      background:#fff;
+    }
+    .sta-cartbtn{
+      flex:1 1 220px;
+      height:44px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .sta-cartbtn.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+    .sta-cartbtn.primary:hover{ background:#a81823; border-color:#a81823; }
+
     @media (max-width:640px){
       .sta-right{ width:100%; justify-content:space-between; }
+      .sta-cartpanel{ border-radius:16px 16px 0 0; }
     }
   </style>
 
@@ -90,13 +180,262 @@
           IG
         </a>
 
-        <!-- ✅ Snipcart cart trigger -->
-        <button class="sta-iconbtn sta-cart snipcart-checkout" type="button" aria-label="Open cart">
+        <!-- ✅ Stripe "cart" (client-side cart stored in localStorage) -->
+        <button id="sta-cart-btn" class="sta-iconbtn sta-cart" type="button" aria-label="Open cart">
           🛒
-          <!-- ✅ Snipcart auto-updating count -->
-          <span class="badge snipcart-items-count">0</span>
+          <span id="sta-cart-count" class="badge">0</span>
         </button>
       </nav>
     </div>
   </div>
+
+  <!-- Cart modal (shared across pages) -->
+  <div id="sta-cart-modal" class="sta-cartmodal" aria-hidden="true" role="dialog" aria-label="Shopping cart">
+    <div class="sta-cartpanel" role="document">
+      <div class="sta-carthead">
+        <div class="sta-carttitle">Your Cart</div>
+        <button type="button" class="sta-x" data-cart-close aria-label="Close cart">✕</button>
+      </div>
+
+      <div id="sta-cart-list" class="sta-cartlist"></div>
+
+      <div class="sta-cartfoot">
+        <button type="button" class="sta-cartbtn" id="sta-cart-clear">Clear</button>
+        <button type="button" class="sta-cartbtn primary" id="sta-cart-checkout">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =======================
+       STA Stripe Cart (Front-end)
+       - Stores cart in localStorage so the badge works across pages
+       - Requires a backend endpoint to actually checkout the WHOLE cart:
+         POST /api/create-checkout-session  { items: [{priceId, quantity}] }
+       ======================= */
+
+    (function(){
+      const KEY = "sta_cart_v1";
+
+      function readCart(){
+        try{
+          const raw = localStorage.getItem(KEY);
+          const arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr : [];
+        }catch{ return []; }
+      }
+      function writeCart(cart){
+        localStorage.setItem(KEY, JSON.stringify(cart || []));
+        window.dispatchEvent(new CustomEvent("sta:cart-updated"));
+      }
+      function countItems(cart){
+        return (cart || []).reduce((n, it) => n + (parseInt(it.quantity,10) || 0), 0);
+      }
+
+      function setBadge(){
+        const badge = document.getElementById("sta-cart-count");
+        if(!badge) return;
+        const cart = readCart();
+        badge.textContent = String(countItems(cart));
+      }
+
+      function moneyFromCents(cents){
+        const n = (Number(cents) || 0) / 100;
+        return "$" + n.toFixed(2);
+      }
+
+      function renderCart(){
+        const list = document.getElementById("sta-cart-list");
+        if(!list) return;
+
+        const cart = readCart();
+        if(!cart.length){
+          list.innerHTML = '<div style="color:var(--dim);padding:12px 6px;">Cart is empty.</div>';
+          return;
+        }
+
+        list.innerHTML = cart.map((it, idx) => {
+          const safeName = (it.name || "Item").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+          const safeSku = (it.sku || it.priceId || "").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+          const img = it.image || "";
+          const qty = parseInt(it.quantity,10) || 1;
+          return `
+            <div class="sta-cartrow" data-idx="${idx}">
+              <img src="${img}" alt="">
+              <div class="sta-cartmeta">
+                <div class="sta-cartname">${safeName}</div>
+                <div class="sta-cartsub">${safeSku}</div>
+              </div>
+              <div class="sta-cartqty" aria-label="Quantity controls">
+                <button class="sta-qbtn" type="button" data-dec aria-label="Decrease">−</button>
+                <div class="sta-qnum">${qty}</div>
+                <button class="sta-qbtn" type="button" data-inc aria-label="Increase">+</button>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function openCart(){
+        const modal = document.getElementById("sta-cart-modal");
+        if(!modal) return;
+        modal.setAttribute("aria-hidden","false");
+        setBadge();
+        renderCart();
+      }
+      function closeCart(){
+        const modal = document.getElementById("sta-cart-modal");
+        if(!modal) return;
+        modal.setAttribute("aria-hidden","true");
+      }
+
+      async function checkoutCart(){
+        const cart = readCart();
+        if(!cart.length){
+          alert("Cart is empty.");
+          return;
+        }
+
+        // Build payload the server expects
+        const items = cart.map(it => ({
+          priceId: it.priceId,
+          quantity: parseInt(it.quantity,10) || 1
+        })).filter(it => it.priceId);
+
+        if(!items.length){
+          alert("Missing Stripe price IDs in cart.");
+          return;
+        }
+
+        try{
+          const res = await fetch("/api/create-checkout-session", {
+            method: "POST",
+            headers: { "Content-Type":"application/json" },
+            body: JSON.stringify({ items })
+          });
+
+          if(!res.ok){
+            const txt = await res.text().catch(()=> "");
+            throw new Error("Checkout failed: " + res.status + (txt ? " — " + txt : ""));
+          }
+
+          const data = await res.json();
+          if(data && data.url){
+            window.location.href = data.url;
+            return;
+          }
+
+          if(data && data.sessionId && window.Stripe){
+            // Optional: if you choose to return sessionId instead of url
+            const stripe = window.Stripe(data.publicKey);
+            await stripe.redirectToCheckout({ sessionId: data.sessionId });
+            return;
+          }
+
+          throw new Error("Server response missing { url } (or sessionId).");
+        }catch(err){
+          console.error(err);
+          alert("Couldn’t start Stripe checkout for the cart.\n\nMake sure /api/create-checkout-session exists on your deployment (Vercel serverless) and returns { url }.");
+        }
+      }
+
+      // Global "Add to Cart" handler:
+      // Any button can add to cart if it has:
+      // data-add-to-cart data-price-id="price_..." data-name="..." data-image="..." data-sku="..."
+      // and optionally data-qty-from="#selector" or data-qty="1"
+      document.addEventListener("click", (e) => {
+        const addBtn = e.target.closest("[data-add-to-cart]");
+        if(!addBtn) return;
+
+        const priceId = addBtn.getAttribute("data-price-id");
+        if(!priceId){
+          alert("Missing Stripe Price ID on this item.");
+          return;
+        }
+
+        const fromSel = addBtn.getAttribute("data-qty-from");
+        let qty = parseInt(addBtn.getAttribute("data-qty") || "1", 10) || 1;
+        if(fromSel){
+          const sel = document.querySelector(fromSel);
+          if(sel) qty = parseInt(sel.value || "1", 10) || 1;
+        }
+
+        const name = addBtn.getAttribute("data-name") || "Item";
+        const image = addBtn.getAttribute("data-image") || "";
+        const sku = addBtn.getAttribute("data-sku") || "";
+
+        const cart = readCart();
+
+        // Merge by priceId (simple + reliable for Stripe)
+        const idx = cart.findIndex(x => x.priceId === priceId);
+        if(idx >= 0){
+          cart[idx].quantity = (parseInt(cart[idx].quantity,10) || 0) + qty;
+        }else{
+          cart.push({ priceId, quantity: qty, name, image, sku });
+        }
+
+        writeCart(cart);
+        setBadge();
+
+        // quick feedback
+        addBtn.textContent = "Added ✓";
+        setTimeout(()=>{ addBtn.textContent = addBtn.getAttribute("data-label") || "Add to Cart"; }, 900);
+      }, true);
+
+      // Cart button + modal controls
+      document.addEventListener("click", (e) => {
+        const openBtn = e.target.closest("#sta-cart-btn");
+        if(openBtn){ openCart(); return; }
+
+        if(e.target.matches("[data-cart-close]")){ closeCart(); return; }
+
+        const modal = document.getElementById("sta-cart-modal");
+        if(modal && e.target === modal){ closeCart(); return; }
+
+        if(e.target && e.target.id === "sta-cart-clear"){
+          writeCart([]);
+          setBadge();
+          renderCart();
+          return;
+        }
+
+        if(e.target && e.target.id === "sta-cart-checkout"){
+          checkoutCart();
+          return;
+        }
+
+        // qty +/- inside cart
+        const row = e.target.closest(".sta-cartrow");
+        if(!row) return;
+
+        const idx = parseInt(row.getAttribute("data-idx"),10);
+        if(Number.isNaN(idx)) return;
+
+        const cart = readCart();
+        if(!cart[idx]) return;
+
+        if(e.target.hasAttribute("data-inc")){
+          cart[idx].quantity = (parseInt(cart[idx].quantity,10) || 0) + 1;
+          writeCart(cart);
+          setBadge();
+          renderCart();
+        }else if(e.target.hasAttribute("data-dec")){
+          cart[idx].quantity = (parseInt(cart[idx].quantity,10) || 0) - 1;
+          if(cart[idx].quantity <= 0) cart.splice(idx,1);
+          writeCart(cart);
+          setBadge();
+          renderCart();
+        }
+      }, true);
+
+      // Keep badge in sync across tabs + after add-to-cart
+      window.addEventListener("storage", (e) => {
+        if(e.key === KEY) setBadge();
+      });
+      window.addEventListener("sta:cart-updated", () => setBadge());
+
+      // init
+      setBadge();
+    })();
+  </script>
 </section>
