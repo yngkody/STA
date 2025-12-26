@@ -347,12 +347,23 @@
         const addBtn = e.target.closest("[data-add-to-cart]");
         if(!addBtn) return;
 
-        const priceId = addBtn.getAttribute("data-price-id");
+        // Resolve Stripe Price ID (required)
+        let priceId = addBtn.getAttribute("data-price-id");
+
+        // Support: data-price-from="#someButton" where that element has data-price-id
+        const priceFromSel = addBtn.getAttribute("data-price-from");
+        if(!priceId && priceFromSel){
+          const el = document.querySelector(priceFromSel);
+          if(el) priceId = el.getAttribute("data-price-id") || el.dataset.priceId || null;
+        }
+
         if(!priceId){
-          alert("Missing Stripe Price ID on this item.");
+          console.warn("Add-to-cart clicked but no priceId could be resolved.", addBtn);
+          alert("This item is missing a Stripe Price ID.");
           return;
         }
 
+        // Qty
         const fromSel = addBtn.getAttribute("data-qty-from");
         let qty = parseInt(addBtn.getAttribute("data-qty") || "1", 10) || 1;
         if(fromSel){
@@ -360,8 +371,16 @@
           if(sel) qty = parseInt(sel.value || "1", 10) || 1;
         }
 
+        // Metadata (optional, for display only)
         const name = addBtn.getAttribute("data-name") || "Item";
-        const image = addBtn.getAttribute("data-image") || "";
+
+        let image = addBtn.getAttribute("data-image") || "";
+        const imageFromSel = addBtn.getAttribute("data-image-from");
+        if(!image && imageFromSel){
+          const imgEl = document.querySelector(imageFromSel);
+          if(imgEl && imgEl.tagName === "IMG") image = imgEl.getAttribute("src") || "";
+        }
+
         const sku = addBtn.getAttribute("data-sku") || "";
 
         const cart = readCart();
@@ -370,6 +389,10 @@
         const idx = cart.findIndex(x => x.priceId === priceId);
         if(idx >= 0){
           cart[idx].quantity = (parseInt(cart[idx].quantity,10) || 0) + qty;
+          // keep freshest display fields
+          cart[idx].name = name;
+          cart[idx].image = image;
+          cart[idx].sku = sku;
         }else{
           cart.push({ priceId, quantity: qty, name, image, sku });
         }
@@ -378,8 +401,9 @@
         setBadge();
 
         // quick feedback
+        const original = addBtn.getAttribute("data-label") || addBtn.textContent || "Add to Cart";
         addBtn.textContent = "Added ✓";
-        setTimeout(()=>{ addBtn.textContent = addBtn.getAttribute("data-label") || "Add to Cart"; }, 900);
+        setTimeout(()=>{ addBtn.textContent = original; }, 900);
       }, true);
 
       // Cart button + modal controls
