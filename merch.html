@@ -180,20 +180,39 @@
 
   <!-- Central header -->
   <div id="sta-nav"></div>
-  <script>
+    <script>
+    // Inject global header (sta-header.html) AND execute its scripts.
+    // NOTE: when you set innerHTML, <script> tags do NOT run automatically — so we re-create them.
     (async () => {
       const navEl = document.getElementById('sta-nav');
       const candidates = ['./sta-header.html', '../sta-header.html'];
+
+      const runScripts = (root) => {
+        const scripts = root.querySelectorAll('script');
+        scripts.forEach((old) => {
+          const s = document.createElement('script');
+          // copy attributes
+          for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
+          // copy inline code
+          s.text = old.textContent || '';
+          // replace to force execution
+          old.parentNode.replaceChild(s, old);
+        });
+      };
+
       for (const url of candidates) {
         try {
           const r = await fetch(url, { cache: 'no-store' });
           if (!r.ok) continue;
           const html = await r.text();
           if (html.includes("There isn't a GitHub Pages site here")) continue;
+
           navEl.innerHTML = html;
+          runScripts(navEl);
           return;
         } catch {}
       }
+
       navEl.innerHTML = '';
     })();
   </script>
