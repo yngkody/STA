@@ -269,6 +269,16 @@
             >
               Checkout with Stripe
             </button>
+            <button
+              class="btn"
+              data-add-to-cart
+              data-label="Add to Cart"
+              data-qty-from="#qh"
+              data-name="STA Signature Hoodie — Heavyweight"
+              data-image-from="#hoodie-img"
+              data-price-from="#hoodie-buy"
+              data-sku="STA-HOODIE"
+            >Add to Cart</button>
             <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
 
             <a class="btn" href="./merchandise.html?item=sta-hoodie">View details</a>
@@ -335,6 +345,16 @@
             >
               Checkout with Stripe
             </button>
+            <button
+              class="btn"
+              data-add-to-cart
+              data-label="Add to Cart"
+              data-qty-from="#qt"
+              data-name="STA Classic Tee — Ringspun Cotton"
+              data-image-from="#tee-img"
+              data-price-from="#tee-buy"
+              data-sku="STA-TEE"
+            >Add to Cart</button>
             <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
 
             <a class="btn" href="./merchandise.html?item=sta-tee">View details</a>
@@ -385,6 +405,32 @@
         if (sel) btn.setAttribute('data-qty', sel.value || "1");
       }, true);
     </script>
+  
+    <script>
+      // Make [data-add-to-cart] buttons track the currently selected variant:
+      // - data-price-from="#stripeButtonId" -> copies the Stripe button's current data-price-id
+      // - data-image-from="#imgId" -> copies current image src for cart preview
+      document.addEventListener('click', (e) => {
+        const addBtn = e.target.closest('[data-add-to-cart]');
+        if (!addBtn) return;
+
+        const priceFrom = addBtn.getAttribute('data-price-from');
+        const imgFrom = addBtn.getAttribute('data-image-from');
+
+        if (priceFrom) {
+          const stripeBtn = document.querySelector(priceFrom);
+          const priceId = stripeBtn ? stripeBtn.getAttribute('data-price-id') : null;
+          if (priceId) addBtn.setAttribute('data-price-id', priceId);
+        }
+
+        if (imgFrom) {
+          const imgEl = document.querySelector(imgFrom);
+          const src = imgEl ? (imgEl.currentSrc || imgEl.src) : null;
+          if (src) addBtn.setAttribute('data-image', src);
+        }
+      }, true);
+    </script>
+
   </section>
 </body>
 </html>
