@@ -4,7 +4,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const VERSION = "sta-cart-v3";
 
 export default async function handler(req, res) {
-  if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
   try {
@@ -15,9 +14,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing items[]", version: VERSION });
     }
 
-    // ✅ convert whatever you send into Stripe's required shape
+    // ✅ Stripe requires `price`, not `priceId`
     const line_items = items.map((it) => ({
-      price: it.price || it.priceId || it.priceid, // MUST be "price"
+      price: it.price || it.priceId || it.priceid,
       quantity: Math.max(1, parseInt(it.quantity, 10) || 1),
     }));
 
