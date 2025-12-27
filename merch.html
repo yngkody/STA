@@ -171,6 +171,39 @@
       box-shadow:0 6px 16px rgba(99,91,255,.25);
     }
     .ec .smallnote{ font-size:12px; color:#6a707a; margin-top:-6px; }
+  
+    /* Toast */
+    .sta-toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      background:#111;
+      color:#fff;
+      padding:12px 14px;
+      border-radius:12px;
+      box-shadow:0 14px 30px rgba(0,0,0,.25);
+      font-weight:950;
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s ease, transform .18s ease;
+      z-index:9999;
+      max-width:min(520px, calc(100% - 24px));
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .sta-toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-6px);
+    }
+    .sta-toast .dot{
+      width:10px;height:10px;border-radius:999px;
+      background:var(--accent);
+      flex:0 0 auto;
+    }
+
   </style>
 </head>
 
@@ -455,8 +488,17 @@
 
     if (window.STACart && typeof window.STACart.add === 'function') {
       window.STACart.add({ price, quantity, name, image, variant });
-      // Optional: pop cart open so user sees it worked
-      window.STACart.open();
+      // Toast feedback
+      const t = document.getElementById('sta-toast');
+      const tt = document.getElementById('sta-toast-text');
+      if (t) {
+        if (tt) tt.textContent = `Added to cart (${quantity})`;
+        t.classList.add('show');
+        clearTimeout(window.__staToastTimer);
+        window.__staToastTimer = setTimeout(() => t.classList.remove('show'), 1400);
+      }
+      // If your header defines a badge, refresh it too
+      if (window.STACart && typeof window.STACart.updateBadge === 'function') window.STACart.updateBadge();
     } else {
       console.warn("STACart not loaded. Make sure checkout.js is included on this page.");
     }
@@ -464,5 +506,8 @@
 </script>
 
   </section>
+
+  <div id="sta-toast" class="sta-toast" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="sta-toast-text">Added to cart</span></div>
+
 </body>
 </html>
