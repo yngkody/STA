@@ -30,7 +30,7 @@
   </style>
 
   <!-- Snipcart CSS (loaded once; JS injected below) -->
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css"/>
+  <script src="./checkout.js" defer></script>
 </head>
 
 <body>
@@ -46,24 +46,6 @@
   </script>
 
   <!-- Snipcart (load once) -->
-  <script>
-    (function loadSnipcartOnce(){
-      if (document.getElementById('snipcart')) return;
-
-      // Root
-      const root = document.createElement('div');
-      root.id = 'snipcart';
-      root.setAttribute('data-api-key', 'ZTdhMTVkNTMtMjU2Mi00ZDZiLThmMjYtMGU5ZTA3Mzk4Y2I0NjM4OTYyNDgzNDg1OTU2NTYx');
-      document.body.appendChild(root);
-
-      // JS
-      const js = document.createElement('script');
-      js.src = 'https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js';
-      js.defer = true;
-      document.body.appendChild(js);
-    })();
-  </script>
-
   <!-- ===================== Sticky Jump Bar ===================== -->
   <section class="sta-head" aria-label="Browse STA Products">
     <style>
