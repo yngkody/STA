@@ -103,8 +103,7 @@
         >Add to Cart</button>
 
         <a class="back" href="./merch.html">← Back to merch</a>
-        <div class="note" id="debugNote"></div>
-      </div>
+</div>
     </section>
   </main>
 
@@ -131,7 +130,7 @@
         name: "STA Signature Hoodie — Heavyweight",
         desc: "Heavyweight hoodie with STA print. Clean fit, built to last.",
         priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
-        img: "./images/sta-hoodie.png" // <- replace if you want
+        img: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w" // <- replace if you want
       },
       "sta-tee": {
         name: "STA Signature Tee",
@@ -194,11 +193,7 @@
       }
 
       // little debug note (helps you confirm what the page thinks it is)
-      document.getElementById('debugNote').textContent =
-        "Item: " + item + " • priceId: " + (p.priceId || "MISSING") + (imgParam ? " • img param set" : "");
-    })();
-
-    // 3) Cart (localStorage) – independent of header scripts
+// 3) Cart (localStorage) – independent of header scripts
     const CART_KEY = "sta_cart_v1";
 
     function readCart(){
