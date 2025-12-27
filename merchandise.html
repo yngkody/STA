@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>STA — Product</title>
 
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
-
   <style>
     :root{
       --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9; --line:#e6e6e6;
@@ -83,6 +81,8 @@
 
     a:focus-visible, button:focus-visible, select:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   </style>
+
+  <script src="./checkout.js" defer></script>
 </head>
 <body>
 
@@ -132,135 +132,5 @@
   </main>
 
   <!-- Snipcart Root -->
-  <div id="snipcart" data-api-key="ZTdhMTVkNTMtMjU2Mi00ZDZiLThmMjYtMGU5ZTA3Mzk4Y2I0NjM4OTYyNDgzNDg1OTU2NTYx"></div>
-  <script defer src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
-
-  <script>
-    // Central product data (match what you're selling on merch.html)
-    const PRODUCTS = {
-      "sta-hoodie": {
-        name: "STA Signature Hoodie",
-        basePrice: "85.00",
-        desc: "Heavyweight fleece hoodie with front & back STA artwork.",
-        variants: [
-          {
-            label: "Front",
-            sku: "STA-HOODIE-FRONT-BLK",
-            image: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
-          },
-          {
-            label: "Back",
-            sku: "STA-HOODIE-BACK-BLK",
-            image: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w"
-          }
-        ]
-      },
-      "sta-tee": {
-        name: "STA Classic Tee",
-        basePrice: "40.00",
-        desc: "Soft ringspun cotton tee. Everyday fit.",
-        variants: [
-          {
-            label: "Front",
-            sku: "STA-TEE-FRONT-WHT",
-            image: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
-          },
-          {
-            label: "Back",
-            sku: "STA-TEE-BACK-WHT",
-            image: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w"
-          }
-        ]
-      }
-    };
-
-    // Helpers
-    const $ = (id) => document.getElementById(id);
-    const params = new URLSearchParams(location.search);
-    const key = params.get('item');
-    const initialVariant = (params.get('v') || '0'); // optional ?v=1 for "Back"
-
-    const product = PRODUCTS[key];
-
-    // If missing/invalid key, bounce back
-    if (!product) {
-      location.replace('/merch.html');
-    }
-
-    // Fill base UI
-    $('p-title').textContent = product.name;
-    $('p-desc').textContent = product.desc;
-    $('p-price').textContent = `$${product.basePrice}`;
-
-    // Build variants chips (if any)
-    const variantsEl = $('p-variants');
-    const addBtn = $('add');
-    const imgEl = $('p-img');
-
-    let activeIndex = Math.max(0, Math.min(parseInt(initialVariant,10) || 0, (product.variants?.length || 1) - 1));
-    const active = product.variants?.[activeIndex] || null;
-
-    function applyVariant(v){
-      imgEl.src = v.image;
-      imgEl.alt = `${product.name} — ${v.label}`;
-
-      addBtn.setAttribute('data-item-id', v.sku);
-      addBtn.setAttribute('data-item-name', product.name);
-      addBtn.setAttribute('data-item-price', product.basePrice);
-      addBtn.setAttribute('data-item-image', v.image);
-    }
-
-    if (product.variants && product.variants.length) {
-      variantsEl.hidden = false;
-      variantsEl.innerHTML = '';
-
-      product.variants.forEach((v, idx) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'v-chip';
-        b.setAttribute('aria-selected', idx === activeIndex ? 'true' : 'false');
-        b.textContent = v.label;
-
-        b.addEventListener('click', () => {
-          activeIndex = idx;
-          variantsEl.querySelectorAll('.v-chip').forEach((x,i)=>x.setAttribute('aria-selected', i===idx ? 'true' : 'false'));
-          applyVariant(v);
-
-          // keep URL in sync (so sharing link works)
-          const url = new URL(location.href);
-          url.searchParams.set('v', String(idx));
-          history.replaceState({}, '', url.toString());
-        });
-
-        variantsEl.appendChild(b);
-      });
-
-      applyVariant(active || product.variants[0]);
-    } else {
-      // no variants: still set something
-      imgEl.src = '';
-      addBtn.setAttribute('data-item-id', key);
-      addBtn.setAttribute('data-item-name', product.name);
-      addBtn.setAttribute('data-item-price', product.basePrice);
-    }
-
-    // Sync qty before adding
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.snipcart-add-item');
-      if (!btn) return;
-      const qty = parseInt($('qty').value || '1', 10) || 1;
-      btn.setAttribute('data-item-quantity', String(qty));
-    });
-
-    // Match your working merch.html behavior: force item-url to current deployed URL
-    document.addEventListener('DOMContentLoaded', () => {
-      const pageUrl = window.location.origin + window.location.pathname + window.location.search;
-      const url = addBtn.getAttribute('data-item-url') || '';
-      if (!url || url === '__CURRENT_PAGE__' || url.includes('merch.html')) {
-        addBtn.setAttribute('data-item-url', pageUrl);
-      }
-    });
-  </script>
-
-</body>
+  </body>
 </html>
