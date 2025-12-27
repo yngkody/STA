@@ -88,9 +88,32 @@
 
   <div id="sta-nav"></div>
   <script>
-    fetch('./sta-header.html')
-      .then(r => r.text())
-      .then(html => document.getElementById('sta-nav').innerHTML = html);
+    // Inject shared header AND execute its inline scripts (required on Vercel/GitHub when using innerHTML)
+    (async () => {
+      const navEl = document.getElementById('sta-nav');
+      const candidates = ['./sta-header.html', '../sta-header.html'];
+      for (const url of candidates) {
+        try {
+          const r = await fetch(url, { cache: 'no-store' });
+          if (!r.ok) continue;
+          const html = await r.text();
+          navEl.innerHTML = html;
+
+          // Re-run any scripts that were inside the injected header
+          const scripts = navEl.querySelectorAll('script');
+          scripts.forEach(old => {
+            const s = document.createElement('script');
+            // copy attributes
+            for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
+            s.textContent = old.textContent;
+            old.replaceWith(s);
+          });
+
+          return;
+        } catch (e) {}
+      }
+      navEl.innerHTML = '';
+    })();
   </script>
 
   <main class="wrap">
@@ -115,13 +138,26 @@
             </select>
           </div>
 
-          <button id="add" class="snipcart-add-item btn primary"
-            data-item-id=""
-            data-item-name=""
-            data-item-price=""
-            data-item-url="__CURRENT_PAGE__"
-            data-item-image=""
-            data-item-quantity="1">
+          <button
+            id="p-buy"
+            class="btn primary stripe"
+            data-stripe-checkout
+            data-price-id=""
+            data-qty-from="#qty"
+          >
+            Continue with Stripe
+          </button>
+
+          <button
+            id="p-add"
+            class="btn"
+            style="margin-top:10px;"
+            data-add-to-cart
+            data-price-from="#p-buy"
+            data-qty-from="#qty"
+            data-image-from="#p-img"
+            data-name="Item"
+          >
             Add to Cart
           </button>
 
@@ -129,7 +165,26 @@
         </div>
       </div>
     </div>
-  </main>
+  
+  <script>
+    // Keep "Add to Cart" display name synced with the product title that checkout.js populates
+    (function(){
+      const titleEl = document.getElementById('p-title');
+      const addBtn = document.getElementById('p-add');
+      if(!titleEl || !addBtn) return;
+
+      const sync = () => {
+        const t = (titleEl.textContent || '').trim();
+        if(t) addBtn.setAttribute('data-name', t);
+      };
+
+      // sync now + whenever title changes
+      sync();
+      const mo = new MutationObserver(sync);
+      mo.observe(titleEl, { childList:true, subtree:true, characterData:true });
+    })();
+  </script>
+</main>
 
   <!-- Snipcart Root -->
   </body>
