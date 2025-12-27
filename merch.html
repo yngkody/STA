@@ -176,46 +176,30 @@
 
 <body>
   <!-- Stripe checkout helper (centralized) -->
-  <script src="checkout.js"></script>
+  <script src="./checkout.js" defer></script>
 
   <!-- Central header -->
   <div id="sta-nav"></div>
-    <script>
-    // Inject global header (sta-header.html) AND execute its scripts.
-    // NOTE: when you set innerHTML, <script> tags do NOT run automatically — so we re-create them.
-    (async () => {
-      const navEl = document.getElementById('sta-nav');
-      const candidates = ['./sta-header.html', '../sta-header.html'];
+    
+<script>
+  // Inject global header (sta-header.html)
+  (async () => {
+    const navEl = document.getElementById('sta-nav');
+    const candidates = ['./sta-header.html', '../sta-header.html'];
+    for (const url of candidates) {
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        if (!r.ok) continue;
+        const text = await r.text();
+        if (text.includes("There isn't a GitHub Pages site here")) continue;
+        navEl.innerHTML = text;
+        return;
+      } catch {}
+    }
+    navEl.innerHTML = '';
+  })();
+</script>
 
-      const runScripts = (root) => {
-        const scripts = root.querySelectorAll('script');
-        scripts.forEach((old) => {
-          const s = document.createElement('script');
-          // copy attributes
-          for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
-          // copy inline code
-          s.text = old.textContent || '';
-          // replace to force execution
-          old.parentNode.replaceChild(s, old);
-        });
-      };
-
-      for (const url of candidates) {
-        try {
-          const r = await fetch(url, { cache: 'no-store' });
-          if (!r.ok) continue;
-          const html = await r.text();
-          if (html.includes("There isn't a GitHub Pages site here")) continue;
-
-          navEl.innerHTML = html;
-          runScripts(navEl);
-          return;
-        } catch {}
-      }
-
-      navEl.innerHTML = '';
-    })();
-  </script>
 
   <section class="ec" aria-label="STA Merch">
     <div class="wrap">
@@ -425,30 +409,59 @@
       }, true);
     </script>
   
-    <script>
-      // Make [data-add-to-cart] buttons track the currently selected variant:
-      // - data-price-from="#stripeButtonId" -> copies the Stripe button's current data-price-id
-      // - data-image-from="#imgId" -> copies current image src for cart preview
-      document.addEventListener('click', (e) => {
-        const addBtn = e.target.closest('[data-add-to-cart]');
-        if (!addBtn) return;
+    
+<script>
+  // Add-to-cart wiring (works across pages via checkout.js -> localStorage cart)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-add-to-cart]');
+    if (!btn) return;
 
-        const priceFrom = addBtn.getAttribute('data-price-from');
-        const imgFrom = addBtn.getAttribute('data-image-from');
+    e.preventDefault();
 
-        if (priceFrom) {
-          const stripeBtn = document.querySelector(priceFrom);
-          const priceId = stripeBtn ? stripeBtn.getAttribute('data-price-id') : null;
-          if (priceId) addBtn.setAttribute('data-price-id', priceId);
-        }
+    const qtyFrom = btn.getAttribute('data-qty-from');
+    const qtyEl = qtyFrom ? document.querySelector(qtyFrom) : null;
+    const quantity = Math.max(1, parseInt(qtyEl?.value || "1", 10) || 1);
 
-        if (imgFrom) {
-          const imgEl = document.querySelector(imgFrom);
-          const src = imgEl ? (imgEl.currentSrc || imgEl.src) : null;
-          if (src) addBtn.setAttribute('data-image', src);
-        }
-      }, true);
-    </script>
+    // Resolve current Stripe Price ID (variant-aware)
+    let price = btn.getAttribute('data-price-id') || btn.getAttribute('data-price');
+    if (!price) {
+      const priceFrom = btn.getAttribute('data-price-from');
+      const stripeBtn = priceFrom ? document.querySelector(priceFrom) : null;
+      price = stripeBtn?.getAttribute('data-price-id') || stripeBtn?.getAttribute('data-price');
+    }
+
+    // Resolve current image
+    let image = btn.getAttribute('data-image');
+    if (!image) {
+      const imgFrom = btn.getAttribute('data-image-from');
+      const imgEl = imgFrom ? document.querySelector(imgFrom) : null;
+      image = imgEl ? (imgEl.currentSrc || imgEl.src) : null;
+    }
+
+    // Resolve variant label (Front/Back)
+    let variant = "";
+    const item = btn.closest('.item');
+    if (item) {
+      const activeChip = item.querySelector('.variants .v-chip[aria-selected="true"]');
+      if (activeChip) variant = (activeChip.textContent || "").trim();
+    }
+
+    const name = btn.getAttribute('data-name') || (item?.querySelector('.title')?.textContent || "Item").trim();
+
+    if (!price) {
+      alert("Missing Stripe Price ID for this item.");
+      return;
+    }
+
+    if (window.STACart && typeof window.STACart.add === 'function') {
+      window.STACart.add({ price, quantity, name, image, variant });
+      // Optional: pop cart open so user sees it worked
+      window.STACart.open();
+    } else {
+      console.warn("STACart not loaded. Make sure checkout.js is included on this page.");
+    }
+  }, true);
+</script>
 
   </section>
 </body>
