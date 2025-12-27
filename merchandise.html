@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>STA — Product</title>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>STA — Product</title>
+<style>
     :root{
       --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9; --line:#e6e6e6;
       --max:1100px; --g:clamp(14px,3vw,24px);
@@ -81,14 +81,12 @@
 
     a:focus-visible, button:focus-visible, select:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   </style>
-
-  <script src="./checkout.js" defer></script>
+<script defer="" src="./checkout.js"></script>
 </head>
 <body>
-
-  <div id="sta-nav"></div>
-  <script>
-    // Inject shared header AND execute its inline scripts (required on Vercel/GitHub when using innerHTML)
+<div id="sta-nav"></div>
+<script>
+    // Inject shared header AND execute its inline scripts (required on Vercel when using innerHTML)
     (async () => {
       const navEl = document.getElementById('sta-nav');
       const candidates = ['./sta-header.html', '../sta-header.html'];
@@ -96,14 +94,11 @@
         try {
           const r = await fetch(url, { cache: 'no-store' });
           if (!r.ok) continue;
-          const html = await r.text();
-          navEl.innerHTML = html;
+          navEl.innerHTML = await r.text();
 
           // Re-run any scripts that were inside the injected header
-          const scripts = navEl.querySelectorAll('script');
-          scripts.forEach(old => {
+          navEl.querySelectorAll('script').forEach(old => {
             const s = document.createElement('script');
-            // copy attributes
             for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
             s.textContent = old.textContent;
             old.replaceWith(s);
@@ -114,78 +109,54 @@
       }
       navEl.innerHTML = '';
     })();
-  </script>
+</script>
+<main class="wrap">
+<div class="card">
+<div class="product">
+<div class="media">
+<img alt="" id="p-img" src=""/>
+</div>
+<div>
+<h1 id="p-title"></h1>
+<p class="meta" id="p-desc"></p>
+<div class="price" id="p-price"></div>
+<!-- optional: front/back chips (only shown if product has variants) -->
+<div class="variants" hidden="" id="p-variants"></div>
+<div class="row">
+<label for="qty" style="font-weight:900;">Qty</label>
+<select aria-label="Quantity" class="qty" id="qty">
+<option>1</option><option>2</option><option>3</option><option>4</option>
+</select>
+</div>
 
-  <main class="wrap">
-    <div class="card">
-      <div class="product">
-        <div class="media">
-          <img id="p-img" src="" alt="">
-        </div>
+<button class="btn primary stripe" data-price-id="" data-qty-from="#qty" data-stripe-checkout="" id="p-buy">
+  Continue with Stripe
+</button>
+<button class="btn" data-add-to-cart="" data-image-from="#p-img" data-price-from="#p-buy" data-qty-from="#qty" id="p-add" style="margin-top:10px;">
+  Add to Cart
+</button>
 
-        <div>
-          <h1 id="p-title"></h1>
-          <p class="meta" id="p-desc"></p>
-          <div class="price" id="p-price"></div>
-
-          <!-- optional: front/back chips (only shown if product has variants) -->
-          <div class="variants" id="p-variants" hidden></div>
-
-          <div class="row">
-            <label for="qty" style="font-weight:900;">Qty</label>
-            <select id="qty" class="qty" aria-label="Quantity">
-              <option>1</option><option>2</option><option>3</option><option>4</option>
-            </select>
-          </div>
-
-          <button
-            id="p-buy"
-            class="btn primary stripe"
-            data-stripe-checkout
-            data-price-id=""
-            data-qty-from="#qty"
-          >
-            Continue with Stripe
-          </button>
-
-          <button
-            id="p-add"
-            class="btn"
-            style="margin-top:10px;"
-            data-add-to-cart
-            data-price-from="#p-buy"
-            data-qty-from="#qty"
-            data-image-from="#p-img"
-            data-name="Item"
-          >
-            Add to Cart
-          </button>
-
-          <a class="btn ghost" href="./merch.html" style="margin-top:10px;">Back to merch</a>
-        </div>
-      </div>
-    </div>
-  
-  <script>
-    // Keep "Add to Cart" display name synced with the product title that checkout.js populates
-    (function(){
-      const titleEl = document.getElementById('p-title');
-      const addBtn = document.getElementById('p-add');
-      if(!titleEl || !addBtn) return;
-
-      const sync = () => {
-        const t = (titleEl.textContent || '').trim();
-        if(t) addBtn.setAttribute('data-name', t);
-      };
-
-      // sync now + whenever title changes
-      sync();
-      const mo = new MutationObserver(sync);
-      mo.observe(titleEl, { childList:true, subtree:true, characterData:true });
-    })();
-  </script>
+<a class="btn ghost" href="./merch.html" style="margin-top:10px;">Back to merch</a>
+</div>
+</div>
+</div>
 </main>
+<!-- Snipcart Root -->
 
-  <!-- Snipcart Root -->
-  </body>
+<script>
+  // Keep Add-to-Cart name synced with product title (checkout.js populates)
+  (function(){
+    const titleEl = document.getElementById('p-title');
+    const addBtn = document.getElementById('p-add');
+    if(!titleEl || !addBtn) return;
+    const sync = () => {
+      const t = (titleEl.textContent || '').trim();
+      if(t) addBtn.setAttribute('data-name', t);
+    };
+    sync();
+    const mo = new MutationObserver(sync);
+    mo.observe(titleEl, { childList:true, subtree:true, characterData:true });
+  })();
+</script>
+</body>
 </html>
