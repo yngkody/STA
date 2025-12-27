@@ -1,162 +1,269 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>STA — Product</title>
-<style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>STA Merchandise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
     :root{
-      --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#fdfcf9; --line:#e6e6e6;
-      --max:1100px; --g:clamp(14px,3vw,24px);
+      --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#F7F5F3; --panel:#fff; --line:#e9e9e9;
+      --shadow:0 8px 24px rgba(0,0,0,.08); --radius:18px;
     }
-    *{ box-sizing:border-box; }
-    html,body{ margin:0; padding:0; }
-    body{ font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--bg); }
-    img{ max-width:100%; height:auto; display:block; }
-
-    .wrap{ max-width:var(--max); margin:0 auto; padding:20px var(--g) 64px; }
-    .card{
-      background:#fff; border:1px solid var(--line); border-radius:10px;
-      box-shadow:0 12px 34px rgba(16,24,40,.08);
-      padding:18px;
-    }
-    .product{
-      display:grid;
-      grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
-      gap:22px;
-      align-items:start;
-    }
-    @media(max-width:900px){
-      .product{ grid-template-columns:1fr; }
-    }
-.media{
-  border:1px solid #eee;
-  border-radius:10px;
-  overflow:hidden;
-  background:#f7f7f7;
-
-  /* NEW */
-  height: min(100vh, 800px); /* fills screen but doesn’t go insane on large monitors */
-}
-
-.media img{
-  width:100%;
-  height:100%;
-  object-fit: contain; /* NO CROP */
-  background:#000;     /* optional – makes hoodies look premium */
-}
-
-    
-@media (max-width: 900px){
-  .media{
-    height: 60vh;
-  }
-}
-
-
-    h1{ margin:0 0 6px; font-size:26px; font-weight:900; letter-spacing:-.01em; }
-    .meta{ color:var(--dim); margin:0 0 14px; }
-    .price{ font-size:22px; font-weight:900; margin:10px 0 10px; }
-
-    .variants{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 14px; }
-    .v-chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px; border-radius:999px; background:#fff;
-      border:1px solid #ddd; font-weight:800; font-size:13px; cursor:pointer;
-    }
-    .v-chip[aria-selected="true"]{ outline:2px solid #fef3f2; box-shadow:0 0 0 2px #c71f2d1a; }
-
-    .row{ display:flex; gap:10px; align-items:center; margin:10px 0 14px; }
-    select.qty{ height:40px; padding:0 10px; border:1px solid #dcdcdc; border-radius:8px; background:#fff; font-weight:900; }
-
-    .btn{
-      display:inline-flex; justify-content:center; align-items:center;
-      width:100%; height:44px; border-radius:8px; border:1px solid #dcdcdc;
-      background:#fff; color:#111; font-weight:900; cursor:pointer; text-decoration:none;
-    }
-    .btn.primary{ background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 12px rgba(199,31,45,.18); }
-    .btn.primary:hover{ background:#a81823; border-color:#a81823; transform:translateY(-1px); }
-    .btn.ghost:hover{ background:#f7f7f7; }
-
-    a:focus-visible, button:focus-visible, select:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    main{max-width:1100px;margin:0 auto;padding:22px 16px 56px}
+    .wrap{display:grid;grid-template-columns: 1.1fr .9fr; gap:18px; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+    @media (max-width: 920px){ .wrap{grid-template-columns:1fr} }
+    .media{min-height:540px; background:#0d0d0d; display:flex; align-items:center; justify-content:center; position:relative}
+    .media img{width:100%;height:100%;object-fit:cover; display:block}
+    .media .fallback{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; color:#fff; text-align:center; background:linear-gradient(135deg,#151515,#0b0b0b)}
+    .panel{padding:22px 22px 24px}
+    h1{margin:0 0 8px; font-size:26px; letter-spacing:-.02em}
+    .muted{color:var(--dim); margin:0 0 14px}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:14px 0 18px}
+    label{font-size:13px; color:var(--dim); font-weight:600}
+    select, input{padding:10px 12px;border-radius:12px;border:1px solid var(--line); background:#fff; font-weight:600}
+    .btn{width:100%; padding:14px 14px; border-radius:14px; border:1px solid var(--line); background:#fff; font-weight:800; cursor:pointer}
+    .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+    .btn + .btn{margin-top:10px}
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+    .back{display:inline-block; margin-top:14px; font-weight:800; color:var(--ink); text-decoration:none}
+    .note{margin-top:10px; color:var(--dim); font-size:13px}
   </style>
-<script defer="" src="./checkout.js"></script>
+
+  <!-- Your existing Stripe buy-now wiring (you said this already works) -->
+  <script src="./checkout.js" defer></script>
 </head>
+
 <body>
-<div id="sta-nav"></div>
-<script>
-    // Inject shared header AND execute its inline scripts (required on Vercel when using innerHTML)
-    (async () => {
-      const navEl = document.getElementById('sta-nav');
-      const candidates = ['./sta-header.html', '../sta-header.html'];
-      for (const url of candidates) {
-        try {
-          const r = await fetch(url, { cache: 'no-store' });
-          if (!r.ok) continue;
-          navEl.innerHTML = await r.text();
+  <div id="sta-nav" aria-label="Site navigation"></div>
 
-          // Re-run any scripts that were inside the injected header
-          navEl.querySelectorAll('script').forEach(old => {
-            const s = document.createElement('script');
-            for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
-            s.textContent = old.textContent;
-            old.replaceWith(s);
-          });
+  <main>
+    <section class="wrap" aria-label="Merch item">
+      <div class="media">
+        <img id="p-img" src="" alt="" style="display:none;">
+        <div id="p-fallback" class="fallback">
+          <div>
+            <div style="font-weight:900;font-size:18px;margin-bottom:6px">Image not loading</div>
+            <div style="opacity:.85;font-size:13px">Fix the image URL for this product (see notes below).</div>
+          </div>
+        </div>
+      </div>
 
-          return;
-        } catch (e) {}
+      <div class="panel">
+        <h1 id="p-title">Merch</h1>
+        <p id="p-desc" class="muted">STA merchandise.</p>
+
+        <div class="row">
+          <label for="qty">Qty</label>
+          <select id="qty">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+        </div>
+
+        <!-- BUY NOW (Stripe) -->
+        <button id="buyNow" class="btn primary"
+          data-stripe-checkout
+          data-price-id=""
+          data-qty-from="#qty"
+        >Continue with Stripe</button>
+
+        <!-- CART -->
+        <button id="addToCart" class="btn"
+          data-add-to-cart
+        >Add to Cart</button>
+
+        <a class="back" href="./merch.html">← Back to merch</a>
+        <div class="note" id="debugNote"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 1) Inject header (markup only). Do NOT rely on scripts inside injected HTML.
+    (async function injectHeader(){
+      const host = document.getElementById('sta-nav');
+      try{
+        const res = await fetch('./sta-header.html', { cache: 'no-store' });
+        const html = await res.text();
+        host.innerHTML = html;
+      }catch(e){
+        console.warn('Header inject failed', e);
       }
-      navEl.innerHTML = '';
+      setupCartUI();
+      syncCartBadge();
     })();
-</script>
-<main class="wrap">
-<div class="card">
-<div class="product">
-<div class="media">
-<img alt="" id="p-img" src=""/>
-</div>
-<div>
-<h1 id="p-title"></h1>
-<p class="meta" id="p-desc"></p>
-<div class="price" id="p-price"></div>
-<!-- optional: front/back chips (only shown if product has variants) -->
-<div class="variants" hidden="" id="p-variants"></div>
-<div class="row">
-<label for="qty" style="font-weight:900;">Qty</label>
-<select aria-label="Quantity" class="qty" id="qty">
-<option>1</option><option>2</option><option>3</option><option>4</option>
-</select>
-</div>
 
-<button class="btn primary stripe" data-price-id="" data-qty-from="#qty" data-stripe-checkout="" id="p-buy">
-  Continue with Stripe
-</button>
-<button class="btn" data-add-to-cart="" data-image-from="#p-img" data-price-from="#p-buy" data-qty-from="#qty" id="p-add" style="margin-top:10px;">
-  Add to Cart
-</button>
-
-<a class="btn ghost" href="./merch.html" style="margin-top:10px;">Back to merch</a>
-</div>
-</div>
-</div>
-</main>
-<!-- Snipcart Root -->
-
-<script>
-  // Keep Add-to-Cart name synced with product title (checkout.js populates)
-  (function(){
-    const titleEl = document.getElementById('p-title');
-    const addBtn = document.getElementById('p-add');
-    if(!titleEl || !addBtn) return;
-    const sync = () => {
-      const t = (titleEl.textContent || '').trim();
-      if(t) addBtn.setAttribute('data-name', t);
+    // 2) Product mapping: uses ?item=sta-hoodie or ?item=sta-tee
+    // NOTE: Your merch.html currently has broken image URLs with "..." in them.
+    // Replace these with REAL URLs or local image paths in your repo.
+    const PRODUCTS = {
+      "sta-hoodie": {
+        name: "STA Signature Hoodie — Heavyweight",
+        desc: "Heavyweight hoodie with STA print. Clean fit, built to last.",
+        priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
+        img: "./images/sta-hoodie.png" // <- replace if you want
+      },
+      "sta-tee": {
+        name: "STA Signature Tee",
+        desc: "Soft tee with STA graphic. Everyday staple.",
+        priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
+        img: "./images/sta-tee.png" // <- replace if you want
+      }
     };
-    sync();
-    const mo = new MutationObserver(sync);
-    mo.observe(titleEl, { childList:true, subtree:true, characterData:true });
-  })();
-</script>
+
+    (function populateProduct(){
+      const params = new URLSearchParams(location.search);
+      const item = params.get('item') || 'sta-hoodie';
+      const p = PRODUCTS[item] || PRODUCTS['sta-hoodie'];
+
+      document.getElementById('p-title').textContent = p.name;
+      document.getElementById('p-desc').textContent = p.desc;
+
+      const buyBtn = document.getElementById('buyNow');
+      buyBtn.dataset.priceId = p.priceId;
+
+      // image
+      const img = document.getElementById('p-img');
+      const fallback = document.getElementById('p-fallback');
+      img.alt = p.name;
+
+      // allow overriding image via ?img=
+      const imgParam = params.get('img');
+      const src = imgParam || p.img || '';
+      if (src){
+        img.src = src;
+        img.onload = () => { img.style.display='block'; fallback.style.display='none'; };
+        img.onerror = () => { img.style.display='none'; fallback.style.display='flex'; };
+      } else {
+        img.style.display='none';
+        fallback.style.display='flex';
+      }
+
+      // little debug note (helps you confirm what the page thinks it is)
+      document.getElementById('debugNote').textContent =
+        "Item: " + item + " • priceId: " + (p.priceId || "MISSING") + (imgParam ? " • img param set" : "");
+    })();
+
+    // 3) Cart (localStorage) – independent of header scripts
+    const CART_KEY = "sta_cart_v1";
+
+    function readCart(){
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
+      catch { return []; }
+    }
+    function writeCart(items){
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+      syncCartBadge();
+      renderCartModal();
+    }
+
+    function getQty(){
+      return Math.max(1, parseInt(document.getElementById('qty').value, 10) || 1);
+    }
+
+    function addCurrentToCart(){
+      const params = new URLSearchParams(location.search);
+      const item = params.get('item') || 'sta-hoodie';
+      const p = PRODUCTS[item] || PRODUCTS['sta-hoodie'];
+
+      if (!p.priceId){
+        alert("Missing Stripe priceId for this product.");
+        return;
+      }
+
+      const qty = getQty();
+      const cart = readCart();
+
+      const existing = cart.find(x => x.priceId === p.priceId);
+      if (existing) existing.quantity += qty;
+      else cart.push({ priceId: p.priceId, name: p.name, image: p.img || "", quantity: qty });
+
+      writeCart(cart);
+    }
+
+    document.getElementById('addToCart').addEventListener('click', addCurrentToCart);
+
+    // 4) Header cart UI (badge + modal render)
+    function syncCartBadge(){
+      const cart = readCart();
+      const count = cart.reduce((a,b)=> a + (parseInt(b.quantity,10)||0), 0);
+      const badge = document.getElementById('sta-cart-count');
+      if (badge) badge.textContent = String(count);
+    }
+
+    function setupCartUI(){
+      const btn = document.getElementById('sta-cart-btn');
+      const modal = document.getElementById('sta-cart-modal');
+      const close = modal ? modal.querySelector('[data-close]') : null;
+      const clear = document.getElementById('sta-cart-clear');
+      const checkout = document.getElementById('sta-cart-checkout');
+
+      if (btn && modal){
+        btn.addEventListener('click', () => {
+          modal.style.display = 'block';
+          renderCartModal();
+        });
+      }
+      if (close && modal){
+        close.addEventListener('click', () => modal.style.display = 'none');
+      }
+      if (modal){
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.style.display = 'none';
+        });
+      }
+      if (clear){
+        clear.addEventListener('click', () => writeCart([]));
+      }
+      if (checkout){
+        checkout.addEventListener('click', async () => {
+          // If you already have a working cart->Stripe endpoint, wire it here.
+          // Otherwise, keep using buy-now buttons only.
+          alert("Cart checkout needs your /api/create-checkout-session endpoint (cart -> Stripe).");
+        });
+      }
+
+      renderCartModal();
+    }
+
+    function renderCartModal(){
+      const list = document.getElementById('sta-cart-list');
+      if (!list) return;
+
+      const cart = readCart();
+      if (!cart.length){
+        list.innerHTML = '<div style="padding:10px;color:#5b606b;font-weight:700">Cart is empty</div>';
+        return;
+      }
+
+      list.innerHTML = cart.map((it, idx) => {
+        const name = (it.name || "Item").replace(/</g,"&lt;");
+        const qty = parseInt(it.quantity,10) || 1;
+        return `
+          <div style="display:flex;justify-content:space-between;gap:10px;padding:10px;border-bottom:1px solid #eee">
+            <div style="font-weight:800">${name}<div style="color:#5b606b;font-weight:700;font-size:12px">Qty: ${qty}</div></div>
+            <button data-rm="${idx}" style="border:1px solid #ddd;background:#fff;border-radius:10px;padding:8px 10px;font-weight:900;cursor:pointer">Remove</button>
+          </div>
+        `;
+      }).join("");
+
+      list.querySelectorAll('[data-rm]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-rm'), 10);
+          const c = readCart();
+          c.splice(idx, 1);
+          writeCart(c);
+        });
+      });
+    }
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === CART_KEY) syncCartBadge();
+    });
+  </script>
 </body>
 </html>
