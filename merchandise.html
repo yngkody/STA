@@ -32,6 +32,32 @@
     .btn:disabled{opacity:.6; cursor:not-allowed}
     .back{display:inline-block; margin-top:14px; font-weight:800; color:var(--ink); text-decoration:none}
     .note{margin-top:10px; color:var(--dim); font-size:13px}
+  
+    /* Toast */
+    .sta-toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      background:#111;
+      color:#fff;
+      padding:12px 14px;
+      border-radius:12px;
+      box-shadow:0 14px 30px rgba(0,0,0,.25);
+      font-weight:950;
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s ease, transform .18s ease;
+      z-index:9999;
+      max-width:min(520px, calc(100% - 24px));
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .sta-toast.show{ opacity:1; transform:translateX(-50%) translateY(-6px); }
+    .sta-toast .dot{ width:10px;height:10px;border-radius:999px;background:var(--accent); flex:0 0 auto; }
+
   </style>
 
   <!-- Your existing Stripe buy-now wiring (you said this already works) -->
@@ -126,6 +152,30 @@
       const buyBtn = document.getElementById('buyNow');
       buyBtn.dataset.priceId = p.priceId;
 
+      // Buy-now (Stripe) fallback: your merch page works, but this product page sets priceId dynamically.
+      // Some checkout.js setups only bind on initial markup, so we handle click here too.
+      buyBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const qtySel = document.querySelector(buyBtn.getAttribute('data-qty-from') || '#qty');
+        const quantity = Math.max(1, parseInt(qtySel?.value || '1', 10) || 1);
+        const priceId = buyBtn.dataset.priceId || buyBtn.getAttribute('data-price-id');
+        if (!priceId) { alert('Missing Stripe Price ID for this item.'); return; }
+        try {
+          const r = await fetch('/api/create-checkout-session', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ priceId, quantity, items:[{ priceId, quantity }] })
+          });
+          const data = await r.json().catch(()=> ({}));
+          const url = data.url || data.checkoutUrl || data.checkout_url;
+          if (!r.ok || !url) throw new Error(data.error || 'Checkout failed');
+          window.location.href = url;
+        } catch(err){
+          console.error(err);
+          alert(err?.message || 'Stripe checkout failed');
+        }
+      });
+
       // image
       const img = document.getElementById('p-img');
       const fallback = document.getElementById('p-fallback');
@@ -183,6 +233,9 @@
       else cart.push({ priceId: p.priceId, name: p.name, image: p.img || "", quantity: qty });
 
       writeCart(cart);
+      const t=document.getElementById('sta-toast');
+      const tt=document.getElementById('sta-toast-text');
+      if(t){ if(tt) tt.textContent=`Added to cart (${qty})`; t.classList.add('show'); clearTimeout(window.__staToastTimer); window.__staToastTimer=setTimeout(()=>t.classList.remove('show'),1400); }
     }
 
     document.getElementById('addToCart').addEventListener('click', addCurrentToCart);
@@ -265,5 +318,8 @@
       if (e.key === CART_KEY) syncCartBadge();
     });
   </script>
+
+  <div id="sta-toast" class="sta-toast" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="sta-toast-text">Added to cart</span></div>
+
 </body>
 </html>
