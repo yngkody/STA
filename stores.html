@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>STA — Store Locator</title>
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
-  
-<style>
+  <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
   body{
@@ -16,6 +14,8 @@
   }
 </style>
 
+
+  <script src="./checkout.js" defer></script>
 </head>
 <body>
 
@@ -27,32 +27,6 @@
 </script>
 
   <div id="staSnipcartMount"></div>
-<script>
-  (function loadSnipcartOnce(){
-    // already loaded?
-    if (document.getElementById('snipcart')) return;
-
-    // CSS
-    const css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = 'https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css';
-    document.head.appendChild(css);
-
-    // Root
-    const root = document.createElement('div');
-    root.id = 'snipcart';
-    root.setAttribute('data-api-key', 'ZTdhMTVkNTMtMjU2Mi00ZDZiLThmMjYtMGU5ZTA3Mzk4Y2I0NjM4OTYyNDgzNDg1OTU2NTYx');
-    document.body.appendChild(root);
-
-    // JS
-    const js = document.createElement('script');
-    js.src = 'https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js';
-    js.defer = true;
-    document.body.appendChild(js);
-  })();
-</script>
-
-
 <section class="sta-map" aria-label="STA Locations">
   <link
     rel="stylesheet"
@@ -262,19 +236,6 @@
   </script>
 </section>
 
-
-
-<script>
-(function(){
-  // If homepage header already manages this, this is harmless.
-  document.addEventListener('snipcart.cart.updated', function(e){
-    var b = document.getElementById('staCartCount');
-    if(!b) return;
-    var n = (e && e.detail && e.detail.cart && e.detail.cart.items) ? e.detail.cart.items.count : 0;
-    b.textContent = String(n || 0);
-  });
-})();
-</script>
 
 
 </body>
