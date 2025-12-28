@@ -1,4 +1,4 @@
-/* ===== STA CART (Global) ===== */
+/* ===== STA CART (Global + Stripe Checkout) ===== */
 (function () {
   const CART_KEY = "sta_cart";
 
@@ -17,14 +17,18 @@
   }
 
   function normalizeItem(item) {
-    // Support older keys: img vs image
     const img = item.img || item.image || item.imageUrl || "";
     return {
       id: String(item.id || item.sku || item.key || item.name || "item"),
       name: String(item.name || "STA Item"),
       img: String(img || ""),
       qty: Math.max(1, parseInt(item.qty || 1, 10) || 1),
-      price: item.price != null ? Number(item.price) : null,
+
+      // IMPORTANT: persist Stripe price id
+      priceId: String(item.priceId || item.price_id || item.price || item.stripePriceId || ""),
+
+      // optional display price (not used for Stripe)
+      displayPrice: item.displayPrice != null ? String(item.displayPrice) : "",
     };
   }
 
@@ -51,13 +55,21 @@
     document.body.style.overflow = "";
   }
 
+  function escapeHtml(s) {
+    return String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
   function renderCart() {
     const list = document.getElementById("sta-cart-list");
     if (!list) return;
 
     const cart = readCart().map(normalizeItem);
     writeCart(cart); // rewrite normalized
-
     setBadge(getCount(cart));
 
     if (!cart.length) {
@@ -72,14 +84,13 @@
     list.innerHTML = cart
       .map((it) => {
         const safeImg = it.img || "";
-        const safePrice =
-          typeof it.price === "number" && !Number.isNaN(it.price) ? `$${it.price.toFixed(2)}` : "";
+        const priceLine = it.displayPrice ? escapeHtml(it.displayPrice) : " ";
         return `
           <div class="sta-cartrow" data-id="${encodeURIComponent(it.id)}">
             <img src="${safeImg}" alt="${escapeHtml(it.name)}" onerror="this.style.display='none'">
             <div class="sta-cartmeta">
               <div class="sta-cartname">${escapeHtml(it.name)}</div>
-              <div class="sta-cartsub">${safePrice || " "}</div>
+              <div class="sta-cartsub">${priceLine}</div>
             </div>
             <div class="sta-cartqty">
               <button class="sta-qbtn" type="button" data-qty="-1" aria-label="Decrease quantity">−</button>
@@ -90,15 +101,6 @@
         `;
       })
       .join("");
-  }
-
-  function escapeHtml(s) {
-    return String(s)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
   }
 
   function updateQty(id, delta) {
@@ -116,7 +118,48 @@
     renderCart();
   }
 
-  // Public API in case you want to call from pages after adding items
+  async function stripeCheckoutFromCart() {
+    // only items that actually have Stripe priceId
+    const cart = readCart().map(normalizeItem);
+    const items = cart
+      .filter((x) => x.priceId && x.qty > 0)
+      .map((x) => ({ priceId: x.priceId, quantity: x.qty }));
+
+    if (!items.length) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const btn = document.getElementById("sta-cart-checkout");
+    if (btn) {
+      btn.disabled = true;
+      btn.setAttribute("aria-busy", "true");
+    }
+
+    try {
+      const r = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+
+      const data = await r.json().catch(() => ({}));
+      const url = data.url || data.checkoutUrl || data.checkout_url;
+
+      if (!r.ok || !url) throw new Error(data.error || `Checkout failed (${r.status})`);
+      window.location.href = url;
+    } catch (err) {
+      console.error(err);
+      alert(err?.message || "Stripe checkout failed");
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.removeAttribute("aria-busy");
+      }
+    }
+  }
+
+  // Public API
   window.STA_CART = {
     refresh: renderCart,
     add(item) {
@@ -124,8 +167,16 @@
       const n = normalizeItem(item);
       const existing = cart.find((x) => x.id === n.id);
 
-      if (existing) existing.qty += n.qty;
-      else cart.push(n);
+      if (existing) {
+        existing.qty += n.qty;
+        // keep these updated
+        existing.name = n.name || existing.name;
+        existing.img = n.img || existing.img;
+        existing.priceId = n.priceId || existing.priceId;
+        existing.displayPrice = n.displayPrice || existing.displayPrice;
+      } else {
+        cart.push(n);
+      }
 
       writeCart(cart);
       renderCart();
@@ -133,7 +184,7 @@
   };
 
   function bindOnce() {
-    // Open
+    // Open cart
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("#sta-cart-btn");
       if (!btn) return;
@@ -166,16 +217,20 @@
       clearCart();
     });
 
+    // Stripe checkout (THIS is the important new hook)
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest("#sta-cart-checkout")) return;
+      stripeCheckoutFromCart();
+    });
+
     // Keep badge synced if cart changes in another tab
     window.addEventListener("storage", (e) => {
       if (e.key === CART_KEY) renderCart();
     });
   }
 
-  // Run after DOM ready (works even if header is injected later)
   document.addEventListener("DOMContentLoaded", () => {
     bindOnce();
-    // Poll lightly until header inject exists, then sync badge once
     const start = Date.now();
     const t = setInterval(() => {
       if (document.getElementById("sta-cart-count")) {
