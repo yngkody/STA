@@ -324,44 +324,48 @@
         #sta-root-nyc .sta-brand .cta:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(199,31,45,.32); }
 
        /* ---------- Solid Red Ribbon Swirl (NON-HERO ONLY) ---------- */
+/* ---------- SOLID SWIRLING RIBBON (NON-HERO SECTIONS ONLY) ---------- */
+
 #sta-root-nyc .sta-section,
-#sta-root-nyc .sta-brand{
-  position: relative; /* ensure ::before anchors correctly */
-  overflow: hidden;   /* keep ribbon contained */
+#sta-root-nyc .sta-brand {
+  position: relative;
+  overflow: hidden;
 }
 
+/* Ribbon layer */
 #sta-root-nyc .sta-section::before,
-#sta-root-nyc .sta-brand::before{
-  content:"";
-  position:absolute;
-  inset:-22%;
-  z-index:0;
-  pointer-events:none;
+#sta-root-nyc .sta-brand::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
 
-  /* SOLID ribbon via inline SVG (thick stroke + highlight stroke) */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 700'%3E%3Cpath d='M-120 420 C 140 120 420 680 720 360 S 1220 520 1520 200' fill='none' stroke='%23c71f2d' stroke-width='120' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M-120 420 C 140 120 420 680 720 360 S 1220 520 1520 200' fill='none' stroke='%23ff5a66' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' opacity='0.35'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 800'%3E%3Cpath d='M-200 500 C 200 100 500 900 900 420 S 1400 650 1800 250' fill='none' stroke='%239b1621' stroke-width='70' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M-200 500 C 200 100 500 900 900 420 S 1400 650 1800 250' fill='none' stroke='%23c71f2d' stroke-width='20' stroke-linecap='round' stroke-linejoin='round' opacity='0.28'/%3E%3C/svg%3E");
 
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   background-size: 140% 140%;
-  background-position: 50% 50%;
+  background-position: center;
 
-  opacity:0.22; /* adjust intensity */
-  transform-origin: 50% 50%;
-  animation: staSolidRibbonSwirl 18s ease-in-out infinite;
+  opacity: 0.35;
+  transform-origin: center;
+  animation: staRibbonSwirl 20s ease-in-out infinite;
 }
 
-/* keep your content above the ribbon */
+/* Keep section content above ribbon */
 #sta-root-nyc .sta-section > *,
-#sta-root-nyc .sta-brand > *{
-  position:relative;
-  z-index:1;
+#sta-root-nyc .sta-brand > * {
+  position: relative;
+  z-index: 1;
 }
 
-@keyframes staSolidRibbonSwirl{
-  0%   { transform: rotate(-2deg) translate3d(-1%, 1%, 0) scale(1.02); }
-  50%  { transform: rotate( 3deg) translate3d( 2%,-2%, 0) scale(1.05); }
-  100% { transform: rotate(-2deg) translate3d(-1%, 1%, 0) scale(1.02); }
+/* Subtle swirl motion */
+@keyframes staRibbonSwirl {
+  0%   { transform: rotate(-3deg) translate(-2%, 1%); }
+  50%  { transform: rotate(3deg)  translate(2%, -1%); }
+  100% { transform: rotate(-3deg) translate(-2%, 1%); }
 }
+
 
       </style>
 
