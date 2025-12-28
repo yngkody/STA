@@ -322,62 +322,47 @@
           transition:transform .2s, box-shadow .2s;
         }
         #sta-root-nyc .sta-brand .cta:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(199,31,45,.32); }
-/* ---------- Red Ribbon Swirl Background (NON-HERO ONLY) ---------- */
+
+       /* ---------- Solid Red Ribbon Swirl (NON-HERO ONLY) ---------- */
+#sta-root-nyc .sta-section,
+#sta-root-nyc .sta-brand{
+  position: relative; /* ensure ::before anchors correctly */
+  overflow: hidden;   /* keep ribbon contained */
+}
+
 #sta-root-nyc .sta-section::before,
-#sta-root-nyc .sta-brand::before {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(
-      60% 40% at 20% 30%,
-      rgba(199,31,45,0.18),
-      transparent 70%
-    ),
-    radial-gradient(
-      50% 35% at 80% 70%,
-      rgba(199,31,45,0.15),
-      transparent 75%
-    ),
-    radial-gradient(
-      40% 30% at 50% 50%,
-      rgba(199,31,45,0.12),
-      transparent 70%
-    );
-  filter: blur(40px);
-  z-index: 0;
-  pointer-events: none;
-  animation: staRibbonFloat 22s linear infinite;
+#sta-root-nyc .sta-brand::before{
+  content:"";
+  position:absolute;
+  inset:-22%;
+  z-index:0;
+  pointer-events:none;
+
+  /* SOLID ribbon via inline SVG (thick stroke + highlight stroke) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 700'%3E%3Cpath d='M-120 420 C 140 120 420 680 720 360 S 1220 520 1520 200' fill='none' stroke='%23c71f2d' stroke-width='120' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M-120 420 C 140 120 420 680 720 360 S 1220 520 1520 200' fill='none' stroke='%23ff5a66' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' opacity='0.35'/%3E%3C/svg%3E");
+
+  background-repeat:no-repeat;
+  background-size: 140% 140%;
+  background-position: 50% 50%;
+
+  opacity:0.22; /* adjust intensity */
+  transform-origin: 50% 50%;
+  animation: staSolidRibbonSwirl 18s ease-in-out infinite;
 }
 
-/* Keep content above ribbons */
+/* keep your content above the ribbon */
 #sta-root-nyc .sta-section > *,
-#sta-root-nyc .sta-brand > * {
-  position: relative;
-  z-index: 1;
+#sta-root-nyc .sta-brand > *{
+  position:relative;
+  z-index:1;
 }
 
-@keyframes staRibbonFloat {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-6%) rotate(1.5deg);
-  }
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
+@keyframes staSolidRibbonSwirl{
+  0%   { transform: rotate(-2deg) translate3d(-1%, 1%, 0) scale(1.02); }
+  50%  { transform: rotate( 3deg) translate3d( 2%,-2%, 0) scale(1.05); }
+  100% { transform: rotate(-2deg) translate3d(-1%, 1%, 0) scale(1.02); }
 }
 
-        .snipcart,
-        .snipcart-modal,
-        .snipcart__overlay,
-        .snipcart__modal,
-        .snipcart__box,
-        .snipcart-modal__container,
-        .snipcart-cart__content {
-          z-index: 2147483647 !important;
-        }
       </style>
 
       <!-- HERO -->
