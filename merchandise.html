@@ -5,28 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>STA Merchandise</title>
 
-  <!-- keep if you already use it elsewhere -->
+  <!-- keep your existing checkout helper if you have one -->
   <script src="./checkout.js" defer></script>
 
   <style>
     :root{
-      --ink:#0f0f0f;
-      --dim:#666b74;
-      --accent:#c71f2d;
-      --bg:#f7f5f3;
-      --panel:#fff;
-      --line:#e7e7e7;
+      --ink:#0f0f0f; --dim:#666b74; --accent:#c71f2d;
+      --bg:#f7f5f3; --panel:#fff; --line:#e7e7e7;
       --shadow:0 14px 40px rgba(0,0,0,.10);
       --r:18px;
-
-      /* set this to match the rest of your site width */
-      --max:1180px;
+      --max:1100px;
       --g:clamp(14px,3vw,22px);
     }
 
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
-
     body{
       font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
       color:var(--ink);
@@ -35,56 +28,10 @@
         radial-gradient(900px 520px at 90% 0%, rgba(199,31,45,.06), transparent 55%),
         var(--bg);
     }
-
     a{ color:inherit; text-decoration:none; }
-    img{ display:block; max-width:100%; }
+    main{ max-width:var(--max); margin:0 auto; padding:22px var(--g) 70px; }
 
-    /* ===== HEADER CONTAINER (CENTER IT, DON’T CLIP IT) ===== */
-    #sta-nav{
-      width:100%;
-      display:flex;
-      justify-content:center;
-    }
-    #sta-nav > *{
-      width:100%;
-      max-width:var(--max);
-      padding:0 var(--g);
-    }
-
-    /* Cart badge that we can inject onto whatever cart element exists */
-    .sta-cart-wrap{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .sta-cart-badge{
-      position:absolute;
-      top:-6px;
-      right:-6px;
-      min-width:18px;
-      height:18px;
-      padding:0 5px;
-      border-radius:999px;
-      background:var(--accent);
-      color:#fff;
-      font-size:11px;
-      font-weight:900;
-      line-height:18px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 10px 18px rgba(199,31,45,.25);
-      pointer-events:none;
-    }
-
-    /* ===== PAGE ===== */
-    main{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:18px var(--g) 70px;
-    }
-
+    /* ===== Product layout ===== */
     .wrap{
       background:var(--panel);
       border:1px solid var(--line);
@@ -95,9 +42,7 @@
       grid-template-columns: 1.1fr .9fr;
       min-height:560px;
     }
-    @media (max-width: 920px){
-      .wrap{ grid-template-columns:1fr; }
-    }
+    @media (max-width: 920px){ .wrap{ grid-template-columns:1fr; } }
 
     .media{
       background:#0b0b0b;
@@ -108,6 +53,7 @@
       width:100%;
       height:100%;
       object-fit:cover;
+      display:block;
     }
     .fallback{
       position:absolute; inset:0;
@@ -126,7 +72,6 @@
 
     .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:14px 0 16px; }
     label{ font-size:13px; color:var(--dim); font-weight:850; }
-
     select{
       height:40px;
       padding:0 12px;
@@ -150,7 +95,6 @@
       justify-content:center;
       gap:10px;
       transition:transform .08s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
-      user-select:none;
     }
     .btn:hover{ background:#f7f7f7; }
     .btn:active{ transform:translateY(1px); }
@@ -160,7 +104,6 @@
       color:#fff;
     }
     .btn.primary:hover{ background:#a81823; border-color:#a81823; }
-
     .btn.stripe::before{
       content:"";
       width:18px; height:18px;
@@ -169,7 +112,6 @@
       box-shadow:0 10px 22px rgba(99,91,255,.22);
       display:inline-block;
     }
-
     .btn + .btn{ margin-top:10px; }
     .btn:disabled{ opacity:.65; cursor:not-allowed; }
 
@@ -179,28 +121,64 @@
       font-weight:1000;
       color:#121212;
     }
-    .note{
-      margin-top:10px;
-      color:var(--dim);
-      font-size:13px;
-      font-weight:650;
+
+    /* ===== Header injection host ===== */
+    #sta-nav{ width:100%; }
+
+    /* ===== Make injected STA header SHORT + consistent (NO CLIPPING) =====
+       Your issue was wrapping + extra padding, then you tried max-height/overflow hidden which killed nav/items.
+       This fixes height without hiding anything.
+    */
+    #sta-nav .sta-banner{ position:sticky !important; top:0 !important; z-index:100 !important; }
+
+    #sta-nav .sta-banner .wrap{
+      max-width:var(--max) !important;
+      padding:10px var(--g) !important;   /* shorter */
+      gap:10px !important;
+      flex-wrap:nowrap !important;        /* prevents tall wrap */
+      align-items:center !important;
     }
 
-    /* Toast */
-    .toast{
+    #sta-nav .sta-brand{ white-space:nowrap !important; }
+    #sta-nav .sta-brand .sub{ display:none !important; } /* keeps header compact */
+
+    #sta-nav .sta-actions{
+      flex-wrap:nowrap !important;
+      overflow-x:auto !important;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+    }
+    #sta-nav .sta-actions::-webkit-scrollbar{ display:none; }
+
+    #sta-nav .sta-chip{
+      padding:7px 10px !important;        /* slightly smaller pills */
+      font-weight:850 !important;
+    }
+
+    #sta-nav .sta-right{
+      flex-wrap:nowrap !important;
+      gap:8px !important;
+      margin-left:auto !important;
+      align-items:center !important;
+    }
+
+    /* On very small screens, let it wrap once, but still stay tight */
+    @media (max-width: 520px){
+      #sta-nav .sta-banner .wrap{ flex-wrap:wrap !important; }
+      #sta-nav .sta-right{ width:100% !important; justify-content:space-between !important; }
+    }
+
+    /* ===== Toast ===== */
+    .sta-toast{
       position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
       background:#0f0f0f; color:#fff; padding:10px 14px; border-radius:12px;
       font-weight:900; z-index:9999; box-shadow:0 10px 30px rgba(0,0,0,.25);
-      opacity:0; pointer-events:none;
-      transition:opacity .2s ease;
-      max-width:calc(100vw - 28px);
-      text-align:center;
     }
-    .toast.show{ opacity:1; }
   </style>
 </head>
 
 <body>
+  <!-- Injected header lives here -->
   <div id="sta-nav" aria-label="Site navigation"></div>
 
   <main>
@@ -226,59 +204,79 @@
           </select>
         </div>
 
-        <!-- Stripe -->
-        <button id="buyNow" class="btn primary stripe" type="button" data-stripe-checkout data-price-id="">
+        <button id="buyNow" class="btn primary stripe" data-stripe-checkout data-price-id="">
           Continue with Stripe
         </button>
 
-        <!-- Add to cart -->
         <button id="addToCart" class="btn" type="button">
           Add to Cart
         </button>
 
         <a class="back" href="./merch.html">← Back to merch</a>
-        <div class="note">Cart count updates in the header automatically.</div>
       </div>
     </section>
   </main>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
   <script>
-    /* =========================
-       NAV INJECT (use your real header)
-       ========================= */
-    async function injectHeader(){
+    /* =============================
+       1) Inject sta-header.html
+       ============================= */
+    (async function injectHeader(){
       const host = document.getElementById('sta-nav');
       try{
         const res = await fetch('./sta-header.html', { cache:'no-store' });
         if(!res.ok) throw new Error('sta-header.html not found');
-        const html = await res.text();
-        if(!html || html.trim().length < 40) throw new Error('sta-header.html empty');
-        host.innerHTML = html;
-
-        // After header loads, ensure we have a badge to update
-        ensureCartBadge();
-        updateCartBadge(getCartCount());
+        host.innerHTML = await res.text();
       }catch(e){
-        // If header file is missing, fail loud but still usable
-        host.innerHTML = `<div style="max-width:var(--max);margin:0 auto;padding:14px var(--g);color:var(--dim);font-weight:900;">
-          Missing sta-header.html (nav).
-        </div>`;
-      }
-    }
+        // Minimal fallback (still includes a cart button + badge)
+        host.innerHTML = `
+          <div style="background:#0f0f0f;color:#fff;border-bottom:1px solid #222;">
+            <div style="max-width:${getComputedStyle(document.documentElement).getPropertyValue('--max')||'1100px'};margin:0 auto;padding:10px ${getComputedStyle(document.documentElement).getPropertyValue('--g')||'16px'};display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div style="font-weight:1000;letter-spacing:.08em;">STA</div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;font-weight:850;">
+                <a href="./index.html" style="color:#fff;opacity:.9;">Home</a>
+                <a href="./products.html" style="color:#fff;opacity:.9;">Products</a>
+                <a href="./merch.html" style="color:#fff;opacity:1;text-decoration:underline;text-underline-offset:4px;">Merch</a>
+              </div>
+              <button id="sta-cart-btn" type="button" style="background:#fff;color:#0f0f0f;border:none;border-radius:999px;padding:6px 12px;font-weight:950;cursor:pointer;">
+                🛒 <span id="sta-cart-count" style="background:#c71f2d;color:#fff;border-radius:999px;padding:2px 6px;font-size:11px;">0</span>
+              </button>
+            </div>
+          </div>
 
-    /* =========================
-       PRODUCT DATA + POPULATE
-       ========================= */
+          <div id="sta-cart-modal" class="sta-cartmodal" aria-hidden="true" role="dialog" aria-label="Shopping cart">
+            <div class="sta-cartpanel" role="document">
+              <div class="sta-carthead">
+                <div class="sta-carttitle">Your Cart</div>
+                <button type="button" class="sta-x" data-cart-close aria-label="Close cart">✕</button>
+              </div>
+              <div id="sta-cart-list" class="sta-cartlist"></div>
+              <div class="sta-cartfoot">
+                <button type="button" class="sta-cartbtn" id="sta-cart-clear">Clear</button>
+                <button type="button" class="sta-cartbtn primary" id="sta-cart-checkout">Checkout</button>
+              </div>
+            </div>
+          </div>
+        `;
+      } finally {
+        // once header exists, sync badge + bind cart UI
+        STA_CART.refreshBadge();
+      }
+    })();
+
+    /* =============================
+       2) Product data + populate
+       ============================= */
     const PRODUCTS = {
       "sta-hoodie": {
+        id: "sta-hoodie",
         name: "STA Signature Hoodie — Heavyweight",
         desc: "Heavyweight hoodie with STA print. Clean fit, built to last.",
         priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
         img: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
       },
       "sta-tee": {
+        id: "sta-tee",
         name: "STA Classic Tee — Ringspun Cotton",
         desc: "Soft ringspun cotton tee with STA graphic. Everyday staple.",
         priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
@@ -288,9 +286,20 @@
 
     function qs(name){ return new URLSearchParams(location.search).get(name); }
 
-    function populate(){
-      const item = qs('item') || 'sta-hoodie';
-      const p = PRODUCTS[item] || PRODUCTS['sta-hoodie'];
+    const PAGE = {
+      currentItemKey: null,
+      currentProduct: null,
+      getQty(){
+        return Math.max(1, parseInt(document.getElementById('qty')?.value || '1', 10) || 1);
+      }
+    };
+
+    (function populate(){
+      const itemKey = qs('item') || 'sta-hoodie';
+      const p = PRODUCTS[itemKey] || PRODUCTS['sta-hoodie'];
+
+      PAGE.currentItemKey = itemKey;
+      PAGE.currentProduct = p;
 
       const titleEl = document.getElementById('p-title');
       const descEl  = document.getElementById('p-desc');
@@ -300,7 +309,8 @@
 
       titleEl.textContent = p.name;
       descEl.textContent  = p.desc;
-      buyBtn.setAttribute('data-price-id', p.priceId);
+
+      buyBtn.setAttribute('data-price-id', p.priceId || '');
 
       const src = qs('img') || p.img || '';
       imgEl.alt = p.name;
@@ -313,103 +323,270 @@
         imgEl.onload = () => { fbEl.style.display = 'none'; imgEl.style.display = 'block'; };
         imgEl.onerror = () => { imgEl.style.display = 'none'; fbEl.style.display = 'flex'; };
       }
-    }
+    })();
 
-    /* =========================
-       CART (localStorage)
-       ========================= */
-    function toast(msg){
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(()=> t.classList.remove('show'), 1200);
-    }
+    /* =============================
+       3) Cart (localStorage) + UI
+       - Updates #sta-cart-count (in injected header)
+       - Renders modal list (in injected header)
+       - Checkout uses Stripe /api/create-checkout-session
+       ============================= */
+    const STA_CART = (function(){
+      const CART_KEY = 'sta_cart';
 
-    function getCart(){
-      try { return JSON.parse(localStorage.getItem('sta_cart') || '[]'); }
-      catch { return []; }
-    }
-    function setCart(cart){
-      localStorage.setItem('sta_cart', JSON.stringify(cart));
-      updateCartBadge(getCartCount());
-    }
-    function getCartCount(){
-      const cart = getCart();
-      return cart.reduce((sum, x) => sum + (Number(x.qty) || 0), 0);
-    }
-
-    // Find an existing cart element in your real header and guarantee a badge exists
-    function ensureCartBadge(){
-      // If your header already has a badge we can update, we’re good.
-      const existing =
-        document.querySelector('[data-cart-count]') ||
-        document.querySelector('#cartCount') ||
-        document.querySelector('.cart-count') ||
-        document.querySelector('.cart-badge') ||
-        document.querySelector('.snipcart-items-count');
-
-      if (existing) return;
-
-      // Otherwise: locate a cart link/button and inject our own badge.
-      const cartEl =
-        document.querySelector('a[href*="cart"]') ||
-        document.querySelector('a[aria-label*="cart" i]') ||
-        document.querySelector('button[aria-label*="cart" i]') ||
-        document.querySelector('.snipcart-checkout') ||
-        document.querySelector('.cart') ||
-        document.querySelector('.cart-btn');
-
-      if (!cartEl) return;
-
-      // Wrap so badge positions correctly
-      if (!cartEl.classList.contains('sta-cart-wrap')) {
-        cartEl.classList.add('sta-cart-wrap');
+      function read(){
+        try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
+        catch { return []; }
+      }
+      function write(cart){
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
       }
 
-      const badge = document.createElement('span');
-      badge.className = 'sta-cart-badge';
-      badge.setAttribute('data-cart-count', 'true');
-      badge.textContent = '0';
-      cartEl.appendChild(badge);
-    }
+      function normalize(x){
+        const img = x.img || x.image || x.imageUrl || '';
+        return {
+          id: String(x.id || ''),
+          name: String(x.name || 'STA Item'),
+          img: String(img || ''),
+          qty: Math.max(1, parseInt(x.qty || 1, 10) || 1),
+          priceId: String(x.priceId || x.price_id || '')
+        };
+      }
 
-    function updateCartBadge(count){
-      const el =
-        document.querySelector('[data-cart-count]') ||
-        document.querySelector('#cartCount') ||
-        document.querySelector('.cart-count') ||
-        document.querySelector('.cart-badge') ||
-        document.querySelector('.snipcart-items-count');
+      function count(cart){
+        return cart.reduce((sum, it) => sum + (it.qty || 0), 0);
+      }
 
-      if (el) el.textContent = String(count);
-    }
+      function badgeEl(){
+        return document.getElementById('sta-cart-count'); // from sta-header.html
+      }
 
-    // Add to cart button
-    function addToCart(){
-      const itemId = qs('item') || 'sta-hoodie';
-      const name = document.getElementById('p-title')?.textContent?.trim() || 'STA Item';
-      const img  = document.getElementById('p-img')?.getAttribute('src') || '';
-      const qty  = Math.max(1, parseInt(document.getElementById('qty')?.value || '1', 10) || 1);
+      function refreshBadge(){
+        const cart = read().map(normalize);
+        const el = badgeEl();
+        if (el) el.textContent = String(count(cart));
+      }
 
-      const cart = getCart();
-      const existing = cart.find(x => x.id === itemId);
+      function toast(msg){
+        const t = document.createElement('div');
+        t.className = 'sta-toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(()=> t.remove(), 1400);
+      }
 
-      if (existing) existing.qty += qty;
-      else cart.push({ id:itemId, name, img, qty });
+      function modal(){
+        return document.getElementById('sta-cart-modal');
+      }
+      function listEl(){
+        return document.getElementById('sta-cart-list');
+      }
 
-      setCart(cart);
-      toast(`Added to cart (${qty})`);
-    }
+      function open(){
+        const m = modal();
+        if (!m) return;
+        render();
+        m.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+      function close(){
+        const m = modal();
+        if (!m) return;
+        m.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
 
-    /* =========================
-       STRIPE FALLBACK (keeps your working checkout)
-       ========================= */
-    function getQty(){
-      return Math.max(1, parseInt(document.getElementById('qty')?.value || '1', 10) || 1);
-    }
+      function render(){
+        const list = listEl();
+        if (!list) { refreshBadge(); return; }
 
-    async function goStripeCheckout(priceId, quantity) {
+        let cart = read().map(normalize);
+        write(cart); // store normalized
+        refreshBadge();
+
+        if (!cart.length){
+          list.innerHTML = `<div style="padding:14px;color:#5b606b;font-weight:750;">Your cart is empty.</div>`;
+          return;
+        }
+
+        list.innerHTML = cart.map((it) => {
+          const safeName = escapeHtml(it.name);
+          const safeImg = it.img || '';
+          return `
+            <div class="sta-cartrow" data-id="${encodeURIComponent(it.id)}">
+              <img src="${safeImg}" alt="${safeName}" onerror="this.style.display='none'">
+              <div class="sta-cartmeta">
+                <div class="sta-cartname">${safeName}</div>
+                <div class="sta-cartsub">${escapeHtml(it.priceId ? '' : '')}</div>
+              </div>
+              <div class="sta-cartqty">
+                <button class="sta-qbtn" type="button" data-qty="-1" aria-label="Decrease quantity">−</button>
+                <div class="sta-qnum">${it.qty}</div>
+                <button class="sta-qbtn" type="button" data-qty="+1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function escapeHtml(s){
+        return String(s)
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      function add(item){
+        const cart = read().map(normalize);
+        const n = normalize(item);
+        if (!n.id) return;
+
+        const existing = cart.find(x => x.id === n.id);
+        if (existing) {
+          existing.qty += n.qty;
+          // keep priceId/img/name up to date
+          existing.priceId = n.priceId || existing.priceId;
+          existing.img = n.img || existing.img;
+          existing.name = n.name || existing.name;
+        } else {
+          cart.push(n);
+        }
+
+        write(cart);
+        refreshBadge();
+        toast(`Added to cart (${n.qty})`);
+      }
+
+      function setQty(id, delta){
+        const cart = read().map(normalize);
+        const it = cart.find(x => x.id === id);
+        if (!it) return;
+        it.qty = Math.max(1, it.qty + delta);
+        write(cart);
+        render();
+      }
+
+      function clear(){
+        write([]);
+        render();
+      }
+
+      async function checkout(){
+        const cart = read().map(normalize).filter(x => x.priceId && x.qty > 0);
+
+        if (!cart.length){
+          toast('Cart is empty');
+          return;
+        }
+
+        // Stripe expects: { items: [{ priceId, quantity }] }
+        const payload = {
+          items: cart.map(x => ({ priceId: x.priceId, quantity: x.qty }))
+        };
+
+        const btn = document.getElementById('sta-cart-checkout');
+        if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
+
+        try{
+          const r = await fetch('/api/create-checkout-session', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await r.json().catch(()=> ({}));
+          const url = data.url || data.checkoutUrl || data.checkout_url;
+          if (!r.ok || !url) throw new Error(data.error || ('Checkout failed (' + r.status + ')'));
+          window.location.href = url;
+        }catch(err){
+          console.error(err);
+          alert(err?.message || 'Stripe checkout failed');
+        }finally{
+          if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
+        }
+      }
+
+      // Event delegation so it works even though header is injected AFTER load
+      document.addEventListener('click', (e) => {
+        // Open cart
+        if (e.target.closest('#sta-cart-btn')) {
+          e.preventDefault();
+          open();
+          return;
+        }
+
+        // Close cart
+        if (e.target.closest('[data-cart-close]')) {
+          e.preventDefault();
+          close();
+          return;
+        }
+
+        // Backdrop close
+        const m = modal();
+        if (m && e.target === m){
+          close();
+          return;
+        }
+
+        // Qty buttons
+        const qbtn = e.target.closest('.sta-cartrow [data-qty]');
+        if (qbtn) {
+          const row = e.target.closest('.sta-cartrow');
+          const id = row ? decodeURIComponent(row.getAttribute('data-id') || '') : '';
+          const delta = qbtn.getAttribute('data-qty') === '+1' ? 1 : -1;
+          setQty(id, delta);
+          return;
+        }
+
+        // Clear
+        if (e.target.closest('#sta-cart-clear')) {
+          e.preventDefault();
+          clear();
+          return;
+        }
+
+        // Checkout
+        if (e.target.closest('#sta-cart-checkout')) {
+          e.preventDefault();
+          checkout();
+          return;
+        }
+      });
+
+      // Keep badge in sync if updated elsewhere
+      window.addEventListener('storage', (ev) => {
+        if (ev.key === CART_KEY) refreshBadge();
+      });
+
+      return { add, read, refreshBadge, open, close, render, checkout };
+    })();
+
+    /* =============================
+       4) Add-to-cart + Buy-now (Stripe)
+       ============================= */
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('#addToCart');
+      if (!btn) return;
+
+      const p = PAGE.currentProduct;
+      if (!p) return;
+
+      const qty = PAGE.getQty();
+
+      // IMPORTANT: store priceId so cart checkout works
+      STA_CART.add({
+        id: p.id,
+        name: p.name,
+        img: document.getElementById('p-img')?.getAttribute('src') || p.img || '',
+        qty,
+        priceId: p.priceId
+      });
+    }, true);
+
+    async function goStripeCheckoutSingle(priceId, quantity) {
       const r = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type':'application/json' },
@@ -421,6 +598,7 @@
       window.location.href = url;
     }
 
+    // Buy now button (single item)
     document.addEventListener('click', async (e) => {
       const btn = e.target.closest('[data-stripe-checkout]');
       if (!btn) return;
@@ -434,7 +612,7 @@
       try{
         btn.disabled = true;
         btn.setAttribute('aria-busy','true');
-        await goStripeCheckout(priceId, getQty());
+        await goStripeCheckoutSingle(priceId, PAGE.getQty());
       }catch(err){
         console.error(err);
         alert(err?.message || 'Stripe checkout failed');
@@ -444,17 +622,9 @@
       }
     }, true);
 
-    /* =========================
-       INIT
-       ========================= */
-    injectHeader();
-    populate();
-
-    // sync badge on load (and after header inject)
+    // Initial badge sync (will re-run after injection too)
     document.addEventListener('DOMContentLoaded', () => {
-      ensureCartBadge();
-      updateCartBadge(getCartCount());
-      document.getElementById('addToCart').addEventListener('click', addToCart);
+      STA_CART.refreshBadge();
     });
   </script>
 </body>
