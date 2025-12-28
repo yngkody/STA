@@ -5,520 +5,458 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>STA — Merch</title>
 
+  <!-- If you already have checkout.js, keep it. This page also has its own Stripe fallback. -->
+  <script src="./checkout.js" defer></script>
+
   <style>
     :root{
-      --ink:#111;
-      --dim:#5b606b;
+      --ink:#0f0f0f;
+      --dim:#666b74;
       --accent:#c71f2d;
-      --bg:#fdfcf9;
-      --panel:#fff;
-      --line:#e6e6e6;
-      --max:1200px;
-      --g:clamp(14px,3vw,24px);
-      --r:14px;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --bg:#f7f5f3;
+      --panel:#ffffff;
+      --line:#e7e7e7;
+      --shadow:0 14px 40px rgba(0,0,0,.10);
+      --r:18px;
+      --max:1180px;
+      --g:clamp(14px, 3vw, 22px);
     }
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
     body{
-      font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+      font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
       color:var(--ink);
-      background:var(--bg);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(199,31,45,.10), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(199,31,45,.06), transparent 55%),
+        var(--bg);
     }
-    img{ max-width:100%; height:auto; display:block; }
     a{ color:inherit; text-decoration:none; }
-    a:focus-visible, button:focus-visible, select:focus-visible{
-      outline:2px solid var(--accent);
-      outline-offset:2px;
-    }
-    .visually-hidden{
-      position:absolute!important;width:1px!important;height:1px!important;
-      padding:0!important;margin:-1px!important;overflow:hidden!important;
-      clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
-    }
+    img{ max-width:100%; display:block; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:22px var(--g) 80px; }
 
-    /* Page */
-    .ec{ background:#F7F5F3; padding:20px var(--g) 72px; overflow-x:hidden; }
-    .ec .wrap{ max-width:var(--max); margin:0 auto; }
-    .ec .h-title{ margin:0 0 6px; font-size:22px; font-weight:950; letter-spacing:-.02em; }
-    .ec .h-sub{ margin:0 0 18px; color:var(--dim); }
+    /* Page header */
+    .pagehead{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+      margin:14px 0 18px;
+    }
+    .title{
+      margin:0;
+      font-weight:950;
+      letter-spacing:-.03em;
+      font-size:clamp(22px, 2.2vw, 30px);
+    }
+    .sub{
+      margin:6px 0 0;
+      color:var(--dim);
+      font-weight:650;
+      max-width:60ch;
+    }
 
     /* List */
-    .ec .list{ display:flex; flex-direction:column; gap:12px; }
+    .list{ display:flex; flex-direction:column; gap:14px; }
 
-    .ec .item{
-      display:grid;
-      grid-template-columns:minmax(0,150px) 1fr minmax(220px,260px);
-      gap:16px;
-      align-items:center;
+    .item{
       background:var(--panel);
       border:1px solid var(--line);
       border-radius:var(--r);
-      padding:14px 16px;
       box-shadow:var(--shadow);
-    }
-    @media (max-width:900px){
-      .ec .item{ grid-template-columns:minmax(0,120px) minmax(0,1fr); }
-      .ec .pricebox{
-        grid-column:1 / -1;
-        justify-self:stretch;
-        border-left:0;
-        padding-left:0;
-        margin-top:10px;
-      }
-    }
-
-    .ec .thumb{
-      width:100%;
-      height:150px;
-      border:1px solid #eee;
-      border-radius:12px;
       overflow:hidden;
-      background:#f7f7f7;
+      display:grid;
+      grid-template-columns: 170px 1fr 290px;
+      gap:16px;
+      padding:16px;
+      position:relative;
     }
-    .ec .thumb img{ width:100%; height:100%; object-fit:cover; }
-    @media (max-width:900px){ .ec .thumb{ height:120px; } }
-
-    .ec .info{ display:flex; flex-direction:column; gap:8px; min-width:0; }
-    .ec .title{
-      font-weight:950; font-size:15px; line-height:1.25;
-      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    .item::before{
+      content:"";
+      position:absolute; inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg, rgba(199,31,45,.10), transparent 35%),
+        radial-gradient(500px 240px at 15% 0%, rgba(199,31,45,.08), transparent 60%);
+      opacity:.65;
+      mix-blend-mode:multiply;
     }
-    .ec .meta{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    .ec .badge{
-      font-size:12px; font-weight:950;
-      color:#7f1d1d; background:#fff4f3; border:1px solid #ffd7d4;
-      padding:2px 10px; border-radius:999px;
+    .item > *{ position:relative; z-index:1; }
+
+    @media (max-width: 980px){
+      .item{ grid-template-columns: 140px 1fr; }
+      .pricebox{ grid-column:1 / -1; border-left:0 !important; padding-left:0 !important; }
     }
-    .ec .stock{ color:#0a6b4a; font-weight:950; font-size:13px; }
 
-    .ec .bullets{ margin:2px 0 0; padding:0 0 0 16px; color:#3a3a3a; font-size:13px; }
-    .ec .bullets li{ margin:2px 0; }
+    .thumb{
+      height:170px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid #eee;
+      background:#111;
+    }
+    .thumb img{ width:100%; height:100%; object-fit:cover; }
 
-    .ec .variants{ display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
-    .ec .v-chip{
-      display:inline-flex; align-items:center; gap:6px;
-      padding:6px 10px; border-radius:999px;
+    .info{ min-width:0; display:flex; flex-direction:column; gap:10px; }
+    .name{
+      font-weight:1000;
+      letter-spacing:-.02em;
+      line-height:1.15;
+      font-size:16px;
+      max-width:55ch;
+    }
+    .meta{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .badge{
+      font-size:12px;
+      font-weight:1000;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(199,31,45,.22);
+      background:rgba(199,31,45,.08);
+      color:#7f121b;
+    }
+    .stock{ font-size:13px; font-weight:1000; color:#0a6b4a; }
+
+    .bullets{
+      margin:0;
+      padding:0 0 0 18px;
+      color:#2f2f2f;
+      font-size:13px;
+      font-weight:650;
+    }
+    .bullets li{ margin:3px 0; }
+
+    .variants{ display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
       border:1px solid #ddd;
       background:#fff;
-      font-weight:950; font-size:13px;
+      border-radius:999px;
+      padding:8px 12px;
+      font-weight:950;
+      font-size:13px;
       cursor:pointer;
       user-select:none;
     }
-    .ec .v-chip[aria-selected="true"]{
-      border-color:#f0a1a9;
+    .chip[aria-selected="true"]{
+      border-color:rgba(199,31,45,.35);
       box-shadow:0 0 0 3px rgba(199,31,45,.10);
     }
-    .ec .v-chip img{
-      width:18px; height:18px; border-radius:5px; object-fit:cover; border:1px solid #eee;
+    .chip img{
+      width:18px; height:18px;
+      border-radius:6px;
+      object-fit:cover;
+      border:1px solid #eee;
     }
 
-    .ec .pricebox{
-      justify-self:end;
-      display:flex; flex-direction:column; gap:10px;
+    .pricebox{
       border-left:1px solid #efefef;
       padding-left:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
       width:100%;
-      max-width:100%;
     }
-    .ec .price{ display:flex; align-items:baseline; gap:8px; }
-    .ec .price .now{ font-size:18px; font-weight:1000; }
-    .ec .price .was{ font-size:12px; color:#7e8794; text-decoration:line-through; }
+    .price{ display:flex; align-items:baseline; gap:10px; }
+    .now{ font-weight:1100; font-size:18px; }
+    .was{ font-size:12px; color:#7e8794; text-decoration:line-through; }
+    .ship{ font-size:12px; color:#6a707a; font-weight:700; }
 
-    .ec .shipline{ font-size:12px; color:#6a707a; }
-    .ec .qtyline{ display:flex; gap:8px; align-items:center; }
-    .ec select.qty{
-      height:36px;
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    select{
+      height:38px;
       padding:0 10px;
       border:1px solid #dcdcdc;
-      border-radius:10px;
+      border-radius:12px;
       background:#fff;
       font-weight:950;
-      width:90px;
+      width:96px;
     }
 
-    .ec .btn{
-      display:inline-flex; justify-content:center; align-items:center;
-      width:100%; height:42px;
-      border-radius:12px;
+    .btn{
+      width:100%;
+      height:44px;
+      border-radius:14px;
       border:1px solid #dcdcdc;
       background:#fff;
       color:#111;
       font-weight:1000;
       cursor:pointer;
       transition:transform .08s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
     }
-    .ec .btn:hover{ background:#f7f7f7; }
-    .ec .btn:active{ transform:translateY(1px); }
-    .ec .btn.primary{
+    .btn:hover{ background:#f7f7f7; }
+    .btn:active{ transform:translateY(1px); }
+    .btn.primary{
       background:var(--accent);
       border-color:var(--accent);
       color:#fff;
     }
-    .ec .btn.primary:hover{ background:#a81823; border-color:#a81823; }
+    .btn.primary:hover{ background:#a81823; border-color:#a81823; }
+    .btn:disabled{ opacity:.65; cursor:not-allowed; }
 
-    .ec .btn.stripe{
-      position:relative;
-      padding-left:44px;
-    }
-    .ec .btn.stripe::before{
+    .btn.stripe::before{
       content:"";
-      position:absolute;
-      left:14px;
-      width:22px; height:22px;
+      width:18px; height:18px;
       border-radius:6px;
       background:linear-gradient(135deg,#635bff,#00d4ff);
-      box-shadow:0 6px 16px rgba(99,91,255,.25);
+      box-shadow:0 10px 22px rgba(99,91,255,.22);
+      display:inline-block;
     }
-    .ec .smallnote{ font-size:12px; color:#6a707a; margin-top:-6px; }
+
+    .smallnote{ font-size:12px; color:#6a707a; font-weight:650; margin-top:-6px; }
+
+    /* Nav fallback */
+    .nav-fallback{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px var(--g);
+    }
+    .nav-fallback .bar{
+      background:#0f0f0f;
+      color:#fff;
+      border-radius:16px;
+      padding:12px 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+    }
+    .nav-fallback .brand{ font-weight:1100; letter-spacing:.02em; }
+    .nav-fallback .links{ display:flex; gap:12px; flex-wrap:wrap; font-weight:850; opacity:.95; }
+    .nav-fallback .links a{ opacity:.95; }
   </style>
 </head>
 
 <body>
-  <!-- Stripe checkout helper (centralized) -->
-  <script src="./checkout.js" defer></script>
-
-  <!-- Central header -->
   <div id="sta-nav"></div>
-    
-<script>
-  // Inject global header (sta-header.html)
-  (async () => {
-    const navEl = document.getElementById('sta-nav');
-    const candidates = ['./sta-header.html', '../sta-header.html'];
-    for (const url of candidates) {
-      try {
-        const r = await fetch(url, { cache: 'no-store' });
-        if (!r.ok) continue;
-        const text = await r.text();
-        if (text.includes("There isn't a GitHub Pages site here")) continue;
-        navEl.innerHTML = text;
-        return;
-      } catch {}
-    }
-    navEl.innerHTML = '';
-  })();
-</script>
 
-
-  <section class="ec" aria-label="STA Merch">
-    <div class="wrap">
-      <h2 class="h-title">STA Hoodies &amp; Shirts</h2>
-      <p class="h-sub">Get high in style with our signature collection!</p>
-
-      <div class="list">
-
-        <!-- ===================== HOODIE ===================== -->
-        <article class="item" data-product="sta-hoodie">
-          <a class="thumb" href="./merchandise.html?item=sta-hoodie" aria-label="View STA Hoodie">
-            <img id="hoodie-img"
-              src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
-              alt="STA Hoodie — Front">
-          </a>
-
-          <div class="info">
-            <div class="title">STA Signature Hoodie — Heavyweight</div>
-            <div class="meta">
-              <span class="badge">Limited Run</span>
-              <span class="stock">In stock</span>
-            </div>
-            <ul class="bullets">
-              <li>Double-lined hood, heavyweight fleece</li>
-              <li>Front &amp; back artwork</li>
-              <li>NYC print shop quality</li>
-            </ul>
-
-            <!-- IMPORTANT:
-              Replace the placeholder price ids below with your real Stripe Price IDs for each variant.
-              Example: data-price-id="price_1ABC..."
-            -->
-            <div class="variants" data-target-img="hoodie-img" data-buybtn="#hoodie-buy">
-              <button type="button" class="v-chip" aria-selected="true"
-                data-sku="STA-HOODIE-FRONT-BLK"
-                data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-                data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w">
-                <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=200w" alt="">
-                Front
-              </button>
-
-              <button type="button" class="v-chip" aria-selected="false"
-                data-sku="STA-HOODIE-BACK-BLK"
-                data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-                data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w">
-                <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=200w" alt="">
-                Back
-              </button>
-            </div>
-          </div>
-
-          <aside class="pricebox">
-            <div class="price"><span class="now">$85.00</span><span class="was">$95</span></div>
-            <div class="shipline">Ships in 2–4 business days</div>
-
-            <div class="qtyline">
-              <label for="qh" class="visually-hidden">Qty</label>
-              <select id="qh" class="qty" aria-label="Quantity">
-                <option>1</option><option>2</option><option>3</option><option>4</option>
-              </select>
-            </div>
-
-            <!-- Stripe Checkout button (centralized through checkout.js) -->
-            <button
-              id="hoodie-buy"
-              class="btn primary stripe"
-              data-stripe-checkout
-              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-              data-qty-from="#qh"
-            >
-              Checkout with Stripe
-            </button>
-            <button
-              class="btn"
-              data-add-to-cart
-              data-label="Add to Cart"
-              data-qty-from="#qh"
-              data-name="STA Signature Hoodie — Heavyweight"
-              data-image-from="#hoodie-img"
-              data-price-from="#hoodie-buy"
-              data-sku="STA-HOODIE"
-            >Add to Cart</button>
-            <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
-
-            <a class="btn" href="./merchandise.html?item=sta-hoodie">View details</a>
-          </aside>
-        </article>
-
-        <!-- ===================== TEE ===================== -->
-        <article class="item" data-product="sta-tee">
-          <a class="thumb" href="./merchandise.html?item=sta-tee" aria-label="View STA Tee">
-            <img id="tee-img"
-              src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
-              alt="STA Tee — Front">
-          </a>
-
-          <div class="info">
-            <div class="title">STA Classic Tee — Ringspun Cotton</div>
-            <div class="meta">
-              <span class="badge">New</span>
-              <span class="stock">In stock</span>
-            </div>
-            <ul class="bullets">
-              <li>Soft ringspun cotton</li>
-              <li>Front &amp; back artwork</li>
-              <li>Everyday fit</li>
-            </ul>
-
-            <!-- Replace placeholders with your real Stripe Price IDs -->
-            <div class="variants" data-target-img="tee-img" data-buybtn="#tee-buy">
-              <button type="button" class="v-chip" aria-selected="true"
-                data-sku="STA-TEE-FRONT-WHT"
-                data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-                data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w">
-                <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=200w" alt="">
-                Front
-              </button>
-
-              <button type="button" class="v-chip" aria-selected="false"
-                data-sku="STA-TEE-BACK-WHT"
-                data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-                data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w">
-                <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=200w" alt="">
-                Back
-              </button>
-            </div>
-          </div>
-
-          <aside class="pricebox">
-            <div class="price"><span class="now">$40.00</span><span class="was">$50</span></div>
-            <div class="shipline">Usually ships next day</div>
-
-            <div class="qtyline">
-              <label for="qt" class="visually-hidden">Qty</label>
-              <select id="qt" class="qty" aria-label="Quantity">
-                <option>1</option><option>2</option><option>3</option><option>4</option>
-              </select>
-            </div>
-
-            <button
-              id="tee-buy"
-              class="btn primary stripe"
-              data-stripe-checkout
-              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-              data-qty-from="#qt"
-            >
-              Checkout with Stripe
-            </button>
-            <button
-              class="btn"
-              data-add-to-cart
-              data-label="Add to Cart"
-              data-qty-from="#qt"
-              data-name="STA Classic Tee — Ringspun Cotton"
-              data-image-from="#tee-img"
-              data-price-from="#tee-buy"
-              data-sku="STA-TEE"
-            >Add to Cart</button>
-            <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
-
-            <a class="btn" href="./merchandise.html?item=sta-tee">View details</a>
-          </aside>
-        </article>
-
+  <main class="wrap">
+    <header class="pagehead">
+      <div>
+        <h1 class="title">STA Hoodies &amp; Shirts</h1>
+        <p class="sub">Clean, heavy, and loud. Choose a variant, set qty, and checkout.</p>
       </div>
+    </header>
+
+    <div class="list">
+
+      <!-- HOODIE -->
+      <article class="item" data-product="sta-hoodie">
+        <a class="thumb" href="./merchandise.html?item=sta-hoodie" aria-label="View STA Hoodie details">
+          <img id="hoodie-img"
+            src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
+            alt="STA Hoodie — Front">
+        </a>
+
+        <div class="info">
+          <div class="name">STA Signature Hoodie — Heavyweight</div>
+          <div class="meta">
+            <span class="badge">Limited Run</span>
+            <span class="stock">In stock</span>
+          </div>
+          <ul class="bullets">
+            <li>Double-lined hood, heavyweight fleece</li>
+            <li>Front &amp; back artwork</li>
+            <li>NYC print shop quality</li>
+          </ul>
+
+          <div class="variants" data-target-img="#hoodie-img" data-buybtn="#hoodie-buy">
+            <button type="button" class="chip" aria-selected="true"
+              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
+              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w">
+              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=200w" alt="">
+              Front
+            </button>
+
+            <button type="button" class="chip" aria-selected="false"
+              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
+              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w">
+              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=200w" alt="">
+              Back
+            </button>
+          </div>
+        </div>
+
+        <aside class="pricebox">
+          <div class="price"><span class="now">$85.00</span><span class="was">$95</span></div>
+          <div class="ship">Ships in 2–4 business days</div>
+
+          <div class="row">
+            <label class="visually-hidden" for="qh">Qty</label>
+            <select id="qh" aria-label="Quantity">
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+            </select>
+          </div>
+
+          <button id="hoodie-buy"
+            class="btn primary stripe"
+            data-stripe-checkout
+            data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
+            data-qty-from="#qh">
+            Checkout with Stripe
+          </button>
+
+          <a class="btn" href="./merchandise.html?item=sta-hoodie">View details</a>
+          <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
+        </aside>
+      </article>
+
+      <!-- TEE -->
+      <article class="item" data-product="sta-tee">
+        <a class="thumb" href="./merchandise.html?item=sta-tee" aria-label="View STA Tee details">
+          <img id="tee-img"
+            src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
+            alt="STA Tee — Front">
+        </a>
+
+        <div class="info">
+          <div class="name">STA Classic Tee — Ringspun Cotton</div>
+          <div class="meta">
+            <span class="badge">New</span>
+            <span class="stock">In stock</span>
+          </div>
+          <ul class="bullets">
+            <li>Soft ringspun cotton</li>
+            <li>Front &amp; back artwork</li>
+            <li>Everyday fit</li>
+          </ul>
+
+          <div class="variants" data-target-img="#tee-img" data-buybtn="#tee-buy">
+            <button type="button" class="chip" aria-selected="true"
+              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
+              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w">
+              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=200w" alt="">
+              Front
+            </button>
+
+            <button type="button" class="chip" aria-selected="false"
+              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
+              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w">
+              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=200w" alt="">
+              Back
+            </button>
+          </div>
+        </div>
+
+        <aside class="pricebox">
+          <div class="price"><span class="now">$40.00</span><span class="was">$50</span></div>
+          <div class="ship">Usually ships next day</div>
+
+          <div class="row">
+            <label class="visually-hidden" for="qt">Qty</label>
+            <select id="qt" aria-label="Quantity">
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+            </select>
+          </div>
+
+          <button id="tee-buy"
+            class="btn primary stripe"
+            data-stripe-checkout
+            data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
+            data-qty-from="#qt">
+            Checkout with Stripe
+          </button>
+
+          <a class="btn" href="./merchandise.html?item=sta-tee">View details</a>
+          <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay, Link (if enabled)</div>
+        </aside>
+      </article>
+
     </div>
+  </main>
 
-    <script>
-      // Variant chips:
-      // - swap image
-      // - update Stripe price id on the matching "Checkout with Stripe" button
-      document.addEventListener('click', (e) => {
-        const chip = e.target.closest('.v-chip');
-        if (!chip) return;
+  <script>
+    // ---------- Header inject with fallback ----------
+    (async function injectHeader(){
+      const host = document.getElementById('sta-nav');
+      try{
+        const res = await fetch('./sta-header.html', { cache:'no-store' });
+        if(!res.ok) throw new Error('sta-header.html not found');
+        const html = await res.text();
+        host.innerHTML = html;
+      }catch(e){
+        // fallback nav so you never end up "missing navigation"
+        host.innerHTML = `
+          <div class="nav-fallback">
+            <div class="bar">
+              <div class="brand">STA</div>
+              <div class="links">
+                <a href="./index.html">Home</a>
+                <a href="./products.html">Products</a>
+                <a href="./merch.html">Merch</a>
+                <a href="./contact.html">Contact</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    })();
 
-        const group = chip.closest('.variants');
-        if (!group) return;
+    // ---------- Variant chips: swap image + update Stripe price id ----------
+    document.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
 
-        const imgId = group.getAttribute('data-target-img');
-        const buySel = group.getAttribute('data-buybtn');
+      const group = chip.closest('.variants');
+      if (!group) return;
 
-        const imgEl = imgId ? document.getElementById(imgId) : null;
-        const buyBtn = buySel ? document.querySelector(buySel) : null;
+      group.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-selected','false'));
+      chip.setAttribute('aria-selected','true');
 
-        group.querySelectorAll('.v-chip').forEach(c => c.setAttribute('aria-selected','false'));
-        chip.setAttribute('aria-selected','true');
+      const targetImgSel = group.getAttribute('data-target-img');
+      const buySel = group.getAttribute('data-buybtn');
 
-        const src = chip.getAttribute('data-image');
-        const priceId = chip.getAttribute('data-price-id');
+      const imgEl = targetImgSel ? document.querySelector(targetImgSel) : null;
+      const buyBtn = buySel ? document.querySelector(buySel) : null;
 
-        if (imgEl && src) imgEl.src = src;
-        if (buyBtn && priceId) buyBtn.setAttribute('data-price-id', priceId);
-      }, true);
+      const src = chip.getAttribute('data-image');
+      const priceId = chip.getAttribute('data-price-id');
 
-      // Qty binding:
-      // If a Stripe button has data-qty-from="#selector", we copy that select's value into data-qty
-      // so your centralized checkout.js can read it.
-      document.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-stripe-checkout]');
-        if (!btn) return;
+      if (imgEl && src) imgEl.src = src;
+      if (buyBtn && priceId) buyBtn.setAttribute('data-price-id', priceId);
+    }, true);
 
-        const fromSel = btn.getAttribute('data-qty-from');
-        if (!fromSel) return;
-
-        const sel = document.querySelector(fromSel);
-        if (sel) btn.setAttribute('data-qty', sel.value || "1");
-      }, true);
-    </script>
-  
-    
-<script>
-  // Add-to-cart wiring (works across pages via checkout.js -> localStorage cart)
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-add-to-cart]');
-    if (!btn) return;
-
-    e.preventDefault();
-
-    const qtyFrom = btn.getAttribute('data-qty-from');
-    const qtyEl = qtyFrom ? document.querySelector(qtyFrom) : null;
-    const quantity = Math.max(1, parseInt(qtyEl?.value || "1", 10) || 1);
-
-    // Resolve current Stripe Price ID (variant-aware)
-    let price = btn.getAttribute('data-price-id') || btn.getAttribute('data-price');
-    if (!price) {
-      const priceFrom = btn.getAttribute('data-price-from');
-      const stripeBtn = priceFrom ? document.querySelector(priceFrom) : null;
-      price = stripeBtn?.getAttribute('data-price-id') || stripeBtn?.getAttribute('data-price');
+    // ---------- Stripe fallback (guarantees buttons work even if checkout.js doesn't bind) ----------
+    async function goStripeCheckout(priceId, quantity) {
+      const r = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ items: [{ priceId, quantity }] })
+      });
+      const data = await r.json().catch(()=> ({}));
+      const url = data.url || data.checkoutUrl || data.checkout_url;
+      if (!r.ok || !url) throw new Error(data.error || ('Checkout failed ('+r.status+')'));
+      window.location.href = url;
     }
 
-    // Resolve current image
-    let image = btn.getAttribute('data-image');
-    if (!image) {
-      const imgFrom = btn.getAttribute('data-image-from');
-      const imgEl = imgFrom ? document.querySelector(imgFrom) : null;
-      image = imgEl ? (imgEl.currentSrc || imgEl.src) : null;
-    }
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-stripe-checkout]');
+      if (!btn) return;
 
-    // Resolve variant label (Front/Back)
-    let variant = "";
-    const item = btn.closest('.item');
-    if (item) {
-      const activeChip = item.querySelector('.variants .v-chip[aria-selected="true"]');
-      if (activeChip) variant = (activeChip.textContent || "").trim();
-    }
+      e.preventDefault();
+      e.stopImmediatePropagation();
 
-    const name = btn.getAttribute('data-name') || (item?.querySelector('.title')?.textContent || "Item").trim();
+      const priceId = btn.getAttribute('data-price-id') || '';
+      const qtyFrom = btn.getAttribute('data-qty-from');
+      const qtyEl = qtyFrom ? document.querySelector(qtyFrom) : null;
+      const quantity = Math.max(1, parseInt(qtyEl?.value || '1', 10) || 1);
 
-    if (!price) {
-      alert("Missing Stripe Price ID for this item.");
-      return;
-    }
+      if (!priceId) { alert('Missing Stripe price id.'); return; }
 
-    if (window.STACart && typeof window.STACart.add === 'function') {
-      window.STACart.add({ price, quantity, name, image, variant });
-      // Optional: pop cart open so user sees it worked
-      window.STACart.open();
-    } else {
-      console.warn("STACart not loaded. Make sure checkout.js is included on this page.");
-    }
-  }, true);
-</script>
-
-  </section>
-
-<script>
-/**
- * Stripe "Buy now" fallback:
- * Some checkout helpers only bind once at load; if attributes are set later or scripts fail to execute,
- * this ensures the buttons always redirect to Stripe Checkout.
- *
- * Expects a Vercel API route at /api/create-checkout-session that returns { url }.
- */
-(async () => {
-  async function goStripeCheckout(priceId, quantity) {
-    const r = await fetch('/api/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: [{ priceId, quantity }] })
-    });
-    if (!r.ok) throw new Error('Checkout session failed (' + r.status + ')');
-    const data = await r.json();
-    if (!data || !data.url) throw new Error('No checkout url returned');
-    window.location.href = data.url;
-  }
-
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('[data-stripe-checkout]');
-    if (!btn) return;
-
-    // Take over to guarantee it works
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    const priceId = btn.getAttribute('data-price-id') || '';
-    if (!priceId) {
-      console.error('Missing data-price-id on Stripe button', btn);
-      alert('Checkout not configured (missing price id).');
-      return;
-    }
-
-    const qtyFrom = btn.getAttribute('data-qty-from');
-    const qtyEl = qtyFrom ? document.querySelector(qtyFrom) : null;
-    const quantity = Math.max(1, parseInt(qtyEl?.value || '1', 10) || 1);
-
-    try {
-      btn.disabled = true;
-      btn.setAttribute('aria-busy', 'true');
-      await goStripeCheckout(priceId, quantity);
-    } catch (err) {
-      console.error(err);
-      alert('Stripe checkout failed. Check console + your /api/create-checkout-session endpoint.');
-    } finally {
-      btn.disabled = false;
-      btn.removeAttribute('aria-busy');
-    }
-  }, true); // capture
-})();
-</script>
-
+      try{
+        btn.disabled = true;
+        btn.setAttribute('aria-busy','true');
+        await goStripeCheckout(priceId, quantity);
+      }catch(err){
+        console.error(err);
+        alert(err?.message || 'Stripe checkout failed');
+      }finally{
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+      }
+    }, true);
+  </script>
 </body>
 </html>
