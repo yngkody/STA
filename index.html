@@ -7,189 +7,126 @@
   <meta name="description" content="STA — New York. Quality Flower • Culture & Community." />
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ================= HERO ================= */
-    .sta-hero {
-      position: relative;
-      min-height: 80vh;
-      width: 100%;
-
-      /* FORCE IMAGE LOAD */
-      background:
-        linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
-        url("./STA-hero.png");
-
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: right center;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .sta-hero-content {
-      max-width: 900px;
-      padding: 2rem;
-    }
-
-    .sta-hero h1 {
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.5rem;
-    }
-
-    .sta-hero h1 span {
-      color: #c71f2d;
-    }
-
-    .sta-hero h2 {
-      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-      font-weight: 700;
-      color: #c71f2d;
-      margin-bottom: 1rem;
-    }
-
-    .sta-hero p {
-      max-width: 60ch;
-      margin: 0 auto 2rem;
-      color: #e5e5e5;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .sta-btn {
-      display: inline-block;
-      padding: 1rem 2rem;
-      border-radius: 999px;
-      background: #c71f2d;
-      color: #fff;
-      font-weight: 800;
-      box-shadow: 0 10px 30px rgba(199,31,45,.4);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .sta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 40px rgba(199,31,45,.6);
-    }
-
-    /* ================= SECTION ================= */
-    .section {
-      padding: 6rem 1.5rem;
-      background: #fdfcf9;
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif;
       color: #111;
+      background: #fdfcf9;
     }
-
-    .wrap {
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .grid {
-      display: grid;
-      gap: 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-    }
-
-    .card-img {
-      height: 320px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .card-body {
-      padding: 1.75rem;
-    }
-
-    .card-body h3 {
-      font-size: 1.5rem;
-      margin-bottom: .5rem;
-    }
-
-    .card-body p {
-      color: #555;
-      margin-bottom: 1rem;
-    }
-
-    .chip {
-      display: inline-block;
-      padding: .6rem 1.2rem;
-      border-radius: 999px;
-      background: #c71f2d;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    /* ================= MOBILE ================= */
-    @media (max-width: 768px) {
-      .sta-hero {
-        background-position: center;
-      }
-    }
+    a { color: inherit; }
   </style>
+
+  <script src="./checkout.js" defer></script>
 </head>
 
 <body>
 
-  <!-- ================= HERO ================= -->
-  <section class="sta-hero">
-    <div class="sta-hero-content">
-      <h1>STA <span>→</span> NY</h1>
-      <h2>NYC • Cannabis Culture</h2>
-      <p>
-        Premium flower, ceramic-tipped pre-rolls, and lifestyle merch —
-        crafted for clarity, culture, and community.
-      </p>
-      <a href="./merch.html" class="sta-btn">Shop Now</a>
-    </div>
-  </section>
+<div id="sta-nav"></div>
+<script>
+  fetch('./sta-header.html')
+    .then(r => r.text())
+    .then(html => document.getElementById('sta-nav').innerHTML = html);
+</script>
 
-  <!-- ================= SHOP ================= -->
-  <section class="section">
-    <div class="wrap grid">
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w');"></div>
-        <div class="card-body">
-          <h3>Products</h3>
-          <p>Top-tier flower and ceramic-tipped pre-rolls.</p>
-          <a href="./products.html" class="chip">View Products</a>
-        </div>
-      </div>
+<main>
 
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/6af53b52-4762-4f1b-a86d-91f78c10758c/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=500w');"></div>
-        <div class="card-body">
-          <h3>Merch</h3>
-          <p>Minimal, NYC-rooted lifestyle pieces.</p>
-          <a href="./merch.html" class="chip">Shop Merch</a>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="sta-root-nyc" aria-label="STA Section">
+<style>
+  #sta-root-nyc {
+    --sta-ink:#111;
+    --sta-dim:#5b606b;
+    --sta-accent:#c71f2d;
+    --sta-bg:#fdfcf9;
+    --sta-panel:#fff;
+    --sta-line:#e9e9e9;
+    --sta-shadow:0 8px 24px rgba(0,0,0,.06);
+
+    background:var(--sta-bg);
+    color:var(--sta-ink);
+    font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+  }
+
+  #sta-root-nyc .sta-wrap {
+    width:100%;
+    max-width:1200px;
+    margin-inline:auto;
+    padding-inline:clamp(16px,4vw,32px);
+  }
+
+  /* ---------- HERO (ONLY CHANGE IS HERE) ---------- */
+  #sta-root-nyc .sta-hero {
+    min-height:60svh;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding-block:clamp(56px,10vw,120px);
+
+    background-image:url("./STA-hero.png");
+    background-size:cover;
+    background-position:right center;
+    background-repeat:no-repeat;
+  }
+
+  #sta-root-nyc .hero-title {
+    font-size:clamp(42px,9vw,120px);
+    font-weight:800;
+    letter-spacing:-.02em;
+    margin:0 0 .45rem;
+  }
+
+  #sta-root-nyc .hero-title .arrow {
+    color:var(--sta-accent);
+  }
+
+  #sta-root-nyc .subtitle {
+    font-size:clamp(15px,2.3vw,24px);
+    font-weight:700;
+    color:var(--sta-accent);
+    margin:0 0 .45rem;
+  }
+
+  #sta-root-nyc .tagline {
+    color:var(--sta-dim);
+    font-size:clamp(14px,1.7vw,18px);
+    line-height:1.65;
+    max-width:68ch;
+    margin:0 auto 1.1rem;
+  }
+
+  #sta-root-nyc .sta-btn {
+    display:inline-block;
+    padding:.95rem 1.6rem;
+    border-radius:999px;
+    font-weight:800;
+    letter-spacing:.02em;
+    text-decoration:none;
+    background:var(--sta-accent);
+    color:#fff;
+    box-shadow:0 8px 24px rgba(199,31,45,.25);
+    transition:transform .2s, box-shadow .2s;
+  }
+
+  #sta-root-nyc .sta-btn:hover {
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(199,31,45,.32);
+  }
+</style>
+
+<header class="sta-hero">
+  <div class="sta-wrap">
+    <h1 class="hero-title">STA <span class="arrow">→</span> NY</h1>
+    <p class="subtitle">NYC • Cannabis Culture</p>
+    <p class="tagline">
+      Premium flower, ceramic-tipped pre-rolls, and lifestyle merch — crafted for clarity, culture, and community.
+    </p>
+    <a href="./merch.html" class="sta-btn">Shop Now</a>
+  </div>
+</header>
+
+</section>
+
+</main>
 
 </body>
 </html>
