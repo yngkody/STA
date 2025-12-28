@@ -4,64 +4,141 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>STA Merchandise</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="./checkout.js" defer></script>
+
   <style>
     :root{
-      --ink:#111; --dim:#5b606b; --accent:#c71f2d; --bg:#F7F5F3; --panel:#fff; --line:#e9e9e9;
-      --shadow:0 8px 24px rgba(0,0,0,.08); --radius:18px;
+      --ink:#0f0f0f; --dim:#666b74; --accent:#c71f2d;
+      --bg:#f7f5f3; --panel:#fff; --line:#e7e7e7;
+      --shadow:0 14px 40px rgba(0,0,0,.10);
+      --r:18px;
+      --max:1100px;
+      --g:clamp(14px,3vw,22px);
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-    main{max-width:1100px;margin:0 auto;padding:22px 16px 56px}
-    .wrap{display:grid;grid-template-columns: 1.1fr .9fr; gap:18px; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
-    @media (max-width: 920px){ .wrap{grid-template-columns:1fr} }
-    .media{min-height:540px; background:#0d0d0d; display:flex; align-items:center; justify-content:center; position:relative}
-    .media img{width:100%;height:100%;object-fit:cover; display:block}
-    .media .fallback{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; color:#fff; text-align:center; background:linear-gradient(135deg,#151515,#0b0b0b)}
-    .panel{padding:22px 22px 24px}
-    h1{margin:0 0 8px; font-size:26px; letter-spacing:-.02em}
-    .muted{color:var(--dim); margin:0 0 14px}
-    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:14px 0 18px}
-    label{font-size:13px; color:var(--dim); font-weight:600}
-    select, input{padding:10px 12px;border-radius:12px;border:1px solid var(--line); background:#fff; font-weight:600}
-    .btn{width:100%; padding:14px 14px; border-radius:14px; border:1px solid var(--line); background:#fff; font-weight:800; cursor:pointer}
-    .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
-    .btn + .btn{margin-top:10px}
-    .btn:disabled{opacity:.6; cursor:not-allowed}
-    .back{display:inline-block; margin-top:14px; font-weight:800; color:var(--ink); text-decoration:none}
-    .note{margin-top:10px; color:var(--dim); font-size:13px}
-  
-    /* Toast */
-    .sta-toast{
-      position:fixed;
-      left:50%;
-      bottom:22px;
-      transform:translateX(-50%);
-      background:#111;
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 10% 0%, rgba(199,31,45,.10), transparent 60%),
+        radial-gradient(900px 520px at 90% 0%, rgba(199,31,45,.06), transparent 55%),
+        var(--bg);
+    }
+    a{ color:inherit; text-decoration:none; }
+    main{ max-width:var(--max); margin:0 auto; padding:22px var(--g) 70px; }
+
+    .wrap{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      min-height:560px;
+    }
+    @media (max-width: 920px){ .wrap{ grid-template-columns:1fr; } }
+
+    .media{
+      background:#0b0b0b;
+      position:relative;
+      min-height:420px;
+    }
+    .media img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .fallback{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      padding:22px;
       color:#fff;
-      padding:12px 14px;
-      border-radius:12px;
-      box-shadow:0 14px 30px rgba(0,0,0,.25);
-      font-weight:950;
-      font-size:13px;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .18s ease, transform .18s ease;
-      z-index:9999;
-      max-width:min(520px, calc(100% - 24px));
-      display:flex;
-      align-items:center;
-      gap:10px;
+      text-align:center;
+      background:linear-gradient(135deg,#151515,#070707);
     }
-    .sta-toast.show{ opacity:1; transform:translateX(-50%) translateY(-6px); }
-    .sta-toast .dot{ width:10px;height:10px;border-radius:999px;background:var(--accent); flex:0 0 auto; }
+    .fallback b{ display:block; font-size:18px; margin-bottom:8px; }
+    .fallback span{ opacity:.85; font-weight:650; font-size:13px; }
 
+    .panel{ padding:22px 22px 26px; }
+    h1{ margin:0 0 8px; font-size:26px; letter-spacing:-.03em; font-weight:1000; }
+    .muted{ margin:0 0 14px; color:var(--dim); font-weight:650; }
+
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:14px 0 16px; }
+    label{ font-size:13px; color:var(--dim); font-weight:850; }
+    select{
+      height:40px;
+      padding:0 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:950;
+      width:110px;
+    }
+
+    .btn{
+      width:100%;
+      height:46px;
+      border-radius:14px;
+      border:1px solid #dcdcdc;
+      background:#fff;
+      font-weight:1000;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:transform .08s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+    }
+    .btn:hover{ background:#f7f7f7; }
+    .btn:active{ transform:translateY(1px); }
+    .btn.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+    .btn.primary:hover{ background:#a81823; border-color:#a81823; }
+    .btn.stripe::before{
+      content:"";
+      width:18px; height:18px;
+      border-radius:6px;
+      background:linear-gradient(135deg,#635bff,#00d4ff);
+      box-shadow:0 10px 22px rgba(99,91,255,.22);
+      display:inline-block;
+    }
+    .btn + .btn{ margin-top:10px; }
+    .btn:disabled{ opacity:.65; cursor:not-allowed; }
+
+    .back{
+      display:inline-block;
+      margin-top:14px;
+      font-weight:1000;
+      color:#121212;
+    }
+    .note{ margin-top:10px; color:var(--dim); font-size:13px; font-weight:650; }
+
+    /* Nav fallback */
+    .nav-fallback{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px var(--g);
+    }
+    .nav-fallback .bar{
+      background:#0f0f0f;
+      color:#fff;
+      border-radius:16px;
+      padding:12px 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+    }
+    .nav-fallback .brand{ font-weight:1100; letter-spacing:.02em; }
+    .nav-fallback .links{ display:flex; gap:12px; flex-wrap:wrap; font-weight:850; opacity:.95; }
   </style>
-
-  <!-- Your existing Stripe buy-now wiring (you said this already works) -->
-  <script src="./checkout.js" defer></script>
 </head>
 
 <body>
@@ -70,11 +147,11 @@
   <main>
     <section class="wrap" aria-label="Merch item">
       <div class="media">
-        <img id="p-img" src="" alt="" style="display:none;">
-        <div id="p-fallback" class="fallback">
+        <img id="p-img" src="" alt="">
+        <div id="p-fallback" class="fallback" style="display:none;">
           <div>
-            <div style="font-weight:900;font-size:18px;margin-bottom:6px">Image not loading</div>
-            <div style="opacity:.85;font-size:13px">Fix the image URL for this product (see notes below).</div>
+            <b>Image not loading</b>
+            <span>This usually means the image URL is wrong or blocked.</span>
           </div>
         </div>
       </div>
@@ -90,231 +167,134 @@
           </select>
         </div>
 
-        <!-- BUY NOW (Stripe) -->
-        <button id="buyNow" class="btn primary"
-          data-stripe-checkout
-          data-price-id=""
-          data-qty-from="#qty"
-        >Continue with Stripe</button>
-
-        <!-- CART -->
-        <button id="addToCart" class="btn"
-          data-add-to-cart
-        >Add to Cart</button>
+        <button id="buyNow" class="btn primary stripe" data-stripe-checkout data-price-id="">
+          Continue with Stripe
+        </button>
 
         <a class="back" href="./merch.html">← Back to merch</a>
-</div>
+
+        <div class="note" id="debug" style="display:none;"></div>
+      </div>
     </section>
   </main>
 
   <script>
-    // 1) Inject header (markup only). Do NOT rely on scripts inside injected HTML.
+    // ---------- Header inject with fallback ----------
     (async function injectHeader(){
       const host = document.getElementById('sta-nav');
       try{
-        const res = await fetch('./sta-header.html', { cache: 'no-store' });
+        const res = await fetch('./sta-header.html', { cache:'no-store' });
+        if(!res.ok) throw new Error('sta-header.html not found');
         const html = await res.text();
         host.innerHTML = html;
       }catch(e){
-        console.warn('Header inject failed', e);
+        host.innerHTML = `
+          <div class="nav-fallback">
+            <div class="bar">
+              <div class="brand">STA</div>
+              <div class="links">
+                <a href="./index.html">Home</a>
+                <a href="./products.html">Products</a>
+                <a href="./merch.html">Merch</a>
+                <a href="./contact.html">Contact</a>
+              </div>
+            </div>
+          </div>
+        `;
       }
-      setupCartUI();
-      syncCartBadge();
     })();
 
-    // 2) Product mapping: uses ?item=sta-hoodie or ?item=sta-tee
-    // NOTE: Your merch.html currently has broken image URLs with "..." in them.
-    // Replace these with REAL URLs or local image paths in your repo.
+    // ---------- Product data ----------
     const PRODUCTS = {
       "sta-hoodie": {
         name: "STA Signature Hoodie — Heavyweight",
         desc: "Heavyweight hoodie with STA print. Clean fit, built to last.",
         priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
-        img: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w" // <- replace if you want
+        img: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
       },
       "sta-tee": {
-        name: "STA Signature Tee",
-        desc: "Soft tee with STA graphic. Everyday staple.",
+        name: "STA Classic Tee — Ringspun Cotton",
+        desc: "Soft ringspun cotton tee with STA graphic. Everyday staple.",
         priceId: "price_1ShgiV1blBzCNuBQL9FtDioU",
-        img: "./images/sta-tee.png" // <- replace if you want
+        img: "https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
       }
     };
 
-    (function populateProduct(){
-      const params = new URLSearchParams(location.search);
-      const item = params.get('item') || 'sta-hoodie';
+    function qs(name){ return new URLSearchParams(location.search).get(name); }
+
+    // ---------- Populate page ----------
+    (function populate(){
+      const item = qs('item') || 'sta-hoodie';
       const p = PRODUCTS[item] || PRODUCTS['sta-hoodie'];
 
-      document.getElementById('p-title').textContent = p.name;
-      document.getElementById('p-desc').textContent = p.desc;
+      const titleEl = document.getElementById('p-title');
+      const descEl  = document.getElementById('p-desc');
+      const imgEl   = document.getElementById('p-img');
+      const fbEl    = document.getElementById('p-fallback');
+      const buyBtn  = document.getElementById('buyNow');
 
-      const buyBtn = document.getElementById('buyNow');
-      buyBtn.dataset.priceId = p.priceId;
+      titleEl.textContent = p.name;
+      descEl.textContent  = p.desc;
 
-      // Buy-now (Stripe) fallback: your merch page works, but this product page sets priceId dynamically.
-      // Some checkout.js setups only bind on initial markup, so we handle click here too.
-      buyBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const qtySel = document.querySelector(buyBtn.getAttribute('data-qty-from') || '#qty');
-        const quantity = Math.max(1, parseInt(qtySel?.value || '1', 10) || 1);
-        const priceId = buyBtn.dataset.priceId || buyBtn.getAttribute('data-price-id');
-        if (!priceId) { alert('Missing Stripe Price ID for this item.'); return; }
-        try {
-          const r = await fetch('/api/create-checkout-session', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ priceId, quantity, items:[{ priceId, quantity }] })
-          });
-          const data = await r.json().catch(()=> ({}));
-          const url = data.url || data.checkoutUrl || data.checkout_url;
-          if (!r.ok || !url) throw new Error(data.error || 'Checkout failed');
-          window.location.href = url;
-        } catch(err){
-          console.error(err);
-          alert(err?.message || 'Stripe checkout failed');
-        }
-      });
-
-      // image
-      const img = document.getElementById('p-img');
-      const fallback = document.getElementById('p-fallback');
-      img.alt = p.name;
+      buyBtn.setAttribute('data-price-id', p.priceId);
 
       // allow overriding image via ?img=
-      const imgParam = params.get('img');
-      const src = imgParam || p.img || '';
-      if (src){
-        img.src = src;
-        img.onload = () => { img.style.display='block'; fallback.style.display='none'; };
-        img.onerror = () => { img.style.display='none'; fallback.style.display='flex'; };
+      const src = qs('img') || p.img || '';
+      imgEl.alt = p.name;
+
+      if (!src){
+        imgEl.style.display = 'none';
+        fbEl.style.display = 'flex';
       } else {
-        img.style.display='none';
-        fallback.style.display='flex';
+        imgEl.src = src;
+        imgEl.onload = () => { fbEl.style.display = 'none'; imgEl.style.display = 'block'; };
+        imgEl.onerror = () => { imgEl.style.display = 'none'; fbEl.style.display = 'flex'; };
       }
 
-      // little debug note (helps you confirm what the page thinks it is)
-// 3) Cart (localStorage) – independent of header scripts
-    const CART_KEY = "sta_cart_v1";
+      // optional debug
+      const dbg = document.getElementById('debug');
+      // dbg.style.display = 'block';
+      // dbg.textContent = `item=${item} priceId=${p.priceId}`;
+    })();
 
-    function readCart(){
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
-      catch { return []; }
-    }
-    function writeCart(items){
-      localStorage.setItem(CART_KEY, JSON.stringify(items));
-      syncCartBadge();
-      renderCartModal();
-    }
-
+    // ---------- Stripe checkout fallback ----------
     function getQty(){
-      return Math.max(1, parseInt(document.getElementById('qty').value, 10) || 1);
+      return Math.max(1, parseInt(document.getElementById('qty').value || '1', 10) || 1);
     }
-
-    function addCurrentToCart(){
-      const params = new URLSearchParams(location.search);
-      const item = params.get('item') || 'sta-hoodie';
-      const p = PRODUCTS[item] || PRODUCTS['sta-hoodie'];
-
-      if (!p.priceId){
-        alert("Missing Stripe priceId for this product.");
-        return;
-      }
-
-      const qty = getQty();
-      const cart = readCart();
-
-      const existing = cart.find(x => x.priceId === p.priceId);
-      if (existing) existing.quantity += qty;
-      else cart.push({ priceId: p.priceId, name: p.name, image: p.img || "", quantity: qty });
-
-      writeCart(cart);
-      const t=document.getElementById('sta-toast');
-      const tt=document.getElementById('sta-toast-text');
-      if(t){ if(tt) tt.textContent=`Added to cart (${qty})`; t.classList.add('show'); clearTimeout(window.__staToastTimer); window.__staToastTimer=setTimeout(()=>t.classList.remove('show'),1400); }
-    }
-
-    document.getElementById('addToCart').addEventListener('click', addCurrentToCart);
-
-    // 4) Header cart UI (badge + modal render)
-    function syncCartBadge(){
-      const cart = readCart();
-      const count = cart.reduce((a,b)=> a + (parseInt(b.quantity,10)||0), 0);
-      const badge = document.getElementById('sta-cart-count');
-      if (badge) badge.textContent = String(count);
-    }
-
-    function setupCartUI(){
-      const btn = document.getElementById('sta-cart-btn');
-      const modal = document.getElementById('sta-cart-modal');
-      const close = modal ? modal.querySelector('[data-close]') : null;
-      const clear = document.getElementById('sta-cart-clear');
-      const checkout = document.getElementById('sta-cart-checkout');
-
-      if (btn && modal){
-        btn.addEventListener('click', () => {
-          modal.style.display = 'block';
-          renderCartModal();
-        });
-      }
-      if (close && modal){
-        close.addEventListener('click', () => modal.style.display = 'none');
-      }
-      if (modal){
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.style.display = 'none';
-        });
-      }
-      if (clear){
-        clear.addEventListener('click', () => writeCart([]));
-      }
-      if (checkout){
-        checkout.addEventListener('click', async () => {
-          // If you already have a working cart->Stripe endpoint, wire it here.
-          // Otherwise, keep using buy-now buttons only.
-          alert("Cart checkout needs your /api/create-checkout-session endpoint (cart -> Stripe).");
-        });
-      }
-
-      renderCartModal();
-    }
-
-    function renderCartModal(){
-      const list = document.getElementById('sta-cart-list');
-      if (!list) return;
-
-      const cart = readCart();
-      if (!cart.length){
-        list.innerHTML = '<div style="padding:10px;color:#5b606b;font-weight:700">Cart is empty</div>';
-        return;
-      }
-
-      list.innerHTML = cart.map((it, idx) => {
-        const name = (it.name || "Item").replace(/</g,"&lt;");
-        const qty = parseInt(it.quantity,10) || 1;
-        return `
-          <div style="display:flex;justify-content:space-between;gap:10px;padding:10px;border-bottom:1px solid #eee">
-            <div style="font-weight:800">${name}<div style="color:#5b606b;font-weight:700;font-size:12px">Qty: ${qty}</div></div>
-            <button data-rm="${idx}" style="border:1px solid #ddd;background:#fff;border-radius:10px;padding:8px 10px;font-weight:900;cursor:pointer">Remove</button>
-          </div>
-        `;
-      }).join("");
-
-      list.querySelectorAll('[data-rm]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const idx = parseInt(btn.getAttribute('data-rm'), 10);
-          const c = readCart();
-          c.splice(idx, 1);
-          writeCart(c);
-        });
+    async function goStripeCheckout(priceId, quantity) {
+      const r = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ items: [{ priceId, quantity }] })
       });
+      const data = await r.json().catch(()=> ({}));
+      const url = data.url || data.checkoutUrl || data.checkout_url;
+      if (!r.ok || !url) throw new Error(data.error || ('Checkout failed ('+r.status+')'));
+      window.location.href = url;
     }
 
-    window.addEventListener('storage', (e) => {
-      if (e.key === CART_KEY) syncCartBadge();
-    });
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-stripe-checkout]');
+      if (!btn) return;
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      const priceId = btn.getAttribute('data-price-id') || '';
+      if (!priceId) { alert('Missing Stripe price id.'); return; }
+
+      try{
+        btn.disabled = true;
+        btn.setAttribute('aria-busy','true');
+        await goStripeCheckout(priceId, getQty());
+      }catch(err){
+        console.error(err);
+        alert(err?.message || 'Stripe checkout failed');
+      }finally{
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+      }
+    }, true);
   </script>
-
-  <div id="sta-toast" class="sta-toast" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="sta-toast-text">Added to cart</span></div>
-
 </body>
 </html>
