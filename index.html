@@ -6,488 +6,190 @@
   <title>STA — New York</title>
   <meta name="description" content="STA — New York. Quality Flower • Culture & Community." />
 
-  <!-- Snipcart (required once) -->
   <style>
-    /* Base */
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif; color: #111; background: #fdfcf9; }
-    a { color: inherit; }
-</style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- ===== 21+ Age Verification (non-locking) ===== -->
-  <style>
-    .agegate-overlay{
-      position:fixed; inset:0; z-index:9999;
-      display:flex; align-items:center; justify-content:center;
-      padding:24px;
-      background:rgba(0,0,0,.72);
-      backdrop-filter: blur(6px);
-    }
-    .agegate-card{
-      width:min(520px, 100%);
-      background:#fff;
-      border-radius:18px;
-      box-shadow:0 16px 48px rgba(0,0,0,.35);
-      padding:22px 20px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:#111;
-    }
-    .agegate-card h2{ margin:0 0 8px; font-size:22px; line-height:1.2; }
-    .agegate-card p{ margin:0 0 14px; color:#444; font-size:14px; line-height:1.45; }
-    .agegate-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-    .agegate-btn{
-      appearance:none; border:0; cursor:pointer;
-      padding:12px 14px; border-radius:12px;
-      font-weight:700; font-size:14px;
-    }
-    .agegate-yes{ background:var(--sta-accent, #c71f2d); color:#fff; }
-    .agegate-no{ background:#111; color:#fff; }
-    .agegate-small{
-      margin-top:10px;
-      font-size:12px;
-      color:#666;
-    }
-    .agegate-small a{ color:inherit; text-decoration:underline; }
-    .agegate-banner{
-      position:fixed; left:14px; right:14px; bottom:14px;
-      z-index:9998;
-      display:none;
-      background:#111;
-      color:#fff;
-      border-radius:14px;
-      padding:12px 12px;
-      box-shadow:0 12px 40px rgba(0,0,0,.25);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-    .agegate-banner strong{ display:block; font-size:13px; margin-bottom:4px; }
-    .agegate-banner .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .agegate-banner .row a{ color:#fff; text-decoration:underline; font-size:13px; }
-    .agegate-banner .row button{
-      appearance:none; border:0; cursor:pointer;
-      border-radius:10px;
-      padding:10px 12px;
-      font-weight:800; font-size:13px;
-      background:var(--sta-accent, #c71f2d);
-      color:#fff;
-    }
-    .agegate-banner .row .leave{
-      opacity:.9;
-      padding:10px 12px;
-      border-radius:10px;
-      background:rgba(255,255,255,.12);
-      text-decoration:none;
-      font-weight:800;
-    }
-    @media (max-width:420px){
-      .agegate-card{ padding:18px 16px; }
-      .agegate-actions{ gap:8px; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
     }
 
-    /* ---------- HERO ---------- */
-#sta-root-nyc .sta-hero {
-  position: relative;
-  min-height: 70svh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding-block: clamp(56px, 10vw, 120px);
+    a { color: inherit; text-decoration: none; }
 
-  /* HERO BACKGROUND IMAGE */
-  background-image:
-    linear-gradient(
-      rgba(0,0,0,.55),
-      rgba(0,0,0,.55)
-    ),
-    url('./STA-hero.png');
-  background-size: cover;
-  background-position: right center;
-  background-repeat: no-repeat;
-  color: #fff;
-}
+    /* ================= HERO ================= */
+    .sta-hero {
+      position: relative;
+      min-height: 80vh;
+      width: 100%;
 
+      /* FORCE IMAGE LOAD */
+      background:
+        linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+        url("./STA-hero.png");
+
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: right center;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .sta-hero-content {
+      max-width: 900px;
+      padding: 2rem;
+    }
+
+    .sta-hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .sta-hero h1 span {
+      color: #c71f2d;
+    }
+
+    .sta-hero h2 {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      color: #c71f2d;
+      margin-bottom: 1rem;
+    }
+
+    .sta-hero p {
+      max-width: 60ch;
+      margin: 0 auto 2rem;
+      color: #e5e5e5;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .sta-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      background: #c71f2d;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 10px 30px rgba(199,31,45,.4);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .sta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(199,31,45,.6);
+    }
+
+    /* ================= SECTION ================= */
+    .section {
+      padding: 6rem 1.5rem;
+      background: #fdfcf9;
+      color: #111;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+
+    .card-img {
+      height: 320px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-body {
+      padding: 1.75rem;
+    }
+
+    .card-body h3 {
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+    }
+
+    .card-body p {
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: .6rem 1.2rem;
+      border-radius: 999px;
+      background: #c71f2d;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* ================= MOBILE ================= */
+    @media (max-width: 768px) {
+      .sta-hero {
+        background-position: center;
+      }
+    }
   </style>
-
-
-  <script src="./checkout.js" defer></script>
 </head>
 
 <body>
 
-  <!-- ===== 21+ Age Gate (shows once; only saves YES) ===== -->
-  <div id="agegate" class="agegate-overlay" role="dialog" aria-modal="true" aria-labelledby="agegate-title" style="display:none;">
-    <div class="agegate-card">
-      <h2 id="agegate-title">Are you 21 or older?</h2>
-      <p>This site contains cannabis-related content and is intended for adults 21+. Please confirm your age to continue.</p>
-      <div class="agegate-actions">
-        <button class="agegate-btn agegate-yes" id="agegateYes" type="button">I’m 21+ — Enter</button>
-        <button class="agegate-btn agegate-no" id="agegateNo" type="button">Not 21</button>
+  <!-- ================= HERO ================= -->
+  <section class="sta-hero">
+    <div class="sta-hero-content">
+      <h1>STA <span>→</span> NY</h1>
+      <h2>NYC • Cannabis Culture</h2>
+      <p>
+        Premium flower, ceramic-tipped pre-rolls, and lifestyle merch —
+        crafted for clarity, culture, and community.
+      </p>
+      <a href="./merch.html" class="sta-btn">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- ================= SHOP ================= -->
+  <section class="section">
+    <div class="wrap grid">
+      <div class="card">
+        <div class="card-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w');"></div>
+        <div class="card-body">
+          <h3>Products</h3>
+          <p>Top-tier flower and ceramic-tipped pre-rolls.</p>
+          <a href="./products.html" class="chip">View Products</a>
+        </div>
       </div>
-      <div class="agegate-small">
-        <span>Tip: If you clicked the wrong button, you can always change it.</span>
+
+      <div class="card">
+        <div class="card-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/6af53b52-4762-4f1b-a86d-91f78c10758c/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=500w');"></div>
+        <div class="card-body">
+          <h3>Merch</h3>
+          <p>Minimal, NYC-rooted lifestyle pieces.</p>
+          <a href="./merch.html" class="chip">Shop Merch</a>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div id="agegateBanner" class="agegate-banner" aria-live="polite">
-    <strong>21+ only.</strong>
-    <div class="row">
-      <button type="button" id="agegateEnterFromBanner">I’m 21+ — Enter</button>
-      <a class="leave" href="https://www.google.com/" rel="noopener">Leave site</a>
-      <a href="#" id="agegateChange">Change decision</a>
-    </div>
-  </div>
-
-<div id="sta-nav"></div>
-<script>
-  fetch('./sta-header.html')
-    .then(r => r.text())
-    .then(html => document.getElementById('sta-nav').innerHTML = html);
-</script>
-
-  <div id="staSnipcartMount"></div>
-<main>
-
-    <!-- ===== STA • Scroll-Safe Clean Version (ported from your Squarespace snippet) ===== -->
-    <section id="sta-root-nyc" aria-label="STA Section">
-      <style>
-        /* ---------- Root Scope ---------- */
-        #sta-root-nyc {
-          --sta-ink:#111;
-          --sta-dim:#5b606b;
-          --sta-accent:#c71f2d;
-          --sta-bg:#fdfcf9;
-          --sta-panel:#fff;
-          --sta-line:#e9e9e9;
-          --sta-shadow:0 8px 24px rgba(0,0,0,.06);
-
-          background:var(--sta-bg);
-          color:var(--sta-ink);
-          font:16px/1.5 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
-
-          position:relative;
-          overflow:visible;
-          isolation:auto;
-          z-index:auto;
-        }
-        #sta-root-nyc * { box-sizing:border-box; }
-        #sta-root-nyc .sta-wrap {
-          width:100%;
-          max-width:1200px;
-          margin-inline:auto;
-          padding-inline:clamp(16px,4vw,32px);
-        }
-
-        /* ---------- HERO ---------- */
-        #sta-root-nyc .sta-hero {
-          min-height:60svh;
-          display:grid;
-          place-items:center;
-          text-align:center;
-          padding-block:clamp(56px,10vw,120px);
-          background:var(--sta-bg);
-        }
-        #sta-root-nyc .hero-title {
-          font-size:clamp(42px,9vw,120px);
-          font-weight:800;
-          letter-spacing:-.02em;
-          margin:0 0 .45rem;
-        }
-        #sta-root-nyc .hero-title .arrow { color:var(--sta-accent); }
-        #sta-root-nyc .subtitle {
-          font-size:clamp(15px,2.3vw,24px);
-          font-weight:700;
-          color:var(--sta-accent);
-          margin:0 0 .45rem;
-        }
-        #sta-root-nyc .tagline {
-          color:var(--sta-dim);
-          font-size:clamp(14px,1.7vw,18px);
-          line-height:1.65;
-          max-width:68ch;
-          margin:0 auto 1.1rem;
-        }
-        #sta-root-nyc .sta-btn {
-          display:inline-block;
-          padding:.95rem 1.6rem;
-          border-radius:999px;
-          font-weight:800;
-          letter-spacing:.02em;
-          text-decoration:none;
-          background:var(--sta-accent);
-          color:#fff;
-          box-shadow:0 8px 24px rgba(199,31,45,.25);
-          transition:transform .2s, box-shadow .2s;
-        }
-        #sta-root-nyc .sta-btn:hover {
-          transform:translateY(-2px);
-          box-shadow:0 12px 28px rgba(199,31,45,.32);
-        }
-
-        /* ---------- SHOP ---------- */
-        #sta-root-nyc .sta-section {
-          background:var(--sta-panel);
-          padding-block:clamp(48px,8vw,96px);
-          border-top:1px solid var(--sta-line);
-          position:relative;
-          z-index:2;
-        }
-        #sta-root-nyc .sta-grid {
-          display:grid;
-          gap:28px;
-          grid-template-columns:1fr;
-          max-width:900px;
-          margin-inline:auto;
-        }
-        /* tighter grid on mobile */
-        @media (max-width:520px){
-          #sta-root-nyc .sta-grid{ gap:14px; }
-          #sta-root-nyc .sta-card-body{ padding:16px; }
-          #sta-root-nyc .sta-card-media{ aspect-ratio:4/5; }
-        }
-        @media (min-width:460px) {
-          #sta-root-nyc .sta-grid { grid-template-columns:1fr 1fr; gap:40px; }
-        }
-        #sta-root-nyc .sta-card {
-          display:flex;
-          flex-direction:column;
-          background:var(--sta-panel);
-          border:1px solid var(--sta-line);
-          border-radius:18px;
-          overflow:hidden;
-          box-shadow:var(--sta-shadow);
-          transition:transform .2s, box-shadow .2s;
-        }
-        #sta-root-nyc .sta-card:hover {
-          transform:translateY(-4px);
-          box-shadow:0 12px 30px rgba(0,0,0,.08);
-        }
-        #sta-root-nyc .sta-card-media {
-          --img:url('');
-          --focus:50% 50%;
-          width:100%;
-          aspect-ratio:3/4;
-          background:#f7f7f7;
-          position:relative;
-          overflow:hidden;
-        }
-        #sta-root-nyc .sta-card-media::before {
-          content:"";
-          position:absolute;
-          inset:0;
-          background-image:var(--img);
-          background-size:cover!important;
-          background-position:var(--focus)!important;
-          background-repeat:no-repeat!important;
-        }
-        #sta-root-nyc .sta-card-body { padding:24px; background:var(--sta-panel); }
-        #sta-root-nyc .sta-card-body h2 { margin:.1rem 0 .5rem; font-size:clamp(20px,1.8vw,24px); }
-        #sta-root-nyc .sta-card-body p { color:var(--sta-dim); font-size:clamp(14px,1.2vw,16px); line-height:1.6; margin:0 0 1rem; }
-
-        #sta-root-nyc .btn-row { display:flex; flex-wrap:wrap; gap:10px; }
-        #sta-root-nyc .btn-chip {
-          display:inline-block;
-          padding:.75rem 1.1rem;
-          border-radius:999px;
-          font-weight:700;
-          border:1px solid var(--sta-line);
-          background:#fafafa;
-          color:var(--sta-ink);
-          text-decoration:none;
-          transition:transform .15s, background .15s;
-        }
-        #sta-root-nyc .btn-chip:hover { transform:translateY(-1px); background:#f2f2f2; }
-        #sta-root-nyc .btn-chip.accent { background:var(--sta-accent); color:#fff; border-color:var(--sta-accent); }
-
-        /* ---------- BRAND ---------- */
-        #sta-root-nyc .sta-brand {
-          position:relative;
-          text-align:center;
-          padding-top:clamp(80px,10vw,120px);
-          padding-bottom:clamp(60px,8vw,96px);
-          background:var(--sta-panel);
-          border-top:1px solid var(--sta-line);
-          z-index:1;
-        }
-        #sta-root-nyc .brand-card {
-          position:relative;
-          /* remove the "circle/card" look */
-          background:transparent;
-          border:0;
-          border-radius:0;
-          box-shadow:none;
-          padding:0;
-          max-width:900px;
-          margin-inline:auto;
-        }
-        #sta-root-nyc .sta-brand h2 { font-size:clamp(22px,2.2vw,28px); margin:0 0 .6rem; }
-        #sta-root-nyc .sta-brand p { color:var(--sta-dim); font-size:clamp(14px,1.2vw,16px); line-height:1.65; max-width:68ch; margin:0 auto 1.4rem; }
-        #sta-root-nyc .sta-brand .cta {
-          display:inline-block;
-          padding:.9rem 1.5rem;
-          border-radius:999px;
-          font-weight:800;
-          background:var(--sta-accent);
-          color:#fff;
-          text-decoration:none;
-          box-shadow:0 8px 24px rgba(199,31,45,.25);
-          transition:transform .2s, box-shadow .2s;
-        }
-        #sta-root-nyc .sta-brand .cta:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(199,31,45,.32); }
-        
-        .snipcart,
-.snipcart-modal,
-.snipcart__overlay,
-.snipcart__modal,
-.snipcart__box,
-.snipcart-modal__container,
-.snipcart-cart__content {
-  z-index: 2147483647 !important;
-}
-
-      </style>
-
-      <!-- HERO -->
-      <header class="sta-hero">
-        <div class="sta-wrap">
-          <h1 class="hero-title">STA <span class="arrow">→</span> NY</h1>
-          <p class="subtitle">NYC • Cannabis Culture</p>
-          <p class="tagline">Premium flower, ceramic-tipped pre-rolls, and lifestyle merch — crafted for clarity, culture, and community.</p>
-          <a href="./merch.html" class="sta-btn">Shop Now</a>
-        </div>
-      </header>
-
-      <!-- SHOP -->
-      <section class="sta-section" id="shop">
-        <div class="sta-wrap">
-          <div class="sta-grid">
-            <article class="sta-card" id="product">
-              <div class="sta-card-media"
-                style="--img:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/77ad7487-06a8-48fb-812b-182289fe6f9e/9D3B1C14-7CAE-4143-A8F9-1ED49632B516.jpeg?format=750w');">
-              </div>
-              <div class="sta-card-body">
-                <h2>Products</h2>
-                <p>Top-tier flower and pre-rolls — balanced blends for creativity, calm, and connection.</p>
-                <div class="btn-row">
-                  <a class="btn-chip accent" href="./products.html">View Products</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="sta-card" id="merch">
-              <div class="sta-card-media"
-                style="--img:url('https://images.squarespace-cdn.com/content/v1/691f53283673a70b1bfd6e77/6af53b52-4762-4f1b-a86d-91f78c10758c/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=300w');">
-              </div>
-              <div class="sta-card-body">
-                <h2>Merchandise</h2>
-                <p>Minimal, urban, and rooted in NYC — premium hoodies, tees, and hats built for the modern creative.</p>
-                <div class="btn-row">
-                  <a class="btn-chip accent" href="./merch.html">Shop Merch</a>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- BRAND -->
-      <section class="sta-brand" id="brand">
-        <div class="sta-wrap">
-          <div class="brand-card">
-            <h2>The Brand & Culture</h2>
-            <p>Street-born, design-driven, and community-rooted. STA brings clarity and confidence to NYC’s cannabis scene.</p>
-            <a href="products.html" class="cta">Shop Now</a>
-          </div>
-        </div>
-      </section>
-    </section>
-
-  </main>
-
-  <!-- ====================== Snipcart Root + Script (embedded) ====================== -->
-  <!-- IMPORTANT: Put your API key on ONE line (no spaces/newlines). -->
-  <script>
-  (function(){
-    // Session-only: user is asked again when they start a new session (new tab / closed & reopened).
-    const KEY = "sta_age_verified_session_v1";
-    const gate = document.getElementById("agegate");
-    const banner = document.getElementById("agegateBanner");
-    const yesBtn = document.getElementById("agegateYes");
-    const noBtn = document.getElementById("agegateNo");
-    const bannerYes = document.getElementById("agegateEnterFromBanner");
-    const change = document.getElementById("agegateChange");
-
-    if(!gate || !banner || !yesBtn || !noBtn) return;
-
-    function showGate(){
-      gate.hidden = false;
-      gate.style.display = "grid";
-      banner.classList.remove("show");
-    }
-    function hideGate(){
-      gate.hidden = true;
-      gate.style.display = "none";
-    }
-    function showBanner(){
-      banner.classList.add("show");
-    }
-    function hideBanner(){
-      banner.classList.remove("show");
-    }
-
-    function isVerified(){
-      try { return sessionStorage.getItem(KEY) === "true"; }
-      catch(e){ return false; }
-    }
-    function setVerified(){
-      try { sessionStorage.setItem(KEY, "true"); } catch(e){}
-    }
-    function clearVerified(){
-      try { sessionStorage.removeItem(KEY); } catch(e){}
-    }
-
-    // Initial state (ask every new session)
-    if(isVerified()){
-      hideGate();
-      hideBanner();
-    } else {
-      showGate();
-      hideBanner();
-    }
-
-    yesBtn.addEventListener("click", function(){
-      setVerified();
-      hideGate();
-      hideBanner();
-    });
-
-    function handleNo(){
-      // Do NOT save anything. Do NOT lock them out.
-      clearVerified();
-      hideGate();
-      showBanner();
-    }
-
-    noBtn.addEventListener("click", handleNo);
-
-    if(bannerYes){
-      bannerYes.addEventListener("click", function(){
-        setVerified();
-        hideBanner();
-      });
-    }
-
-    if(change){
-      change.addEventListener("click", function(e){
-        e.preventDefault();
-        clearVerified();
-        showGate();
-      });
-    }
-
-    // Optional: if they navigate away via the banner "Leave site", they’ll be asked again next time anyway.
-  })();
-</script>
+  </section>
 
 </body>
 </html>
