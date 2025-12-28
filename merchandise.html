@@ -138,6 +138,41 @@
     }
     .nav-fallback .brand{ font-weight:1100; letter-spacing:.02em; }
     .nav-fallback .links{ display:flex; gap:12px; flex-wrap:wrap; font-weight:850; opacity:.95; }
+    /* --- FORCE HEADER/NAV TO NOT BE TALL --- */
+#sta-nav,
+#sta-nav *{
+  box-sizing:border-box;
+}
+
+/* Kill any huge min-heights/padding coming from the injected header */
+#sta-nav header,
+#sta-nav .header,
+#sta-nav nav,
+#sta-nav .nav,
+#sta-nav .topbar,
+#sta-nav .navbar{
+  height:auto !important;
+  min-height:0 !important;
+  padding-top:10px !important;
+  padding-bottom:10px !important;
+  margin:0 !important;
+}
+
+/* If your injected header is wrapped in a big section/container */
+#sta-nav section,
+#sta-nav .wrap,
+#sta-nav .container{
+  padding-top:10px !important;
+  padding-bottom:10px !important;
+  margin:0 !important;
+}
+
+/* If your header file uses a big “card” area, cap it */
+#sta-nav > *{
+  max-height:110px;
+  overflow:hidden;
+}
+
   </style>
 </head>
 
@@ -170,6 +205,9 @@
         <button id="buyNow" class="btn primary stripe" data-stripe-checkout data-price-id="">
           Continue with Stripe
         </button>
+<button id="addToCart" class="btn" type="button">
+  Add to Cart
+</button>
 
         <a class="back" href="./merch.html">← Back to merch</a>
 
@@ -296,5 +334,68 @@
       }
     }, true);
   </script>
+  <script>
+  function getCart(){
+    try { return JSON.parse(localStorage.getItem('sta_cart') || '[]'); }
+    catch { return []; }
+  }
+  function setCart(cart){
+    localStorage.setItem('sta_cart', JSON.stringify(cart));
+    updateCartBadge(cart);
+  }
+  function updateCartBadge(cart){
+    const count = cart.reduce((sum, x) => sum + (x.qty || 0), 0);
+
+    // Try common badge selectors
+    const el =
+      document.querySelector('[data-cart-count]') ||
+      document.querySelector('#cartCount') ||
+      document.querySelector('.cart-count') ||
+      document.querySelector('.snipcart-items-count'); // if you still have this in header
+
+    if (el) el.textContent = String(count);
+  }
+
+  function toast(msg){
+    const t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = `
+      position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+      background:#0f0f0f; color:#fff; padding:10px 14px; border-radius:12px;
+      font-weight:900; z-index:9999; box-shadow:0 10px 30px rgba(0,0,0,.25);
+    `;
+    document.body.appendChild(t);
+    setTimeout(()=> t.remove(), 1400);
+  }
+
+  // On load: sync badge
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge(getCart());
+  });
+
+  // Add to cart button
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#addToCart');
+    if (!btn) return;
+
+    // Pull current product from your populated page
+    const name = document.getElementById('p-title')?.textContent?.trim() || 'STA Item';
+    const img  = document.getElementById('p-img')?.getAttribute('src') || '';
+    const qty  = Math.max(1, parseInt(document.getElementById('qty')?.value || '1', 10) || 1);
+
+    // Use item query param as the unique id
+    const itemId = new URLSearchParams(location.search).get('item') || 'sta-item';
+
+    const cart = getCart();
+    const existing = cart.find(x => x.id === itemId);
+
+    if (existing) existing.qty += qty;
+    else cart.push({ id: itemId, name, img, qty });
+
+    setCart(cart);
+    toast(`Added to cart (${qty})`);
+  }, true);
+</script>
+
 </body>
 </html>
