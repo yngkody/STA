@@ -135,6 +135,50 @@
       .sta-right{ width:100%; justify-content:space-between; }
       .sta-cartpanel{ border-radius:16px 16px 0 0; }
     }
+    @media (max-width:640px){
+
+  /* Reduce brand height */
+  .sta-brand .sub{
+    display:none;
+  }
+
+  /* Keep header compact */
+  .sta-banner .wrap{
+    padding:10px 14px;
+  }
+
+  /* Prevent nav from stretching weirdly */
+  .sta-right{
+    width:auto;
+    margin-left:auto;
+    gap:8px;
+  }
+
+  /* Collapse nav pills into a horizontal scroll row */
+  .sta-actions{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+
+  .sta-actions::-webkit-scrollbar{
+    display:none;
+  }
+
+  .sta-chip{
+    padding:6px 10px;
+    font-size:13px;
+    white-space:nowrap;
+  }
+
+  /* Slightly smaller icon buttons */
+  .sta-iconbtn{
+    width:34px;
+    height:34px;
+  }
+}
+
   </style>
 
   <div class="wrap">
