@@ -187,17 +187,16 @@
     width:34px;
     height:34px;
   }
-
-       .sta-actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
+ .sta-actions{
+    flex-wrap:wrap !important;
+    overflow:visible !important;
+    white-space:normal !important;
   }
 
-  /* Force Store Locator onto its own row */
-  .sta-actions a[href*="stores"]{
-    flex-basis:100%;
-    max-width:fit-content;
+  /* 2) Force ONLY the last nav item (Store Locator) onto its own row */
+  .sta-actions .sta-chip:last-child{
+    flex:0 0 100% !important;
+    width:fit-content;
   }
 }
 
