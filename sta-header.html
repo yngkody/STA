@@ -134,40 +134,46 @@
    
 @media (max-width:640px){
 
-  /* Header becomes 2 rows: brand/icons row, then nav row */
+  /* Let the header stack */
   .sta-banner .wrap{
     flex-wrap:wrap;
     align-items:flex-start;
     gap:10px;
   }
 
-  /* Brand on row 1 (left) */
+  /* Brand row 1 (left) */
   .sta-brand{
     flex:1 1 auto;
     min-width:0;
   }
 
-  /* Icons on row 1 (right) */
+  /* IMPORTANT: make the right side take full width so nav can truly wrap */
   .sta-right{
-    margin-left:auto;
-    flex:0 0 auto;
-    width:auto;              /* IMPORTANT: do NOT set width:100% */
+    flex:1 1 100%;
+    width:100%;
+    margin-left:0;
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     gap:10px;
     flex-wrap:wrap;
   }
 
-  /* Nav is its own row */
+  /* Icons stay on row 1, aligned right */
+  .sta-icons{
+    order:1;
+    margin-left:auto;
+  }
+
+  /* Nav is row 2 and can wrap */
   .sta-actions{
+    order:2;
     flex:0 0 100%;
+    width:100%;
     display:flex;
     flex-wrap:wrap;
     gap:8px;
-    order:3;
   }
 
-  /* Make pills a bit smaller on mobile */
   .sta-chip{
     padding:7px 10px;
     font-size:13px;
@@ -178,14 +184,12 @@
     height:34px;
   }
 
-  /* Force Store Locator to the next line BUT keep pill tight */
+  /* Force Store Locator onto its own line WITHOUT stretching the pill */
   .sta-actions .sta-chip:last-child{
-    flex:0 0 100%;
+    flex:0 0 auto;
     width:max-content;
-    max-width:max-content;
+    margin-right:100vw; /* <- this forces a line break in flex-wrap reliably */
   }
-
-  .sta-cartpanel{ border-radius:16px 16px 0 0; }
 }
 
 
