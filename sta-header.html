@@ -187,6 +187,18 @@
     width:34px;
     height:34px;
   }
+
+       .sta-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  /* Force Store Locator onto its own row */
+  .sta-actions a[href*="stores"]{
+    flex-basis:100%;
+    max-width:fit-content;
+  }
 }
 
 
