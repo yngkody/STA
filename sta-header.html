@@ -198,6 +198,19 @@
     flex:0 0 100% !important;
     width:fit-content;
   }
+     .sta-actions{
+    flex-wrap:wrap !important;
+    overflow:visible !important;
+    white-space:normal !important;
+  }
+
+  /* Store Locator = new row, but NOT full-width pill */
+  .sta-actions .sta-chip:last-child{
+    flex:0 1 100% !important;     /* breaks to its own line */
+    width:max-content !important; /* pill only as wide as text */
+    max-width:max-content !important;
+    align-self:flex-start;        /* keeps it left instead of stretching */
+  }
 }
 
 
