@@ -135,49 +135,60 @@
       .sta-right{ width:100%; justify-content:space-between; }
       .sta-cartpanel{ border-radius:16px 16px 0 0; }
     }
-    @media (max-width:640px){
+   @media (max-width:640px){
 
-  /* Reduce brand height */
-  .sta-brand .sub{
-    display:none;
-  }
-
-  /* Keep header compact */
+  /* Make the header able to stack into 2 rows */
   .sta-banner .wrap{
-    padding:10px 14px;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
   }
 
-  /* Prevent nav from stretching weirdly */
+  /* Row 1: brand left */
+  .sta-brand{
+    flex:1 1 auto;
+    min-width:0;
+  }
+
+  /* Optional: keep subtitle but reduce it so it doesn't make it tall */
+  .sta-brand .sub{
+    font-size:12px;
+    line-height:1.2;
+  }
+
+  /* Row 1: icons right */
   .sta-right{
-    width:auto;
     margin-left:auto;
+    flex:0 0 auto;
+    width:auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  /* Put the nav on its own row */
+  .sta-actions{
+    flex:0 0 100%;
+    order:3;
+    display:flex;
+    flex-wrap:wrap;          /* <-- WRAPS */
+    justify-content:flex-start;
     gap:8px;
   }
 
-  /* Collapse nav pills into a horizontal scroll row */
-  .sta-actions{
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
-
-  .sta-actions::-webkit-scrollbar{
-    display:none;
-  }
-
+  /* Make pills smaller so they fit */
   .sta-chip{
-    padding:6px 10px;
+    padding:7px 10px;
     font-size:13px;
-    white-space:nowrap;
   }
 
-  /* Slightly smaller icon buttons */
+  /* Keep icons tidy */
   .sta-iconbtn{
     width:34px;
     height:34px;
   }
 }
+
 
   </style>
 
