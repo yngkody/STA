@@ -234,6 +234,10 @@
       }
       if(group.getLayers().length){ map.fitBounds(group.getBounds().pad(0.12)); }
     })();
+
+    window.addEventListener("sta-cart-updated", () => {
+    STA_CART.refresh();
+    });
   </script>
 </section>
 
