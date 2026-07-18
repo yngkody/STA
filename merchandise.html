@@ -623,10 +623,17 @@
       }
     }, true);
 
-    // Initial badge sync (will re-run after injection too)
-    document.addEventListener('DOMContentLoaded', () => {
-      STA_CART.refreshBadge();
+    document.getElementById("addToCart").addEventListener("click", () => {
+    const p = PAGE.currentProduct;
+
+    window.STA_CART.add({
+        id: p.id,
+        name: p.name,
+        img: p.img,
+        qty: PAGE.getQty(),
+        priceId: p.priceId
     });
+});
   </script>
 </body>
 </html>
