@@ -227,6 +227,7 @@
         const res = await fetch('./sta-header.html', { cache:'no-store' });
         if(!res.ok) throw new Error('sta-header.html not found');
         host.innerHTML = await res.text();
+        window.STA_CART.refresh();
       }catch(e){
         // Minimal fallback (still includes a cart button + badge)
         host.innerHTML = `
