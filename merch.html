@@ -1,15 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>STA — Merch</title>
-<script src="./sta-cart.js" defer></script>
+<!DOCTYPE html>
 
-  <!-- If you already have checkout.js, keep it. This page also has its own Stripe fallback. -->
-  <script src="./checkout.js" defer></script>
-
-  <style>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>STA — Merch</title>
+<script defer="" src="./sta-cart.js"></script>
+<script defer="" src="./checkout.js"></script>
+<style>
     :root{
       --ink:#0f0f0f;
       --dim:#666b74;
@@ -17,10 +14,10 @@
       --bg:#f7f5f3;
       --panel:#ffffff;
       --line:#e7e7e7;
-      --shadow:0 14px 40px rgba(0,0,0,.10);
-      --r:18px;
-      --max:1180px;
-      --g:clamp(14px, 3vw, 22px);
+      --shadow:0 20px 50px rgba(0,0,0,.08);
+      --r:24px;
+      --max:1200px;
+      --g:clamp(16px, 4vw, 32px);
     }
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
@@ -31,340 +28,383 @@
         radial-gradient(1200px 600px at 10% -10%, rgba(199,31,45,.10), transparent 60%),
         radial-gradient(900px 500px at 90% 0%, rgba(199,31,45,.06), transparent 55%),
         var(--bg);
+      -webkit-font-smoothing: antialiased;
     }
     a{ color:inherit; text-decoration:none; }
     img{ max-width:100%; display:block; }
-    .wrap{ max-width:var(--max); margin:0 auto; padding:22px var(--g) 80px; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:40px var(--g) 100px; }
 
     /* Page header */
     .pagehead{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
-      margin:14px 0 18px;
+      margin:0 0 48px;
+      text-align: center;
     }
     .title{
       margin:0;
       font-weight:950;
-      letter-spacing:-.03em;
-      font-size:clamp(22px, 2.2vw, 30px);
+      letter-spacing:-.04em;
+      font-size:clamp(32px, 5vw, 52px);
+      line-height: 1;
     }
     .sub{
-      margin:6px 0 0;
+      margin:12px auto 0;
       color:var(--dim);
-      font-weight:650;
-      max-width:60ch;
+      font-weight:600;
+      max-width:50ch;
+      font-size: 18px;
     }
 
-    /* List */
-    .list{ display:flex; flex-direction:column; gap:14px; }
+    /* Grid Layout */
+    .list{ 
+      display:grid; 
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+      gap:32px; 
+    }
+
+    @media (max-width: 600px) {
+      .list { grid-template-columns: 1fr; }
+    }
 
     .item{
       background:var(--panel);
       border:1px solid var(--line);
       border-radius:var(--r);
       box-shadow:var(--shadow);
-      overflow:hidden;
-      display:grid;
-      grid-template-columns: 170px 1fr 290px;
-      gap:16px;
-      padding:16px;
+      display:flex;
+      flex-direction: column;
+      padding:24px;
       position:relative;
+      transition: transform 0.3s ease;
     }
-    .item::before{
-      content:"";
-      position:absolute; inset:0;
-      pointer-events:none;
-      
-    }
-    .item > *{ position:relative; z-index:1; }
-
-    @media (max-width: 980px){
-      .item{ grid-template-columns: 140px 1fr; }
-      .pricebox{ grid-column:1 / -1; border-left:0 !important; padding-left:0 !important; }
+    .item:hover {
+      transform: translateY(-4px);
     }
 
+    /* Image Gallery Area */
+    .thumb-container {
+      position: relative;
+      margin-bottom: 24px;
+    }
     .thumb{
-      height:170px;
-      border-radius:14px;
+      aspect-ratio: 1/1;
+      border-radius:18px;
       overflow:hidden;
       border:1px solid #eee;
       background:#111;
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
     }
-    .thumb img{ width:100%; height:100%; object-fit:cover; }
+    .thumb:hover { opacity: 0.95; }
+    .thumb img{ width:100%; height:100%; object-fit:cover; transition: transform 0.5s ease; }
 
-    .info{ min-width:0; display:flex; flex-direction:column; gap:10px; }
+    .info{ display:flex; flex-direction:column; gap:16px; flex-grow: 1; }
     .name{
       font-weight:1000;
       letter-spacing:-.02em;
-      line-height:1.15;
-      font-size:16px;
-      max-width:55ch;
+      line-height:1.2;
+      font-size:22px;
     }
     .meta{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .badge{
-      font-size:12px;
+      font-size:11px;
       font-weight:1000;
-      padding:4px 10px;
+      padding:4px 12px;
       border-radius:999px;
       border:1px solid rgba(199,31,45,.22);
       background:rgba(199,31,45,.08);
       color:#7f121b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    .stock{ font-size:13px; font-weight:1000; color:#0a6b4a; }
+    .stock{ font-size:13px; font-weight:800; color:#0a6b4a; display: flex; align-items: center; gap: 4px; }
+    .stock::before { content: ""; width: 8px; height: 8px; background: currentColor; border-radius: 50%; }
 
     .bullets{
       margin:0;
-      padding:0 0 0 18px;
-      color:#2f2f2f;
-      font-size:13px;
-      font-weight:650;
+      padding:0;
+      list-style: none;
+      color:#444;
+      font-size:14px;
+      font-weight:500;
     }
-    .bullets li{ margin:3px 0; }
+    .bullets li{ margin:6px 0; display: flex; align-items: center; gap: 8px; }
+    .bullets li::before { content: "•"; color: var(--accent); font-weight: 900; }
 
-    .variants{ display:flex; gap:8px; flex-wrap:wrap; }
+    .variants{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 4px; }
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       border:1px solid #ddd;
       background:#fff;
-      border-radius:999px;
-      padding:8px 12px;
-      font-weight:950;
+      border-radius:12px;
+      padding:10px;
+      font-weight:800;
       font-size:13px;
       cursor:pointer;
       user-select:none;
+      transition: all 0.2s ease;
     }
     .chip[aria-selected="true"]{
-      border-color:rgba(199,31,45,.35);
-      box-shadow:0 0 0 3px rgba(199,31,45,.10);
+      border-color: var(--accent);
+      background: #fffafa;
+      box-shadow: 0 0 0 1px var(--accent);
     }
     .chip img{
-      width:18px; height:18px;
+      width:24px; height:24px;
       border-radius:6px;
       object-fit:cover;
       border:1px solid #eee;
     }
 
     .pricebox{
-      border-left:1px solid #efefef;
-      padding-left:16px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top:1px solid #eee;
       display:flex;
       flex-direction:column;
-      gap:10px;
-      width:100%;
+      gap:16px;
     }
     .price{ display:flex; align-items:baseline; gap:10px; }
-    .now{ font-weight:1100; font-size:18px; }
-    .was{ font-size:12px; color:#7e8794; text-decoration:line-through; }
-    .ship{ font-size:12px; color:#6a707a; font-weight:700; }
+    .now{ font-weight:1100; font-size:24px; color: var(--ink); }
+    .was{ font-size:14px; color:#999; text-decoration:line-through; }
+    .ship{ font-size:12px; color:#777; font-weight:600; }
 
-    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .row{ display:flex; gap:12px; align-items:center; }
+    .qty-wrap { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 14px; color: var(--dim); }
     select{
-      height:38px;
-      padding:0 10px;
-      border:1px solid #dcdcdc;
+      height:44px;
+      padding:0 14px;
+      border:1px solid #ddd;
       border-radius:12px;
       background:#fff;
       font-weight:950;
-      width:96px;
+      width:70px;
+      cursor: pointer;
     }
 
     .btn{
       width:100%;
-      height:44px;
-      border-radius:14px;
+      height:54px;
+      border-radius:16px;
       border:1px solid #dcdcdc;
       background:#fff;
       color:#111;
       font-weight:1000;
       cursor:pointer;
-      transition:transform .08s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap:12px;
+      font-size: 16px;
     }
-    .btn:hover{ background:#f7f7f7; }
-    .btn:active{ transform:translateY(1px); }
+    .btn:hover{ background:#f7f7f7; transform: scale(1.01); }
+    .btn:active{ transform: scale(0.98); }
     .btn.primary{
-      background:var(--accent);
-      border-color:var(--accent);
+      background:var(--ink);
+      border-color:var(--ink);
       color:#fff;
     }
-    .btn.primary:hover{ background:#a81823; border-color:#a81823; }
-    .btn:disabled{ opacity:.65; cursor:not-allowed; }
-
+    .btn.primary:hover{ background:#000; }
+    
     .btn.stripe::before{
       content:"";
-      width:18px; height:18px;
+      width:20px; height:20px;
       border-radius:6px;
       background:linear-gradient(135deg,#635bff,#00d4ff);
-      box-shadow:0 10px 22px rgba(99,91,255,.22);
       display:inline-block;
     }
 
-    .smallnote{ font-size:12px; color:#6a707a; font-weight:650; margin-top:-6px; }
+    .smallnote{ font-size:12px; color:#888; font-weight:600; text-align: center; }
+
+    /* Zoom Modal */
+    #zoom-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,15,15,0.95);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 40px;
+    }
+    #zoom-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #zoom-modal img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+      transform: scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    #zoom-modal.active img {
+      transform: scale(1);
+    }
+    .close-zoom {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
 
     /* Nav fallback */
     .nav-fallback{
       max-width:var(--max);
       margin:0 auto;
-      padding:14px var(--g);
+      padding:24px var(--g) 0;
     }
     .nav-fallback .bar{
       background:#0f0f0f;
       color:#fff;
-      border-radius:16px;
-      padding:12px 14px;
+      border-radius:20px;
+      padding:16px 24px;
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:12px;
-      box-shadow:0 10px 26px rgba(0,0,0,.18);
+      box-shadow:0 10px 30px rgba(0,0,0,.15);
     }
-    .nav-fallback .brand{ font-weight:1100; letter-spacing:.02em; }
-    .nav-fallback .links{ display:flex; gap:12px; flex-wrap:wrap; font-weight:850; opacity:.95; }
-    .nav-fallback .links a{ opacity:.95; }
+    .nav-fallback .brand{ font-weight:1100; font-size: 20px; letter-spacing:-.02em; }
+    .nav-fallback .links{ display:flex; gap:20px; flex-wrap:wrap; font-weight:750; font-size: 14px; }
+    .nav-fallback .links a { transition: opacity 0.2s; }
+    .nav-fallback .links a:hover { opacity: 0.7; }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
   </style>
 </head>
-
 <body>
-  <div id="sta-nav"></div>
-
-  <main class="wrap">
-    <header class="pagehead">
-      <div>
-        <h1 class="title">STA Hoodies &amp; Shirts</h1>
-        <p class="sub">Clean, heavy, and loud. Choose a variant, set qty, and checkout.</p>
-      </div>
-    </header>
-
-    <div class="list">
-
-      <!-- HOODIE -->
-      <article class="item" data-product="sta-hoodie">
-        <a class="thumb" href="./merchandise.html?item=sta-hoodie" aria-label="View STA Hoodie details">
-          <img id="hoodie-img"
-            src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w"
-            alt="STA Hoodie — Front">
-        </a>
-
-        <div class="info">
-          <div class="name">STA Signature Hoodie — Heavyweight</div>
-          <div class="meta">
-            <span class="badge">Limited Run</span>
-            <span class="stock">In stock</span>
-          </div>
-          <ul class="bullets">
-            <li>Double-lined hood, heavyweight fleece</li>
-            <li>Front &amp; back artwork</li>
-            <li>NYC print shop quality</li>
-          </ul>
-
-          <div class="variants" data-target-img="#hoodie-img" data-buybtn="#hoodie-buy">
-            <button type="button" class="chip" aria-selected="true"
-              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w">
-              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=200w" alt="">
+<div id="sta-nav"></div>
+<main class="wrap">
+<header class="pagehead">
+<h1 class="title">STA Gear</h1>
+<p class="sub">Limited heavyweight drops. Designed in NYC.</p>
+</header>
+<div class="list">
+<!-- HOODIE -->
+<article class="item" data-product="sta-hoodie">
+<div class="thumb-container">
+<div class="thumb" data-zoom="">
+<img alt="STA Hoodie — Front" id="hoodie-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVXTWCR-1vh6vna1NnH0XCHyt96U7yG2IWcZF2nWk4AC3dLEpxC0wre-ydIdZJIVnSZg_LHwg0hdcWRg7Q1iVYf3LgZcr_epS9N3LotCk1udxZodNE0rbIQz8JzkDFLc5h3kjaMC67xfI1ELxB_LRYkDs1qao8aytHkPw38LiHMe9DM5s-80B1WuKqFDmsvBZBp5Paly3x6ISBQHW4VRc6APE6Vjp5CRkAkOE3RgJkoguRVE99I9xMpTSWdnXJT0X0QXMH72XIfQ"/>
+</div>
+</div>
+<div class="info">
+<div class="meta">
+<span class="badge">Limited Run</span>
+<span class="stock">In stock</span>
+</div>
+<div class="name">STA Signature Hoodie — Heavyweight</div>
+<ul class="bullets">
+<li>Double-lined hood, heavyweight fleece</li>
+<li>Premium Front &amp; Back Artwork</li>
+<li>Hand-pressed NYC quality</li>
+</ul>
+<div class="variants" data-buybtn="#hoodie-buy" data-target-img="#hoodie-img">
+<button aria-selected="true" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtqs-jr_XAV3HviDMWpihmn94oVLsMXskV7baS9iqC-O3xbpwDwNgELIOzk_HQuLA2JrP44CNQgBTZCzAdCPCPaGvm3iHRbYfrGQ7wsY5MbaNlfSFDwnaUXbjgSMLaEDr523c6CUYc7S0_TqSXPBnRC6D5-T5yd8rS3FtYkX5OrX0hqLMWRLGSK4bU4IyL_XDSILW_uXBFyB8mfo25NKQOdaBArVMw3-pGr9EYlFtMkg019jOC8u900QvWu1e1Z3sgohbOC4nqkg"/>
               Front
             </button>
-
-            <button type="button" class="chip" aria-selected="false"
-              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w">
-              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=200w" alt="">
+<button aria-selected="false" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn7BV9az3lG82xdx-NS_20n8xCnruA3RpMyGQGAHjuwrb7R6rUf6kSkkXhVeLIoid4YTksRVD00PD1NbQepbEA1zTL1HjT_l7N1NZHl2G1npZgh93no8U7kHasUz37PAJ4oOHoorFw4YFFVmgi4zG1OqXshyqB-vYJGD6Cwroo87J-lmUAyRtHyVax6dB2Ay9WQ7pmfm3a0Y9cDg--BThd97jBfCS5T_c5ckVkt9wg02CGQju8NeY2l7UID9DFAZDws7wgF3280Q"/>
               Back
             </button>
-          </div>
-        </div>
-
-        <aside class="pricebox">
-          <div class="price"><span class="now">$85.00</span><span class="was">$95</span></div>
-          <div class="ship">Ships in 2–4 business days</div>
-
-          <div class="row">
-            <label class="visually-hidden" for="qh">Qty</label>
-            <select id="qh" aria-label="Quantity">
-              <option>1</option><option>2</option><option>3</option><option>4</option>
-            </select>
-          </div>
-
-          <button id="hoodie-buy"
-            class="btn primary stripe"
-            data-stripe-checkout
-            data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-            data-qty-from="#qh">
+</div>
+</div>
+<aside class="pricebox">
+<div class="price"><span class="now">$85.00</span><span class="was">$95</span></div>
+<div class="row">
+<div class="qty-wrap">
+<label for="qh">Qty</label>
+<select aria-label="Quantity" id="qh">
+<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+</select>
+</div>
+<div class="ship">Ships in 2–4 days</div>
+</div>
+<button class="btn primary stripe" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" data-qty-from="#qh" data-stripe-checkout="" id="hoodie-buy">
             Checkout with Stripe
           </button>
-
-          <a class="btn" href="./merchandise.html?item=sta-hoodie">View details</a>
-          <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay (if enabled)</div>
-        </aside>
-      </article>
-
-      <!-- TEE -->
-      <article class="item" data-product="sta-tee">
-        <a class="thumb" href="./merchandise.html?item=sta-tee" aria-label="View STA Tee details">
-          <img id="tee-img"
-            src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w"
-            alt="STA Tee — Front">
-        </a>
-
-        <div class="info">
-          <div class="name">STA Classic Tee — Ringspun Cotton</div>
-          <div class="meta">
-            <span class="badge">New</span>
-            <span class="stock">In stock</span>
-          </div>
-          <ul class="bullets">
-            <li>Soft ringspun cotton</li>
-            <li>Front &amp; back artwork</li>
-            <li>Everyday fit</li>
-          </ul>
-
-          <div class="variants" data-target-img="#tee-img" data-buybtn="#tee-buy">
-            <button type="button" class="chip" aria-selected="true"
-              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w">
-              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=200w" alt="">
+<div class="smallnote">Secure checkout • Apple Pay, Google Pay, Card</div>
+</aside>
+</article>
+<!-- TEE -->
+<article class="item" data-product="sta-tee">
+<div class="thumb-container">
+<div class="thumb" data-zoom="">
+<img alt="STA Tee — Front" id="tee-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4YneH6p4-s7f-qrmPBA5EDO3-Yo9Ua7FsTycW7WX7xrW-_xK447J3Es4dlDwIBfcyR_qgtNyW_eCs89IgxU53_7uWfjkQnOMxGQ1Bo1AFHgVxQByBtj8-tTO13hZAztSj-MW6NMlTI9_7YIpDpCFB6z32B5h0vYDo7-kne0reMOHUUBhDds5dAgmtZJ4kGeN8IFlrWrt-GfymOajgwJOLHcZCXElMP-RTwyyJrzVJCvwpgHZyhvKyK2JGkcL8o11vytNC31NAVg"/>
+</div>
+</div>
+<div class="info">
+<div class="meta">
+<span class="badge">New</span>
+<span class="stock">In stock</span>
+</div>
+<div class="name">STA Classic Tee — Ringspun Cotton</div>
+<ul class="bullets">
+<li>Soft premium ringspun cotton</li>
+<li>Durable Front &amp; Back artwork</li>
+<li>Perfect everyday fit</li>
+</ul>
+<div class="variants" data-buybtn="#tee-buy" data-target-img="#tee-img">
+<button aria-selected="true" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaufn4NxcnUM4RFXVtnozqnmL1F8lNU8tncB2XAPcRyVV2B1DEzPz_he_rNNvayz6b_losVca8nBejfQeJt2BA6h0XjgEa8n77prbhOMQAeha0CSf3CrR-M8aVFpLR2BC0I94LGp1S6IBdn08NLqH8uh35EfCURp2rbtExojHsPsHL9W0QdjRY6H6pHwc_wZDCod7h--SAeGstMIYr56DEybz5jUrJUg7Q4aeRqYoOWxIGHB8Hy-dsdDmqBjR0UYyKEfLHV6BBDg"/>
               Front
             </button>
-
-            <button type="button" class="chip" aria-selected="false"
-              data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-              data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w">
-              <img src="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=200w" alt="">
+<button aria-selected="false" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA591IvN7C48JzC7Sw6O3v8ese_YnK47hNUTONUT0a8BBBpHdFvSCYBfIonTzV_3XFc7G0OODUQJzikhpGGM6vgJZcF3G4REzUSZdzJ0ZsYRl0Qg1BnSsrZPWtH5rbymmR-8p_rVhXPxkXVCPg2zhiYiB0CepP9iHwdzOOOGOk0vcLmvVyJugGRuKHaVI2HMO1anjuYjNg1jx-eC5bL475-qlkha0QGa1aqr8R2Y6ple0YiqNym8-NpBMYhi06T7UUaDefD4bfwQw"/>
               Back
             </button>
-          </div>
-        </div>
-
-        <aside class="pricebox">
-          <div class="price"><span class="now">$40.00</span><span class="was">$50</span></div>
-          <div class="ship">Usually ships next day</div>
-
-          <div class="row">
-            <label class="visually-hidden" for="qt">Qty</label>
-            <select id="qt" aria-label="Quantity">
-              <option>1</option><option>2</option><option>3</option><option>4</option>
-            </select>
-          </div>
-
-          <button id="tee-buy"
-            class="btn primary stripe"
-            data-stripe-checkout
-            data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU"
-            data-qty-from="#qt">
+</div>
+</div>
+<aside class="pricebox">
+<div class="price"><span class="now">$40.00</span><span class="was">$50</span></div>
+<div class="row">
+<div class="qty-wrap">
+<label for="qt">Qty</label>
+<select aria-label="Quantity" id="qt">
+<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+</select>
+</div>
+<div class="ship">Usually ships next day</div>
+</div>
+<button class="btn primary stripe" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" data-qty-from="#qt" data-stripe-checkout="" id="tee-buy">
             Checkout with Stripe
           </button>
-
-          <a class="btn" href="./merchandise.html?item=sta-tee">View details</a>
-          <div class="smallnote">Secure checkout • cards, Apple Pay, Google Pay, Link (if enabled)</div>
-        </aside>
-      </article>
-
-    </div>
-  </main>
-
-  <script>
+<div class="smallnote">Secure checkout • All major payment methods</div>
+</aside>
+</article>
+</div>
+</main>
+<!-- Image Zoom Overlay -->
+<div id="zoom-modal">
+<div aria-label="Close zoom" class="close-zoom">×</div>
+<img alt="Zoomed view" src=""/>
+</div>
+<script>
     // ---------- Header inject with fallback ----------
     (async function injectHeader(){
       const host = document.getElementById('sta-nav');
@@ -373,22 +413,7 @@
         if(!res.ok) throw new Error('sta-header.html not found');
         const html = await res.text();
         host.innerHTML = html;
-        console.log("Header injected");
-console.log("Before refresh:", localStorage.getItem("sta_cart"));
-
-setTimeout(() => {
-    console.log("Refreshing cart...");
-    window.STA_CART.refresh();
-    console.log(
-        "Badge now:",
-        document.getElementById("sta-cart-count")?.textContent
-    );
-}, 100);
-        if (window.STA_CART) {
-          STA_CART.refresh();
-      }
       }catch(e){
-        // fallback nav so you never end up "missing navigation"
         host.innerHTML = `
           <div class="nav-fallback">
             <div class="bar">
@@ -429,7 +454,24 @@ setTimeout(() => {
       if (buyBtn && priceId) buyBtn.setAttribute('data-price-id', priceId);
     }, true);
 
-    // ---------- Stripe fallback (guarantees buttons work even if checkout.js doesn't bind) ----------
+    // ---------- Image Expansion Feature ----------
+    const zoomModal = document.getElementById('zoom-modal');
+    const zoomImg = zoomModal.querySelector('img');
+
+    document.addEventListener('click', (e) => {
+      const thumb = e.target.closest('[data-zoom]');
+      if (!thumb) return;
+      
+      const src = thumb.querySelector('img').src;
+      zoomImg.src = src;
+      zoomModal.classList.add('active');
+    });
+
+    zoomModal.addEventListener('click', () => {
+      zoomModal.classList.remove('active');
+    });
+
+    // ---------- Stripe logic (preserving existing functionality) ----------
     async function goStripeCheckout(priceId, quantity) {
       const r = await fetch('/api/create-checkout-session', {
         method: 'POST',
@@ -468,10 +510,5 @@ setTimeout(() => {
         btn.removeAttribute('aria-busy');
       }
     }, true);
-
-    window.addEventListener("sta-cart-updated", () => {
-    STA_CART.refresh();
-    });
   </script>
-</body>
-</html>
+</body></html>
