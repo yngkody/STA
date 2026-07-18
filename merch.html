@@ -457,6 +457,10 @@
         btn.removeAttribute('aria-busy');
       }
     }, true);
+
+    window.addEventListener("sta-cart-updated", () => {
+    STA_CART.refresh();
+    });
   </script>
 </body>
 </html>
