@@ -7,7 +7,7 @@
 
   <!-- keep your existing checkout helper if you have one -->
   <script src="./checkout.js" defer></script>
-
+  <script src="./sta-cart.js" defer></script>
   <style>
     :root{
       --ink:#0f0f0f; --dim:#666b74; --accent:#c71f2d;
@@ -260,7 +260,8 @@
         `;
       } finally {
         // once header exists, sync badge + bind cart UI
-        STA_CART.refreshBadge();
+        //STA_CART.refreshBadge();
+        STA_CART.refresh();
       }
     })();
 
@@ -331,7 +332,7 @@
        - Renders modal list (in injected header)
        - Checkout uses Stripe /api/create-checkout-session
        ============================= */
-    const STA_CART = (function(){
+   /* const STA_CART = (function(){
       const CART_KEY = 'sta_cart';
 
       function read(){
@@ -562,7 +563,7 @@
       });
 
       return { add, read, refreshBadge, open, close, render, checkout };
-    })();
+    })();*/
 
     /* =============================
        4) Add-to-cart + Buy-now (Stripe)
