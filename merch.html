@@ -373,6 +373,17 @@
         if(!res.ok) throw new Error('sta-header.html not found');
         const html = await res.text();
         host.innerHTML = html;
+        console.log("Header injected");
+console.log("Before refresh:", localStorage.getItem("sta_cart"));
+
+setTimeout(() => {
+    console.log("Refreshing cart...");
+    window.STA_CART.refresh();
+    console.log(
+        "Badge now:",
+        document.getElementById("sta-cart-count")?.textContent
+    );
+}, 100);
         if (window.STA_CART) {
           STA_CART.refresh();
       }
