@@ -1,4 +1,375 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script src="./sta-cart.js"></script><script src="./checkout.js"></script></head><body>
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>STA Gear - Official Merchandise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg-color: #fcfcfc;
+      --card-bg: #ffffff;
+      --accent-red: #c71f2d;
+      --text-main: #111111;
+      --text-muted: #52525b;
+      --border-color: #e4e4e7;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      background-image: 
+        radial-gradient(circle at 50% -20%, #fee2e2 0%, transparent 40%),
+        radial-gradient(circle at 0% 100%, #e0e7ff 0%, transparent 20%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem 5rem;
+    }
+
+    .pagehead {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding-top: 2rem;
+    }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+      color: #000;
+    }
+
+    .sub {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2.5rem;
+      justify-content: center;
+    }
+
+    @media (min-width: 1024px) {
+      .list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    }
+
+    .item:hover {
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    .thumb-container {
+      aspect-ratio: 1/1;
+      background: #f4f4f5;
+      position: relative;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .thumb {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 2rem;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .item:hover .thumb img {
+      transform: scale(1.05);
+    }
+
+    .info {
+      padding: 1.75rem;
+      flex-grow: 1;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      background: #fee2e2;
+      color: var(--accent-red);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    .stock {
+      color: #16a34a;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-weight: 500;
+    }
+
+    .stock::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+    }
+
+    .name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: #000;
+    }
+
+    .bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .bullets li::before {
+      content: "•";
+      margin-right: 0.5rem;
+      color: var(--accent-red);
+    }
+
+    .variants {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .chip {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .chip img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #f4f4f5;
+    }
+
+    .chip[aria-selected="true"] {
+      border-color: #000;
+      background: #f4f4f5;
+      color: #000;
+    }
+
+    .pricebox {
+      padding: 1.75rem;
+      border-top: 1px solid var(--border-color);
+      background: #fafafa;
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .now {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .was {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-size: 1rem;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .qty-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .qty-wrap label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .qty-wrap select {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 0.25rem 2rem 0.25rem 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .ship {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .btn.primary.stripe {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      font-weight: 600;
+      padding: 1.125rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn.primary.stripe:hover {
+      background: #27272a;
+    }
+
+    .smallnote {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    /* Zoom Modal */
+    #zoom-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.98);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+
+    #zoom-modal.active {
+      display: flex;
+    }
+
+    #zoom-modal img {
+      max-width: 90%;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    .close-zoom {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      color: #000;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    .close-zoom:hover {
+      opacity: 1;
+    }
+
+    /* Header Styling */
+    .nav-fallback {
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: -0.05em;
+      color: #000;
+    }
+    .links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .links a:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
 <div id="sta-nav"></div>
 <main class="wrap">
 <header class="pagehead">
@@ -8,9 +379,9 @@
 <div class="list">
 <!-- HOODIE -->
 <article class="item" data-product="sta-hoodie">
-<div class="thumb-container">
-<div class="thumb" data-zoom="">
-<img alt="STA Hoodie — Front" id="hoodie-img" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg" style="object-fit: contain; padding: 12px;">
+<div class="thumb-container" data-zoom="">
+<div class="thumb">
+<img alt="STA Hoodie — Front" id="hoodie-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfcaIYW4k6QyZsZ4BgD_ZKafTHynIffuCBnSmZKGCELo-ubq7axeNDe86wnqFjvHWfB3qbKzV_hDdplx4oNZiRhHpwNWXeZJ9ASVtZF_rjyNpUxSIXN95pdvLuFq65hpLWDXmihpeTCd-_gpL01heCrpi0xbWRxD0HfIoZBvg9g02x7Y_h4IvzrUso-rPNGPOrf1pJLMscI80VIcs3fdxBt0uy8u0iFBgW1ANfs_JQctqDWkSCy73yDSOvIMiOUBHuEjHu3xM78w"/>
 </div>
 </div>
 <div class="info">
@@ -20,17 +391,17 @@
 </div>
 <div class="name">STA Signature Hoodie — Heavyweight</div>
 <ul class="bullets">
-<li class="">Double-lined hood, heavyweight fleece</li>
-<li class="">Premium Front &amp; Back Artwork</li>
-<li class="">Hand-pressed NYC quality</li>
+<li>Double-lined hood, heavyweight fleece</li>
+<li>Premium Front &amp; Back Artwork</li>
+<li>Hand-pressed NYC quality</li>
 </ul>
 <div class="variants" data-buybtn="#hoodie-buy" data-target-img="#hoodie-img">
 <button aria-selected="true" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/1f4bb64e-5bed-44b7-9d6d-afb4616c7bdb/126B40DF-C0AA-4299-BBFF-CC4ACC51125D.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
-<img alt="" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArUTn6cWWnRadUbqW-n0ptUhN-GsDzOvaFC7cuf0LWNOOq2YzzKG8rGMRKSvecyLa3RkBDnFcx2VWoAgijAhecDFTOIPDLoavLnkWiGvqP-PKN8y89lwRGV4YqBxTZkdjQqoF5vcHEOZZWfSyKBrXALV-DsHEn0CLFkq9E9sgc4xACVsf6Ck3Sszfvxv8OI76Gq1mOG3gPX8IbDL5E6TWaWzfh7YzzYMyJklcZfi1Rb1UUVe60BRu271VY6crZX7-cUy5TdCBNDg"/>
               Front
             </button>
 <button aria-selected="false" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/f6e7d359-b9e2-471e-888e-664bd3c7324b/AC38F5BD-BBCF-4E6E-AFAF-DF3A52B490B3+%281%29.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
-<img alt="" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNnVxNsP4jS66RAOpiehDNw0_UD4_R9-r15-mFLzUaeT3p_PQOG00woF6srZxi0JdBu07OwaRlSZjKYOkjeARNAyi3TBemZqMXtNB1AiabsrxiKwaE0-EXTEfMLUf3B6KT2XGu3DULM74okr_wR8vw1Qs6FaF2ddPWgp04jVD-P1kc77Lo-3Drg7lwj9uVa-hRVS1E9oYa1lb6rbdtHBGksV62EFYJC7XTFd8CNi89e4Y2ZcFbEEg6kgfqopCMkVt-kXFh-tMwwA"/>
               Back
             </button>
 </div>
@@ -39,7 +410,7 @@
 <div class="price"><span class="now">$85.00</span><span class="was">$95</span></div>
 <div class="row">
 <div class="qty-wrap">
-<label for="qh" class="">Qty</label>
+<label for="qh">Qty</label>
 <select aria-label="Quantity" id="qh">
 <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
 <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -55,29 +426,29 @@
 </article>
 <!-- TEE -->
 <article class="item" data-product="sta-tee">
-<div class="thumb-container">
-<div class="thumb" data-zoom="">
-<img alt="STA Tee — Front" id="tee-img" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg" style="object-fit: contain; padding: 12px;">
+<div class="thumb-container" data-zoom="">
+<div class="thumb">
+<img alt="STA Tee — Front" id="tee-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCSggRCyYDioWu84c9cIeVeguzxup_CO8flue7bm1npE9-nHEjx3KG6uOG2DJWHsggrvJwnWbj9q4vtIF3jiyhAwzft3NH0qlsy6nr-WKje1JfqB9P6rSUWCc913FsEovJz84XvG1YoRRQhlkzgpwfhR4uc_Qx1tS4CiTzcglkQ5lbVgPmgyZmqc1h9kkIWTHU2pyTH4BM07D47_XHLir5XqmtQw8YM6BSlx7Ac1YMd5446aoDRJ1fht_8GWtZDP5kgODHZtsqag"/>
 </div>
 </div>
 <div class="info">
 <div class="meta">
-<span class="badge">New</span>
+<span class="badge" style="background:#dcfce7; color:#166534;">New</span>
 <span class="stock">In stock</span>
 </div>
 <div class="name">STA Classic Tee — Ringspun Cotton</div>
 <ul class="bullets">
-<li class="">Soft premium ringspun cotton</li>
-<li class="">Durable Front &amp; Back artwork</li>
-<li class="">Perfect everyday fit</li>
+<li>Soft premium ringspun cotton</li>
+<li>Durable Front &amp; Back artwork</li>
+<li>Perfect everyday fit</li>
 </ul>
 <div class="variants" data-buybtn="#tee-buy" data-target-img="#tee-img">
 <button aria-selected="true" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/05af804f-6d7e-4f69-91f7-98b4fafa15f3/2STA_Art_Front_PrintReady.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
-<img alt="" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGRItLEQgWF1DvT_BSak--3Ryg8N3Fiv275O9oN6776e_tMO9asf-1Y7KzlmVc0RhQsyokNboiYLECmqRQXAcVRItB-3NakUigzXUbfkiC7VnpSdKIDgz645wPQbDrzv22Rp6lSICC3pPeaTXg2nB4F3KSR03dM-P-HPiImrwlQIDPTMEjsukLmFXZAFTWxS6P7dRmtdSW2G0TykqTqDcELyAqWOmRe9C1iToDq79_vcPMCo5ce2Is1zzBnLJEjcFvLKc1lml3vQ"/>
               Front
             </button>
 <button aria-selected="false" class="chip" data-image="https://images.squarespace-cdn.com/content/v1/68e0528f4cec933d5b272876/6dfc190b-3f95-4236-b40d-327b2a7057fe/3STA_Art_Back_PrintReady.png?format=1500w" data-price-id="price_1ShgiV1blBzCNuBQL9FtDioU" type="button">
-<img alt="" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg">
+<img alt="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfcJlzclgkqSYwsJvzOjcXYIagFG4YawHt8zta2mVErDMdgGkAbqcmmT67PNMMT5ommKlekoukk2TKsSn6J0kUBetA4-7hL26HCAzFEsdfXKYRIs1xaSWEfqbpzbfbRMC3Rr4sMq5nTbVls2PuGfhaeBkdB5P5mM2Orv7IPZV7gyiAnC6o3uNW0iqedWfQzAR-h2k3VS8nHpwOFF1Y0RJ-nQ8ePEnqB_ytVbg7toxE7Vvo2w00a4JZLmDjGh1Y4kfqsvZEjLBIYA"/>
               Back
             </button>
 </div>
@@ -86,7 +457,7 @@
 <div class="price"><span class="now">$40.00</span><span class="was">$50</span></div>
 <div class="row">
 <div class="qty-wrap">
-<label for="qt" class="">Qty</label>
+<label for="qt">Qty</label>
 <select aria-label="Quantity" id="qt">
 <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
 <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -105,18 +476,18 @@
 <!-- Image Zoom Overlay -->
 <div id="zoom-modal">
 <div aria-label="Close zoom" class="close-zoom">×</div>
-<img alt="Zoomed view" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgcng9IjgiIGZpbGw9IiNlOGVhZWQiLz48cGF0aCBkPSJNMTcwIDEzMCBsMzAgNDAgbDIwLTE1IGw0MCA1NSBIMTQweiIgZmlsbD0iI2JkYzFjNiIvPjxjaXJjbGUgY3g9IjI1MCIgY3k9IjEyMCIgcj0iMTgiIGZpbGw9IiNiZGMxYzYiLz48L3N2Zz4=" class="">
+<img alt="Zoomed view" src=""/>
 </div>
-<script class="">
-    // ---------- Header inject with fallback ----------
+<script>
+    // ---------- Header inject with light mode fallback ----------
     (async function injectHeader(){
       const host = document.getElementById('sta-nav');
-      try{
+      try {
         const res = await fetch('./sta-header.html', { cache:'no-store' });
         if(!res.ok) throw new Error('sta-header.html not found');
         const html = await res.text();
         host.innerHTML = html;
-      }catch(e){
+      } catch(e) {
         host.innerHTML = `
           <div class="nav-fallback">
             <div class="bar">
@@ -165,8 +536,10 @@
       const thumb = e.target.closest('[data-zoom]');
       if (!thumb) return;
       
-      const src = thumb.querySelector('img').src;
-      zoomImg.src = src;
+      const targetImg = thumb.querySelector('img');
+      if (!targetImg) return;
+      
+      zoomImg.src = targetImg.src;
       zoomModal.classList.add('active');
     });
 
@@ -174,7 +547,27 @@
       zoomModal.classList.remove('active');
     });
 
-    // ---------- Stripe logic (preserving existing functionality) ----------
+    // ---------- Stripe Checkout Logic ----------
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-stripe-checkout]');
+      if (!btn) return;
+
+      const priceId = btn.getAttribute('data-price-id');
+      const qtySelector = btn.getAttribute('data-qty-from');
+      const quantity = qtySelector ? document.querySelector(qtySelector).value : 1;
+
+      try {
+        btn.disabled = true;
+        btn.textContent = 'Connecting...';
+        await goStripeCheckout(priceId, parseInt(quantity));
+      } catch (err) {
+        console.error(err);
+        alert('Checkout failed. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Checkout with Stripe';
+      }
+    });
+
     async function goStripeCheckout(priceId, quantity) {
       const r = await fetch('/api/create-checkout-session', {
         method: 'POST',
@@ -186,6 +579,5 @@
       if (!r.ok || !url) throw new Error(data.error || ('Checkout failed ('+r.status+')'));
       window.location.href = url;
     }
-
-    document.addEventListener('click', async (e) => {
-      const btn = e.target.closest('[data-</script></body></html>
+  </script>
+</body></html>
