@@ -243,4 +243,10 @@
       if (Date.now() - start > 5000) clearInterval(t);
     }, 60);
   });
+  
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+        renderCart();
+    }
+});
 })();
