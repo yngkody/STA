@@ -373,6 +373,9 @@
         if(!res.ok) throw new Error('sta-header.html not found');
         const html = await res.text();
         host.innerHTML = html;
+        if (window.STA_CART) {
+          STA_CART.refresh();
+      }
       }catch(e){
         // fallback nav so you never end up "missing navigation"
         host.innerHTML = `
