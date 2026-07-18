@@ -116,6 +116,10 @@
         ${specs ? `<div class="specs">${specs}</div>` : ''}
       `;
     })();
+
+    window.addEventListener("sta-cart-updated", () => {
+    STA_CART.refresh();
+    });
   </script>
 </body>
 </html>
