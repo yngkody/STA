@@ -180,6 +180,9 @@
 
       writeCart(cart);
       renderCart();
+       
+
+      window.dispatchEvent(new Event("sta-cart-updated"));
     },
   };
 
